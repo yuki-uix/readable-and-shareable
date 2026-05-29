@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{PAGE_TITLE}}</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --font-sans: -apple-system, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --color-bg: #ffffff;
+    --color-bg-secondary: #f5f5f3;
+    --color-bg-info: #e6f1fb;
+    --color-bg-success: #eaf3de;
+    --color-bg-warning: #faeeda;
+    --color-text: #1a1a18;
+    --color-text-secondary: #6b6a64;
+    --color-text-tertiary: #9c9a92;
+    --color-text-info: #185fa5;
+    --color-text-success: #3b6d11;
+    --color-text-warning: #854f0b;
+    --color-border: rgba(0,0,0,0.12);
+    --color-border-secondary: rgba(0,0,0,0.22);
+    --radius-md: 8px;
+    --radius-lg: 12px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-bg: #1c1c1a;
+      --color-bg-secondary: #272725;
+      --color-bg-info: #042c53;
+      --color-bg-success: #173404;
+      --color-bg-warning: #412402;
+      --color-text: #e8e6de;
+      --color-text-secondary: #b4b2a9;
+      --color-text-tertiary: #73726c;
+      --color-text-info: #85b7eb;
+      --color-text-success: #97c459;
+      --color-text-warning: #ef9f27;
+      --color-border: rgba(255,255,255,0.12);
+      --color-border-secondary: rgba(255,255,255,0.22);
+    }
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-bg);
+    color: var(--color-text);
+    min-height: 100vh;
+    padding: 32px 24px 48px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .page-header { margin-bottom: 28px; padding-bottom: 20px; border-bottom: 0.5px solid var(--color-border); }
+  .page-header h1 { font-size: 20px; font-weight: 500; margin-bottom: 6px; }
+  .page-header p { font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; }
+  .source-tag { display: inline-block; font-size: 11px; background: var(--color-bg-secondary); border: 0.5px solid var(--color-border); border-radius: 4px; padding: 2px 7px; color: var(--color-text-secondary); margin-top: 8px; }
+
+  .map-title { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 16px; }
+
+  .rail-row { display: flex; align-items: stretch; gap: 0; margin-bottom: 8px; }
+  .rail-label { width: 78px; min-width: 78px; font-size: 11px; font-weight: 500; color: var(--color-text-secondary); display: flex; align-items: center; padding-right: 10px; text-align: right; line-height: 1.3; justify-content: flex-end; }
+  .rail-track { flex: 1; display: flex; align-items: center; position: relative; gap: 0; flex-wrap: wrap; row-gap: 6px; }
+  .rail-line { position: absolute; top: 50%; left: 0; right: 0; height: 3px; transform: translateY(-50%); border-radius: 2px; z-index: 0; pointer-events: none; }
+
+  .station { position: relative; z-index: 1; border: 0.5px solid var(--color-border); border-radius: var(--radius-md); padding: 7px 11px; font-size: 12px; font-weight: 500; cursor: pointer; transition: transform .15s, box-shadow .15s; margin-right: 8px; flex-shrink: 0; line-height: 1.3; text-align: center; user-select: none; background: none; font-family: var(--font-sans); }
+  .station:hover { transform: translateY(-2px); box-shadow: 0 3px 10px rgba(0,0,0,.1); }
+  .station:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+  .station.selected { border-width: 1.5px; transform: translateY(-2px); box-shadow: 0 3px 10px rgba(0,0,0,.12); }
+
+  .s-name { font-size: 12px; font-weight: 500; }
+  .s-badge { font-size: 10px; font-weight: 400; opacity: .72; margin-top: 2px; }
+
+  .detail-panel { margin: 10px 0 6px 88px; border: 0.5px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-bg-secondary); padding: 16px 18px; display: none; animation: slideIn .18s ease; }
+  .detail-panel.visible { display: block; }
+
+  @keyframes slideIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+
+  .dp-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .dp-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  .dp-title { font-size: 14px; font-weight: 500; flex: 1; }
+  .close-btn { font-size: 11px; color: var(--color-text-tertiary); cursor: pointer; background: none; border: none; padding: 2px 4px; font-family: var(--font-sans); border-radius: 4px; transition: background .12s; }
+  .close-btn:hover { background: var(--color-border); color: var(--color-text-secondary); }
+
+  .dp-why { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 12px; line-height: 1.6; }
+  .dp-tips { display: flex; flex-direction: column; gap: 6px; }
+  .dp-tip { font-size: 13px; color: var(--color-text); display: flex; gap: 8px; line-height: 1.5; }
+  .dp-tip-icon { color: var(--color-text-tertiary); flex-shrink: 0; font-size: 14px; line-height: 1.5; }
+
+  .legend-row { display: flex; gap: 14px; margin: 16px 0 6px 88px; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--color-text-secondary); }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  /* Cost bar — optional section, remove if article has no cost/metric progression */
+  .cost-bar-wrap { margin: 16px 0 4px 88px; }
+  .cost-label { font-size: 11px; color: var(--color-text-secondary); margin-bottom: 8px; }
+  .cost-steps { display: flex; align-items: stretch; border: 0.5px solid var(--color-border); border-radius: var(--radius-md); overflow: hidden; }
+  .cost-step { font-size: 11px; text-align: center; padding: 8px 6px; border-right: 0.5px solid var(--color-border); background: var(--color-bg-secondary); cursor: pointer; transition: background .15s; display: flex; flex-direction: column; gap: 3px; flex: 1; border-top: none; border-bottom: none; border-left: none; font-family: var(--font-sans); }
+  .cost-step:last-child { border-right: none; }
+  .cost-step:hover, .cost-step.selected { background: var(--color-bg); }
+  .cs-price { font-weight: 500; font-size: 13px; color: var(--color-text); }
+  .cs-pct { font-size: 10px; color: var(--color-text-secondary); }
+
+  .footer { margin-top: 36px; padding-top: 18px; border-top: 0.5px solid var(--color-border); font-size: 12px; color: var(--color-text-tertiary); line-height: 1.7; }
+  .footer a { color: inherit; opacity: .7; }
+
+  /* Station theme presets — pick per rail or override inline */
+  .s-blue   { background: var(--color-bg-info);    border-color: #85b7eb; color: var(--color-text-info); }
+  .s-green  { background: var(--color-bg-success); border-color: #5dcaa5; color: var(--color-text-success); }
+  .s-amber  { background: var(--color-bg-warning); border-color: #ef9f27; color: var(--color-text-warning); }
+  .s-purple { background: #eeedfe; border-color: #afa9ec; color: #3c3489; }
+  .s-gray   { background: var(--color-bg-secondary); border-color: var(--color-border-secondary); color: var(--color-text); }
+  @media (prefers-color-scheme: dark) { .s-purple { background: #26215c; border-color: #7f77dd; color: #cecbf6; } }
+
+  @media (max-width: 600px) {
+    body { padding: 20px 16px 36px; }
+    .rail-label { width: 56px; min-width: 56px; font-size: 10px; }
+    .detail-panel, .legend-row, .cost-bar-wrap { margin-left: 64px; }
+    .station { padding: 6px 8px; font-size: 11px; margin-right: 5px; }
+    .s-name { font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     FILL IN: Page header
+     ═══════════════════════════════════════════════ -->
+<div class="page-header">
+  <h1>{{PAGE_TITLE}}</h1>
+  <p>{{PAGE_DESCRIPTION}}</p>
+  <a href="{{SOURCE_URL}}" target="_blank" rel="noopener" class="source-tag">{{SOURCE_LABEL}}</a>
+</div>
+
+<p class="map-title">{{MAP_SUBTITLE}}</p>
+
+<!-- Shared detail panel — do not duplicate -->
+<div id="detail-panel" class="detail-panel" role="region" aria-live="polite">
+  <div class="dp-header">
+    <div class="dp-dot" id="dp-dot"></div>
+    <div class="dp-title" id="dp-title"></div>
+    <button class="close-btn" onclick="closePanel()" aria-label="关闭详情">关闭 ×</button>
+  </div>
+  <div class="dp-why" id="dp-why"></div>
+  <div class="dp-tips" id="dp-tips"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     FILL IN: Rail rows
+     Each rail = one "line" with stations.
+     s-blue / s-green / s-amber / s-purple / s-gray
+     rail-line color should match station color.
+     data-id must match a key in the DATA object below.
+     ═══════════════════════════════════════════════ -->
+
+<!-- Example rail — copy/paste and fill in -->
+<div class="rail-row">
+  <div class="rail-label">① 示例线</div>
+  <div class="rail-track">
+    <div class="rail-line" style="background:#b5d4f4;"></div>
+    <button class="station s-blue" data-id="ex1">
+      <div class="s-name">站点名称</div><div class="s-badge">副标签</div>
+    </button>
+    <button class="station s-blue" data-id="ex2">
+      <div class="s-name">站点名称</div><div class="s-badge">副标签</div>
+    </button>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     FILL IN: Legend
+     ═══════════════════════════════════════════════ -->
+<div class="legend-row">
+  <div class="legend-item"><div class="legend-dot" style="background:#378add;"></div>① 线路说明</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     OPTIONAL: Metric progression bar
+     Remove this block if article has no quantitative steps.
+     ═══════════════════════════════════════════════ -->
+<div class="cost-bar-wrap">
+  <div class="cost-label">{{METRIC_LABEL}}</div>
+  <div class="cost-steps" id="cost-steps">
+    <!-- Rendered by JS from METRIC_STEPS below -->
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     FILL IN: Footer
+     ═══════════════════════════════════════════════ -->
+<div class="footer">
+  {{FOOTER_NOTE}}<br>
+  原文：<a href="{{SOURCE_URL}}" target="_blank" rel="noopener">{{AUTHOR}} · {{SOURCE_LABEL}}</a> | 可视化整理：{{VIZ_CREDIT}}
+</div>
+
+
+<script>
+/* ═══════════════════════════════════════════════
+   DATA — fill this in, leave JS logic below untouched
+   ═══════════════════════════════════════════════ */
+const DATA = {
+  // id must match data-id on station buttons above
+  ex1: {
+    color: '#378add',        // dot color in detail panel
+    title: '站点完整标题',
+    why: '为什么这个站点重要——背景和原理，2-4句话。',
+    tips: [
+      '具体怎么做，第一条',
+      '具体怎么做，第二条',
+      '具体怎么做，第三条',
+    ]
+  },
+  ex2: {
+    color: '#378add',
+    title: '另一个站点',
+    why: '背景说明。',
+    tips: ['操作建议']
+  },
+};
+
+/* ═══════════════════════════════════════════════
+   METRIC STEPS — remove if no cost/metric bar
+   ═══════════════════════════════════════════════ */
+const METRIC_STEPS = [
+  { value: '基准值',  label: '初始状态',     detail: '对基准状态的说明。' },
+  { value: '步骤后',  label: '① 优化名称',   detail: '做了这步之后的变化说明。' },
+  // ...继续添加
+];
+
+/* ═══════════════════════════════════════════════
+   JS LOGIC — do not modify below this line
+   ═══════════════════════════════════════════════ */
+let selectedStation = null;
+
+function showStation(id) {
+  const d = DATA[id];
+  if (!d) return;
+  if (selectedStation) document.querySelector(`[data-id="${selectedStation}"]`)?.classList.remove('selected');
+  selectedStation = id;
+  document.querySelector(`[data-id="${id}"]`)?.classList.add('selected');
+
+  const panel = document.getElementById('detail-panel');
+  document.getElementById('dp-dot').style.background = d.color;
+  document.getElementById('dp-title').textContent = d.title;
+  document.getElementById('dp-why').textContent = d.why;
+  document.getElementById('dp-tips').innerHTML = d.tips.map(t =>
+    `<div class="dp-tip"><span class="dp-tip-icon">›</span><span>${t}</span></div>`
+  ).join('');
+  panel.classList.add('visible');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  // URL hash for deep-linking
+  history.replaceState(null, '', '#' + id);
+}
+
+function closePanel() {
+  document.getElementById('detail-panel').classList.remove('visible');
+  if (selectedStation) {
+    document.querySelector(`[data-id="${selectedStation}"]`)?.classList.remove('selected');
+    selectedStation = null;
+  }
+  history.replaceState(null, '', location.pathname);
+}
+
+function showMetricDetail(i) {
+  const step = METRIC_STEPS[i];
+  if (!step) return;
+  const panel = document.getElementById('detail-panel');
+  document.getElementById('dp-dot').style.background = '#888780';
+  document.getElementById('dp-title').textContent = step.label;
+  document.getElementById('dp-why').textContent = step.detail;
+  document.getElementById('dp-tips').innerHTML = '';
+  panel.classList.add('visible');
+  document.querySelectorAll('.cost-step').forEach((s, idx) => s.classList.toggle('selected', idx === i));
+}
+
+// Render metric steps
+const stepsContainer = document.getElementById('cost-steps');
+if (stepsContainer && METRIC_STEPS.length) {
+  stepsContainer.innerHTML = METRIC_STEPS.map((s, i) =>
+    `<button class="cost-step" onclick="showMetricDetail(${i})">
+      <span class="cs-price">${s.value}</span>
+      <span class="cs-pct">${s.label}</span>
+    </button>`
+  ).join('');
+}
+
+// Station click handlers
+document.querySelectorAll('.station').forEach(s => {
+  s.addEventListener('click', () => showStation(s.dataset.id));
+  s.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showStation(s.dataset.id); }
+  });
+});
+
+// Click-outside to close
+document.addEventListener('click', e => {
+  const panel = document.getElementById('detail-panel');
+  if (!panel.contains(e.target) && !e.target.closest('.station') && !e.target.closest('.cost-step')) {
+    closePanel();
+  }
+});
+
+// Deep-link: open station from URL hash on load
+const hash = location.hash.slice(1);
+if (hash && DATA[hash]) showStation(hash);
+</script>
+</body>
+</html>
