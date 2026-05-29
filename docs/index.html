@@ -140,7 +140,7 @@
                border-color: var(--border) !important; }
   .chip-narr { background: var(--bg3);       color: var(--text3); }
   .chip-narr.active { border-color: var(--text3) !important;
-                       box-shadow: 0 0 0 3px rgba(156,154,146,.15); }
+                       box-shadow: 0 0 0 3px color-mix(in srgb, var(--text3) 15%, transparent); }
 
   .method-hint {
     padding: 20px; background: var(--bg2);
@@ -391,15 +391,6 @@
 <script>
 (function () {
   // ── Data ──────────────────────────────────────────────────────
-  const TYPES = [
-    { id: 'hier', label: '层级型' },
-    { id: 'num',  label: '数值型' },
-    { id: 'seq',  label: '时序型' },
-    { id: 'comp', label: '对比型' },
-    { id: 'rel',  label: '关系型' },
-    { id: 'narr', label: '叙事型' },
-  ];
-
   // Higher = heavier weight when combining
   const WEIGHT = { num: 5, seq: 4, hier: 3, comp: 2, rel: 1 };
 
