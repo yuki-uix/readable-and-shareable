@@ -92,9 +92,47 @@
 
   /* ── Hero ── */
   .hero { padding-top: var(--space-24); padding-bottom: var(--space-20); }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-12);
+    align-items: center;
+  }
   .hero-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--text3); margin-bottom: 16px; }
   .hero h1 { font-size: clamp(28px, 5vw, 42px); font-weight: 500; line-height: 1.2; margin-bottom: 20px; }
   .hero p { font-size: 16px; color: var(--text2); margin-bottom: 32px; }
+
+  .hero-preview {
+    display: block;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 0.5px solid var(--border);
+    box-shadow: var(--shadow-md);
+    transition: box-shadow .2s, transform .2s;
+    text-decoration: none;
+  }
+  .hero-preview:hover {
+    box-shadow: 0 8px 32px rgba(0,0,0,.12), 0 2px 8px rgba(0,0,0,.06);
+    transform: translateY(-2px);
+  }
+  .hero-preview img {
+    width: 100%; height: auto; display: block;
+  }
+  .hero-preview-caption {
+    display: flex; align-items: center; gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background: var(--bg2);
+    border-top: 0.5px solid var(--border);
+    font-size: 11px; color: var(--text3);
+  }
+  .hero-preview-dot {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--text3); flex-shrink: 0;
+  }
+
+  @media (max-width: 640px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-preview { display: none; }
+  }
 
   .hero-cmd {
     display: inline-flex; align-items: center; gap: 10px;
@@ -296,20 +334,32 @@
 
 <!-- ── Hero ── -->
 <section class="hero">
-  <div class="hero-eyebrow">Claude Code Skill</div>
-  <h1>把复杂技术文章变成可分享的可视化</h1>
-  <p>输入一篇文章，自动识别结构类型，生成对应的交互式展示——思维导图、地铁图、对比表格，或告诉你这篇文章不适合可视化。</p>
+  <div class="hero-grid">
+    <div class="hero-content">
+      <div class="hero-eyebrow">Claude Code Skill</div>
+      <h1>把一篇文章变成多种可分享的形式</h1>
+      <p>输入文章，选择产出形式——思维导图、图片卡片、交互式 HTML——每种产出物都链回原文，让不同受众找到适合自己的切入方式。</p>
 
-  <div class="hero-cmd">
-    <span>$</span> /viz
-  </div>
+      <div class="hero-cmd">
+        <span>$</span> /viz
+      </div>
 
-  <div class="hero-links">
-    <a class="btn btn-primary" href="https://github.com/yuki-uix/readable-and-shareable" target="_blank">
-      View on GitHub
-    </a>
-    <a class="btn btn-secondary" href="#example">
-      See example ↓
+      <div class="hero-links">
+        <a class="btn btn-primary" href="https://github.com/yuki-uix/readable-and-shareable" target="_blank">
+          View on GitHub
+        </a>
+        <a class="btn btn-secondary" href="#example">
+          See example ↓
+        </a>
+      </div>
+    </div>
+
+    <a class="hero-preview" href="examples/coding-agent-cost/index.html" target="_blank" rel="noopener" aria-label="查看真实案例：Coding Agent 成本分析">
+      <img src="preview-coding-agent-cost.jpg" alt="Coding Agent 成本分析 — Interactive HTML 产出物示例" width="960" height="747" loading="lazy">
+      <div class="hero-preview-caption">
+        <span class="hero-preview-dot"></span>
+        真实案例：Coding Agent 成本分析 →
+      </div>
     </a>
   </div>
 </section>
