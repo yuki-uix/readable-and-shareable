@@ -49,7 +49,7 @@ Ask the user:
 
 1. 思维导图      — 展示层级与关系，适合愿意细读的受众；约 5 分钟
 2. Interactive HTML — 数据/流程交互展示，视觉冲击强；约 15 分钟
-3. 图片卡片      — 核心观点提炼，适合快速传播；约 10 分钟（模板建设中）
+3. 图片卡片      — 核心观点提炼，适合快速传播；约 10 分钟
 4. 概念关系图    — 展示概念间连接，适合复杂系统；约 15 分钟（模板建设中）
 5. 漫画          — 轻量叙事，降低阅读门槛；约 30 分钟（实验性）
 
@@ -67,7 +67,7 @@ Use the corresponding template/approach:
 |---|---|
 | 思维导图 | `templates/mindmap/prompt.md` → Markdown 缩进列表（Markmap 可渲染）；按需生成 otml |
 | Interactive HTML | `templates/interactive-html/` → 单文件 HTML；上传至 sharehtml.zhenjia.dev |
-| 图片卡片 | `templates/image-card/`（建设中）→ SVG / Canvas |
+| 图片卡片 | `templates/image-card/prompt.md` → 1:1 单文件 HTML；Chrome 截图后直接发布 |
 | 概念关系图 | `templates/concept-map/`（建设中）→ Mermaid / D3 |
 | 漫画 | `templates/comic/`（实验性）→ 分镜脚本 + 图像生成提示词 |
 
