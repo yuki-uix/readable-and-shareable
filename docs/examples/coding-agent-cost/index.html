@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coding Agent 成本优化路线图</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --font-sans: -apple-system, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --color-bg: #ffffff;
+    --color-bg-secondary: #f5f5f3;
+    --color-bg-info: #e6f1fb;
+    --color-bg-success: #eaf3de;
+    --color-bg-warning: #faeeda;
+    --color-text: #1a1a18;
+    --color-text-secondary: #6b6a64;
+    --color-text-tertiary: #9c9a92;
+    --color-text-info: #185fa5;
+    --color-text-success: #3b6d11;
+    --color-text-warning: #854f0b;
+    --color-border: rgba(0,0,0,0.12);
+    --color-border-secondary: rgba(0,0,0,0.22);
+    --radius-md: 8px;
+    --radius-lg: 12px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-bg: #1c1c1a;
+      --color-bg-secondary: #272725;
+      --color-bg-info: #042c53;
+      --color-bg-success: #173404;
+      --color-bg-warning: #412402;
+      --color-text: #e8e6de;
+      --color-text-secondary: #b4b2a9;
+      --color-text-tertiary: #73726c;
+      --color-text-info: #85b7eb;
+      --color-text-success: #97c459;
+      --color-text-warning: #ef9f27;
+      --color-border: rgba(255,255,255,0.12);
+      --color-border-secondary: rgba(255,255,255,0.22);
+    }
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-bg);
+    color: var(--color-text);
+    min-height: 100vh;
+    padding: 32px 24px 48px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .page-header {
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 0.5px solid var(--color-border);
+  }
+
+  .page-header h1 {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .page-header p {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+
+  .source-tag {
+    display: inline-block;
+    font-size: 11px;
+    background: var(--color-bg-secondary);
+    border: 0.5px solid var(--color-border);
+    border-radius: 4px;
+    padding: 2px 7px;
+    color: var(--color-text-secondary);
+    margin-top: 8px;
+  }
+
+  .map-title {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin-bottom: 16px;
+  }
+
+  .rail-row {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-bottom: 8px;
+  }
+
+  .rail-label {
+    width: 78px;
+    min-width: 78px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
+    text-align: right;
+    line-height: 1.3;
+    justify-content: flex-end;
+  }
+
+  .rail-track {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    position: relative;
+    gap: 0;
+    flex-wrap: wrap;
+    row-gap: 6px;
+  }
+
+  .rail-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 3px;
+    transform: translateY(-50%);
+    border-radius: 2px;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .station {
+    position: relative;
+    z-index: 1;
+    border: 0.5px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 7px 11px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform .15s, box-shadow .15s;
+    margin-right: 8px;
+    flex-shrink: 0;
+    line-height: 1.3;
+    text-align: center;
+    user-select: none;
+  }
+
+  .station:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(0,0,0,.1);
+  }
+
+  .station:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  .station.selected {
+    border-width: 1.5px;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(0,0,0,.12);
+  }
+
+  .s-name { font-size: 12px; font-weight: 500; }
+  .s-badge { font-size: 10px; font-weight: 400; opacity: .72; margin-top: 2px; }
+
+  .detail-panel {
+    margin: 10px 0 6px 88px;
+    border: 0.5px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-bg-secondary);
+    padding: 16px 18px;
+    display: none;
+    animation: slideIn .18s ease;
+  }
+
+  .detail-panel.visible { display: block; }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .dp-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .dp-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .dp-title {
+    font-size: 14px;
+    font-weight: 500;
+    flex: 1;
+  }
+
+  .close-btn {
+    font-size: 11px;
+    color: var(--color-text-tertiary);
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 2px 4px;
+    font-family: var(--font-sans);
+    border-radius: 4px;
+    transition: background .12s;
+  }
+  .close-btn:hover {
+    background: var(--color-border);
+    color: var(--color-text-secondary);
+  }
+
+  .dp-why {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin-bottom: 12px;
+    line-height: 1.6;
+  }
+
+  .dp-tips {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .dp-tip {
+    font-size: 13px;
+    color: var(--color-text);
+    display: flex;
+    gap: 8px;
+    line-height: 1.5;
+  }
+
+  .dp-tip-icon {
+    color: var(--color-text-tertiary);
+    flex-shrink: 0;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .legend-row {
+    display: flex;
+    gap: 14px;
+    margin: 16px 0 6px 88px;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: var(--color-text-secondary);
+  }
+
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .cost-bar-wrap {
+    margin: 16px 0 4px 88px;
+  }
+
+  .cost-label {
+    font-size: 11px;
+    color: var(--color-text-secondary);
+    margin-bottom: 8px;
+  }
+
+  .cost-steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 0.5px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .cost-step {
+    font-size: 11px;
+    text-align: center;
+    padding: 8px 6px;
+    border-right: 0.5px solid var(--color-border);
+    background: var(--color-bg-secondary);
+    cursor: pointer;
+    transition: background .15s;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex: 1;
+  }
+
+  .cost-step:last-child { border-right: none; }
+  .cost-step:hover { background: var(--color-bg); }
+  .cost-step.selected { background: var(--color-bg); }
+
+  .cs-price { font-weight: 500; font-size: 13px; }
+  .cs-pct { font-size: 10px; color: var(--color-text-secondary); }
+
+  .footer {
+    margin-top: 36px;
+    padding-top: 18px;
+    border-top: 0.5px solid var(--color-border);
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+    line-height: 1.7;
+  }
+
+  /* Station theme colors */
+  .s-blue { background: var(--color-bg-info); border-color: #85b7eb; color: var(--color-text-info); }
+  .s-green { background: var(--color-bg-success); border-color: #5dcaa5; color: var(--color-text-success); }
+  .s-amber { background: var(--color-bg-warning); border-color: #ef9f27; color: var(--color-text-warning); }
+  .s-purple { background: #eeedfe; border-color: #afa9ec; color: #3c3489; }
+  .s-gray { background: var(--color-bg-secondary); border-color: var(--color-border-secondary); color: var(--color-text); }
+
+  @media (prefers-color-scheme: dark) {
+    .s-purple { background: #26215c; border-color: #7f77dd; color: #cecbf6; }
+  }
+
+  @media (max-width: 600px) {
+    body { padding: 20px 16px 36px; }
+    .rail-label { width: 56px; min-width: 56px; font-size: 10px; }
+    .detail-panel { margin-left: 64px; }
+    .legend-row { margin-left: 64px; }
+    .cost-bar-wrap { margin-left: 64px; }
+    .station { padding: 6px 8px; font-size: 11px; margin-right: 5px; }
+    .s-name { font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>Coding Agent 成本优化路线图</h1>
+  <p>基于 Zhenjia Zhou 的调研笔记整理，将 Select / Compress / Isolate / Write 四个方向映射为五条可操作路线。<br>点击任意站点查看「为什么」和「怎么做」。</p>
+  <span class="source-tag">原文：ThoughtWorks 内部博客大赛 · 2026.05</span>
+</div>
+
+<p class="map-title">优先坐 ① 缓存线 — 一次配置，长期受益，投入产出比最高</p>
+
+<div id="detail-panel" class="detail-panel" role="region" aria-live="polite">
+  <div class="dp-header">
+    <div class="dp-dot" id="dp-dot"></div>
+    <div class="dp-title" id="dp-title"></div>
+    <button class="close-btn" onclick="closePanel()" aria-label="关闭详情">关闭 ×</button>
+  </div>
+  <div class="dp-why" id="dp-why"></div>
+  <div class="dp-tips" id="dp-tips"></div>
+</div>
+
+<!-- Line 1: Cache -->
+<div class="rail-row">
+  <div class="rail-label">① 缓存线</div>
+  <div class="rail-track">
+    <div class="rail-line" style="background:#b5d4f4;"></div>
+    <button class="station s-blue" data-id="cache1" aria-label="固定前缀顺序详情">
+      <div class="s-name">固定前缀顺序</div><div class="s-badge">MCP schema</div>
+    </button>
+    <button class="station s-blue" data-id="cache2" aria-label="清理无用MCP详情">
+      <div class="s-name">清理无用 MCP</div><div class="s-badge">去掉缓存杀手</div>
+    </button>
+    <button class="station s-blue" data-id="cache3" aria-label="关attribution header详情">
+      <div class="s-name">关 attribution header</div><div class="s-badge">本地模型用</div>
+    </button>
+    <button class="station s-blue" data-id="cache4" aria-label="cache-fix补丁详情">
+      <div class="s-name">cache-fix 补丁</div><div class="s-badge">resume session</div>
+    </button>
+  </div>
+</div>
+
+<!-- Line 2: Select -->
+<div class="rail-row">
+  <div class="rail-label">② 选择线</div>
+  <div class="rail-track">
+    <div class="rail-line" style="background:#9fe1cb;"></div>
+    <button class="station s-green" data-id="sel1">
+      <div class="s-name">CLAUDE.md 路标</div><div class="s-badge">200 行以内</div>
+    </button>
+    <button class="station s-green" data-id="sel2">
+      <div class="s-name">LSP 精确导航</div><div class="s-badge">替代 grep</div>
+    </button>
+    <button class="station s-green" data-id="sel3">
+      <div class="s-name">AST / Grep 索引</div><div class="s-badge">CodeGraph</div>
+    </button>
+    <button class="station s-green" data-id="sel4">
+      <div class="s-name">CLI 替代 MCP</div><div class="s-badge">消灭 schema 税</div>
+    </button>
+  </div>
+</div>
+
+<!-- Line 3: Compress -->
+<div class="rail-row">
+  <div class="rail-label">③ 压缩线</div>
+  <div class="rail-track">
+    <div class="rail-line" style="background:#fac775;"></div>
+    <button class="station s-amber" data-id="cmp1">
+      <div class="s-name">RTK</div><div class="s-badge">CLI 输出 ×0.2</div>
+    </button>
+    <button class="station s-amber" data-id="cmp2">
+      <div class="s-name">lean-ctx</div><div class="s-badge">文件+MCP 全覆盖</div>
+    </button>
+    <button class="station s-amber" data-id="cmp3">
+      <div class="s-name">DCP 剪枝</div><div class="s-badge">已完成的对话</div>
+    </button>
+    <button class="station s-amber" data-id="cmp4">
+      <div class="s-name">/compact</div><div class="s-badge">context 80%+ 时</div>
+    </button>
+  </div>
+</div>
+
+<!-- Line 4: Isolate -->
+<div class="rail-row">
+  <div class="rail-label">④ 隔离线</div>
+  <div class="rail-track">
+    <div class="rail-line" style="background:#afa9ec;"></div>
+    <button class="station s-purple" data-id="iso1">
+      <div class="s-name">Haiku 子 Agent</div><div class="s-badge">探索用便宜模型</div>
+    </button>
+    <button class="station s-purple" data-id="iso2">
+      <div class="s-name">模型三级分层</div><div class="s-badge">Haiku/Sonnet/Opus</div>
+    </button>
+    <button class="station s-purple" data-id="iso3">
+      <div class="s-name">任务间 /clear</div><div class="s-badge">隔离历史上下文</div>
+    </button>
+    <button class="station s-purple" data-id="iso4">
+      <div class="s-name">oh-my-claudecode</div><div class="s-badge">19 Agent 自动路由</div>
+    </button>
+  </div>
+</div>
+
+<!-- Line 5: Write -->
+<div class="rail-row">
+  <div class="rail-label">⑤ 外存线</div>
+  <div class="rail-track">
+    <div class="rail-line" style="background:#b4b2a9;"></div>
+    <button class="station s-gray" data-id="wr1">
+      <div class="s-name">SPEC.md 先写规格</div><div class="s-badge">再 /clear 执行</div>
+    </button>
+    <button class="station s-gray" data-id="wr2">
+      <div class="s-name">planning-with-files</div><div class="s-badge">跨 session 状态</div>
+    </button>
+    <button class="station s-gray" data-id="wr3">
+      <div class="s-name">/handoff</div><div class="s-badge">session 结构化交接</div>
+    </button>
+    <button class="station s-gray" data-id="wr4">
+      <div class="s-name">ctxlint 防漂移</div><div class="s-badge">文档路径验证</div>
+    </button>
+  </div>
+</div>
+
+<div class="legend-row">
+  <div class="legend-item"><div class="legend-dot" style="background:#378add;"></div>① 一次配置，长期受益</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#1d9e75;"></div>② 半天投入，减少无效探索</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ef9f27;"></div>③ 装工具，防膨胀</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#7f77dd;"></div>④ 改习惯，模型分级</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#888780;"></div>⑤ 改工作流，外置记忆</div>
+</div>
+
+<div class="cost-bar-wrap">
+  <div class="cost-label">粗算节省路径（基于真实 session 数据：Input 1.62M / Output 128.1K / Opus 4.6，70% cache 命中假设）</div>
+  <div class="cost-steps">
+    <button class="cost-step" onclick="showCostDetail(0)">
+      <span class="cs-price">$11.30</span>
+      <span class="cs-pct">什么都不做</span>
+    </button>
+    <button class="cost-step" onclick="showCostDetail(1)">
+      <span class="cs-price">$6.20</span>
+      <span class="cs-pct">① 缓存 −45%</span>
+    </button>
+    <button class="cost-step" onclick="showCostDetail(2)">
+      <span class="cs-price">$5.30</span>
+      <span class="cs-pct">② 减探索</span>
+    </button>
+    <button class="cost-step" onclick="showCostDetail(3)">
+      <span class="cs-price">$4.70</span>
+      <span class="cs-pct">③ 防膨胀</span>
+    </button>
+    <button class="cost-step" onclick="showCostDetail(4)">
+      <span class="cs-price">~$4–5</span>
+      <span class="cs-pct">④⑤ 分级+外存</span>
+    </button>
+  </div>
+</div>
+
+<div class="footer">
+  注：成本数字为粗算估计，基于 70% cache 命中率等假设，非实测结果。<br>
+  原文：<a href="https://zhenjia.dev/posts/coding-agent-cost-optimization" target="_blank" rel="noopener" style="color:inherit;opacity:.7;">Zhenjia Zhou · ThoughtWorks 内部博客大赛 2026.05</a> | 可视化整理：Yuki
+</div>
+
+<script>
+const data = {
+  cache1: {
+    color: '#378add',
+    title: '固定 MCP schema 前缀顺序',
+    why: 'Prompt Cache 是从第一个 token 开始逐字节比对的。MCP 工具的注册顺序如果每次不同，schema 哪怕完全相同也会 cache miss。固定顺序之后，8-10k tokens 的工具定义每次只花 $0.50/MTok 而不是 $5/MTok。',
+    tips: ['把 MCP 工具写死在配置文件里，不要让它动态排列', '时间戳之类的动态内容移到消息末尾，不要放 system prompt 开头', '改一次配置，之后每次请求都受益']
+  },
+  cache2: {
+    color: '#378add',
+    title: '清理无用的 MCP 工具',
+    why: '你注册了 40 个 MCP 工具，但常用的可能只有 5 个。另外 35 个的 schema 每次请求都白白占着前缀空间，还破坏了缓存的连续性。不用的工具就是纯粹的"缓存税"。',
+    tips: ['列出所有 MCP 工具，把一个月没用过的注释掉', '工具少了：① 减少 token 占用；② 减少 Agent 选错工具的概率', 'GitHub / Jira 能用官方 CLI 就不装 MCP server（CLI 没有 schema 税）']
+  },
+  cache3: {
+    color: '#378add',
+    title: '关掉 attribution header（本地模型用）',
+    why: '如果你用 Claude Code 接本地推理服务器（如 Ollama），Claude Code 会在每次请求开头加一个每次都变的 attribution header。这导致本地 KV Cache 完全作废，首 token 延迟从 1.8 秒飙到 24 秒。',
+    tips: ['在 ~/.claude/settings.json 的 env 里加 "CLAUDE_CODE_ATTRIBUTION_HEADER": "0"', '注意：shell 的 export 不生效，必须写在 settings 文件里', '只影响本地模型，用 Anthropic API 的话不需要管']
+  },
+  cache4: {
+    color: '#378add',
+    title: 'claude-code-cache-fix 补丁',
+    why: '--resume session 功能会在会话里嵌入每次不同的时间戳，导致前缀字节变化 → cache miss。这个补丁通过本地代理把 sentinel 归一化成固定格式，cache hit rate 从 82% 提升到 95%。',
+    tips: ['GitHub 搜索 claude-code-cache-fix，约 1800 stars，MIT 协议', '安装后透明运行，不改变使用方式', '配合前三步做完，缓存命中率基本到头了']
+  },
+  sel1: {
+    color: '#1d9e75',
+    title: 'CLAUDE.md：Agent 的项目地图',
+    why: '没有地图时，Agent 找一个函数要 grep 整个仓库（5 轮 × ~12000 tokens）。有了 CLAUDE.md，一行"billing 在 src/billing/"，Agent 直接去，省掉 3-5 轮无效探索。',
+    tips: ['写路标，不写百科全书——只告诉 Agent"去哪找"，不把所有内容塞进去', '控制在 200 行以内（约 1500-2000 tokens）。膨胀到 500 行 = 每轮 5000 token 的税', '必写内容：代码入口路径、业务术语对照、已知的坑、不要动的目录']
+  },
+  sel2: {
+    color: '#1d9e75',
+    title: 'LSP：给 Agent 编译器级别的导航',
+    why: 'grep "calculateUsage" 返回 200 行结果，里面只有 3 个是真实调用点。LSP 的 find-references 直接返回 3 个精确位置。社区 benchmark：LSP 比 grep 节省 5-34 倍 tokens，项目越大差距越大。',
+    tips: ['静态类型语言（TypeScript / Rust / Go / Java）开 LSP 最划算', 'Claude Code 设置 ENABLE_LSP_TOOL=1 开启内置 LSP 支持', '动态语言或小项目，好的 CLAUDE.md + grep 可能更务实']
+  },
+  sel3: {
+    color: '#1d9e75',
+    title: 'AST 索引：理解代码结构关系',
+    why: 'Embedding 向量索引做"语义相似"搜索，但代码里"billing"可能叫"subscription"。AST 图谱用 Tree-sitter 解析代码，理解函数调用和继承结构，精度更高。三者各有优劣：grep=现场搜，Embedding=语义近似，AST=结构精确。',
+    tips: ['已经在用 Claude Code？装 CodeGraph（MCP 接入，2.2k stars），上手最快', 'Aider Repo Map：不用向量库，用 PageRank 对代码符号排重要度，完全本地', '小项目不需要索引，好的 CLAUDE.md + grep 就够了']
+  },
+  sel4: {
+    color: '#1d9e75',
+    title: 'CLI 替代 MCP：消灭 schema 税',
+    why: '同样的 GitHub 操作：gh CLI 需要 1365 tokens，GitHub MCP server 需要 44026 tokens（32 倍差距）。MCP server 把 43 个工具的完整 schema 全部注入 context，即使你只用了 1 个。',
+    tips: ['GitHub / Jira / AWS / Supabase 都有官方 CLI', '没有 CLI 的情况：把官方 API 文档放本地，CLAUDE.md 里写"需要时直接发 curl 命令"', '真的没有替代方案，再考虑 MCP——这是原文作者的优先级建议']
+  },
+  cmp1: {
+    color: '#ef9f27',
+    title: 'RTK：CLI 输出压缩器',
+    why: '50 个相同的 ESLint 错误进入 context = 几千 tokens。RTK 拦截 bash 命令输出，在进 context 之前做语义改写：变成一行 "ESLint: 50 errors in src/components/"。30 分钟 session 整体压缩 80%。',
+    tips: ['rtk init -g 一行命令装完，之后透明运行', 'Git 和测试输出压缩率最高（92% / 90%），这类输出最重复', '局限：只管 bash 输出，碰不到 Read / Grep / Glob 的结果']
+  },
+  cmp2: {
+    color: '#ef9f27',
+    title: 'lean-ctx：全通道压缩',
+    why: 'RTK 只管 bash，lean-ctx 同时覆盖三个通道：Shell 输出、文件读取（MCP）、代码分析（Tree-sitter AST）。同一个文件在 session 里被再次读取时，如果文件没变，直接返回 ~13 tokens 的"你之前读过了，没变"。',
+    tips: ['brew install lean-ctx，然后 leanctx setup 自动检测并配置', '有 10 种 read mode（full / map / signatures / diff 等），值得花时间了解', '比 RTK 功能更强，首次使用需要理解 read modes 才能发挥最大效果']
+  },
+  cmp3: {
+    color: '#ef9f27',
+    title: 'DCP：选择性剪枝已完成对话',
+    why: '一个 bug 修完之后，那 20 轮排查工具调用的历史就没用了，但还占着 context 空间。DCP 让 Agent 自己判断"这段对话已完成"，调用 compress 把它替换成技术摘要，不是全量 /compact 重来。',
+    tips: ['只修改发给 API 的 payload，不动原始 session 文件，可以完整回溯', 'OpenCode 用 DCP，Claude Code 用 claude-dcp（移植版，需手动配 3 个 hooks）', 'cache hit rate 略有下降（90% → 85%），因为 payload 改了和上次不完全相同']
+  },
+  cmp4: {
+    color: '#ef9f27',
+    title: '/compact：核弹级上下文重置',
+    why: '最粗暴的方案：把整个上下文压成一段摘要，重新开始。Cache 完全归零。建议在 context 超过 70-80% 时主动触发，不要等到 95% 自动触发——那时候模型已经开始"走神"了。',
+    tips: ['配合 /handoff：先把当前状态压缩成结构化 markdown，再切到新 session', '不用等到自动触发——context 到 70% 时主动 /compact，模型更清醒', '/compact 是最后手段，前面几步做好了可以大幅延迟触发时机']
+  },
+  iso1: {
+    color: '#7f77dd',
+    title: 'Haiku 子 Agent：探索任务用便宜模型',
+    why: 'Claude Code 内置的 Explore agent 默认跑在 Haiku 上，只读不写。统计数据：36.5% 的 API 调用跑在 Haiku 上，但只占总成本的 2.3%。便宜模型吃掉超过三分之一的调用量，花的钱几乎可以忽略。',
+    tips: ['Claude Code 里 /explore 自动用 Haiku，不需要手动设置', '子 Agent 读了 6100 tokens 的文件，回到主 Agent 时只交 420 tokens 的结论——93% 的中间过程被丢掉了', '注意：Multi-agent 之间不能共享 context，每个会自己重新探索代码库（这是额外成本）']
+  },
+  iso2: {
+    color: '#7f77dd',
+    title: '模型三级分层：用对的模型做对的事',
+    why: '同一件事让 Haiku 做和让 Opus 做，价格差 15 倍。Augment Code 数据：路由优化可削减 40-60% 成本。关键是识别每层该做什么，而不是盲目用最贵的模型。',
+    tips: ['第一层（Haiku）：文件搜索、单文件小修改、文档检索——结果确定性高，出错成本低', '第二层（Sonnet）：写测试、修明确的 bug、标准实现——需要语义理解但不涉及架构', '第三层（Opus）：架构设计、跨模块重构、安全审查——做错了返工成本远超模型费用']
+  },
+  iso3: {
+    color: '#7f77dd',
+    title: '任务间 /clear：隔离不相关的历史',
+    why: '一个调试 billing bug 的对话历史，对下一个"加一个新的 API endpoint"任务毫无用处，却每轮都要带着它付 token 费用。/clear 后新任务从干净的 context 开始。',
+    tips: ['任务切换时问自己：这段历史对下一个任务有没有用？没用就 /clear', '配合 /handoff：切 session 之前先把关键决策压缩成文件，/clear 后新 session 读文件恢复', '不要怕 /clear——context 里的大部分历史在新任务里是噪音，不是资产']
+  },
+  iso4: {
+    color: '#7f77dd',
+    title: 'oh-my-claudecode：多 Agent 自动路由',
+    why: '19 个预配置 Agent + 层级变体，从 Haiku 到 Opus 自动路由。Explorer 做代码搜索，Architect 做设计，Tester 写测试……不需要手动决定用哪个模型做哪件事。',
+    tips: ['MIT 协议，个人和商业都可以用', 'oh-my-openagent 是 OpenCode 版本（注意：Sustainable Use License，禁止商业再分发）', '先用内置 /explore 感受一下效果，再决定要不要装完整框架']
+  },
+  wr1: {
+    color: '#888780',
+    title: 'SPEC.md：先讨论，再执行',
+    why: '50 轮讨论 = 80k tokens 的历史。压缩成 2k token 的 spec 文件后 /clear，新 session 从 spec 开始执行。不只是省钱——模型拿着清晰规格工作，比带着杂乱历史工作质量更高。',
+    tips: ['讨论阶段用普通对话，不要着急写代码', '讨论结束时请 Agent 帮你整理成 spec 文件：目标、实现方案、要修改的文件、测试方法', '然后 /clear，新 session 只喂 spec，开始执行']
+  },
+  wr2: {
+    color: '#888780',
+    title: 'planning-with-files：跨 session 的持久状态',
+    why: '三个文件（task_plan.md / findings.md / progress.md）+ hooks 强制执行。Manus AI 的说法："Markdown is my working memory on disk." 关键：hooks 在 session 边界强制读写，Agent 才真的会用这些文件。',
+    tips: ['只有文件本身不够——需要 hooks 在 PreToolUse / PostToolUse 时自动读写', '比 TodoWrite(/task) 的优势：能跨 /clear 和跨 session 存活', '适合持续多个迭代的 feature 开发，一次性任务不需要这么重']
+  },
+  wr3: {
+    color: '#888780',
+    title: '/handoff：session 结构化交接',
+    why: '不是把 200k token 的 context 直接 dump 给下一个 session（那也是 200k），而是先压缩到 5-10% 再传。HumanLayer ACE-FCA：Research → Plan → Implement 三阶段，每阶段之间完整 context reset，只传 ~200 行文档。',
+    tips: ['Matt Pocock 的 /handoff skill：把当前 session 压缩成结构化 markdown，引用文件而不是复制内容', '和 /compact 的区别：/compact 在同一 session 里继续；/handoff 切到全新 session', '交接文档的关键规则：不允许原始文件内容出现在文档里，sub-agent 探索了 3000 行，交接只写 50 行摘要']
+  },
+  wr4: {
+    color: '#888780',
+    title: 'ctxlint：防止文档路径漂移',
+    why: '你在 CLAUDE.md 里写"billing 在 src/billing/"，三个月后有人把它移到了 src/services/billing/。Agent 就在错误的前提下工作了。ctxlint 解析所有文件路径，检查它们是否还存在。',
+    tips: ['CI 里加一行 npx @yawlabs/ctxlint --strict，每次 push 都自动检查', 'Caliber 的 caliber refresh：分析 git diff 自动更新 CLAUDE.md，可作为 pre-commit hook', '语义漂移（代码逻辑变了但文档没跟着变）目前没有成熟解决方案——这是原文提到的 open problem']
+  }
+};
+
+const costDetails = [
+  '没有任何优化。Input 1.62M × $5 + Output 0.128M × $25 = $11.30。',
+  '只做缓存纪律（固定前缀顺序 + 清理无用 MCP）。假设 70% input 命中 cache：缓存部分只花 $0.50/MTok，成本直降至 $6.20。这一步改一次配置就能持续受益。',
+  '写好 CLAUDE.md + 开 LSP。假设无效探索减少 30%，总 token 量从 1.62M 降到 1.13M。加上 70% 缓存：约 $5.30。',
+  '装 RTK（压缩 CLI 输出 80%）或 lean-ctx 覆盖文件读取。假设再减少 15%：约 $4.70。',
+  '模型分级（探索用 Haiku，架构用 Opus）+ session 间 /clear + 外置记忆（SPEC.md / /handoff）。探索部分成本便宜 15 倍。综合节省后约 $4–5。'
+];
+
+let selectedStation = null;
+
+function showStation(id) {
+  const d = data[id];
+  if (!d) return;
+
+  if (selectedStation) {
+    document.querySelector(`[data-id="${selectedStation}"]`)?.classList.remove('selected');
+  }
+  selectedStation = id;
+  document.querySelector(`[data-id="${id}"]`)?.classList.add('selected');
+
+  const panel = document.getElementById('detail-panel');
+  document.getElementById('dp-dot').style.background = d.color;
+  document.getElementById('dp-title').textContent = d.title;
+  document.getElementById('dp-why').textContent = d.why;
+  document.getElementById('dp-tips').innerHTML = d.tips.map(t =>
+    `<div class="dp-tip"><span class="dp-tip-icon">›</span><span>${t}</span></div>`
+  ).join('');
+  panel.classList.add('visible');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function closePanel() {
+  document.getElementById('detail-panel').classList.remove('visible');
+  if (selectedStation) {
+    document.querySelector(`[data-id="${selectedStation}"]`)?.classList.remove('selected');
+    selectedStation = null;
+  }
+}
+
+function showCostDetail(i) {
+  const labels = ['基准成本', '步骤 ① 缓存', '步骤 ② 减探索', '步骤 ③ 防膨胀', '步骤 ④⑤ 分级+外存'];
+  const colors = ['#888780', '#378add', '#1d9e75', '#ef9f27', '#7f77dd'];
+  const panel = document.getElementById('detail-panel');
+  document.getElementById('dp-dot').style.background = colors[i];
+  document.getElementById('dp-title').textContent = labels[i];
+  document.getElementById('dp-why').textContent = costDetails[i];
+  document.getElementById('dp-tips').innerHTML = '';
+  panel.classList.add('visible');
+
+  document.querySelectorAll('.cost-step').forEach((s, idx) => s.classList.toggle('selected', idx === i));
+}
+
+document.querySelectorAll('.station').forEach(s => {
+  s.addEventListener('click', () => showStation(s.dataset.id));
+  s.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      showStation(s.dataset.id);
+    }
+  });
+});
+
+document.addEventListener('click', e => {
+  const panel = document.getElementById('detail-panel');
+  if (!panel.contains(e.target) && !e.target.closest('.station') && !e.target.closest('.cost-step')) {
+    closePanel();
+  }
+});
+
+document.querySelectorAll('.cost-step').forEach((s, i) => {
+  s.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      showCostDetail(i);
+    }
+  });
+});
+</script>
+</body>
+</html>
