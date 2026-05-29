@@ -95,37 +95,110 @@
   .step-title { font-size: 14px; font-weight: 500; margin-bottom: 6px; }
   .step-desc { font-size: 12px; color: var(--text2); line-height: 1.5; }
 
-  /* ── Methodology matrix ── */
-  .matrix { margin-top: 32px; display: flex; flex-direction: column; gap: 8px; }
-  .matrix-row {
-    display: flex; align-items: stretch; gap: 0;
-    border: 0.5px solid var(--border); border-radius: 10px; overflow: hidden;
-    cursor: pointer; transition: box-shadow .15s;
-  }
-  .matrix-row:hover { box-shadow: 0 2px 12px rgba(0,0,0,.08); }
-  .matrix-type {
-    width: 120px; min-width: 120px; padding: 14px 16px;
-    font-size: 12px; font-weight: 500;
-    display: flex; align-items: center;
-    border-right: 0.5px solid var(--border);
-  }
-  .matrix-form {
-    flex: 1; padding: 14px 16px;
-    font-size: 12px; color: var(--text2);
-    display: flex; align-items: center;
-  }
-  .matrix-tag {
-    padding: 14px 16px;
-    font-size: 11px; color: var(--text3);
-    display: flex; align-items: center;
-    white-space: nowrap;
-  }
+  /* ── Methodology interactive ── */
   .t-hier  { background: var(--blue-bg);   color: var(--blue); }
   .t-num   { background: var(--green-bg);  color: var(--green); }
   .t-seq   { background: var(--amber-bg);  color: var(--amber); }
   .t-comp  { background: var(--purple-bg); color: var(--purple); }
   .t-rel   { background: var(--bg2);       color: var(--text2); }
   .t-narr  { background: var(--bg3);       color: var(--text3); }
+
+  .method-demo {
+    margin-top: 20px; margin-bottom: 24px;
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+  .method-demo-label { font-size: 12px; color: var(--text3); }
+  .demo-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 12px; border-radius: 6px; font-size: 12px;
+    font-family: var(--font); cursor: pointer; text-decoration: none;
+    background: var(--bg2); border: 0.5px solid var(--border);
+    color: var(--text2); transition: box-shadow .15s, color .15s;
+  }
+  .demo-btn:hover { box-shadow: 0 1px 6px rgba(0,0,0,.1); color: var(--text); }
+  .demo-btn-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text3); }
+
+  .feature-chips {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px;
+  }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 14px; border-radius: 20px; font-size: 12px; font-weight: 500;
+    font-family: var(--font); cursor: pointer;
+    border: 1.5px solid transparent;
+    transition: opacity .15s, box-shadow .15s, border-color .15s;
+    user-select: none;
+  }
+  .chip:not(.active) { opacity: .55; }
+  .chip.active { opacity: 1; border-color: currentColor; box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 15%, transparent); }
+  .chip.disabled { opacity: .25; pointer-events: none; }
+  .chip-hier { background: var(--blue-bg);   color: var(--blue); }
+  .chip-num  { background: var(--green-bg);  color: var(--green); }
+  .chip-seq  { background: var(--amber-bg);  color: var(--amber); }
+  .chip-comp { background: var(--purple-bg); color: var(--purple); }
+  .chip-rel  { background: var(--bg2);       color: var(--text2);
+               border-color: var(--border) !important; }
+  .chip-narr { background: var(--bg3);       color: var(--text3); }
+  .chip-narr.active { border-color: var(--text3) !important;
+                       box-shadow: 0 0 0 3px color-mix(in srgb, var(--text3) 15%, transparent); }
+
+  .method-hint {
+    padding: 20px; background: var(--bg2);
+    border-radius: 10px; border: 0.5px solid var(--border);
+    font-size: 13px; color: var(--text3); text-align: center;
+    line-height: 1.6;
+  }
+
+  .result-area {
+    display: flex; flex-direction: column; gap: 10px;
+    animation: slideIn .2s ease;
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .result-card {
+    border: 0.5px solid var(--border); border-radius: 10px; overflow: hidden;
+  }
+  .result-card-head {
+    padding: 10px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 0.5px solid var(--border);
+    font-size: 11px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase;
+    color: var(--text3);
+  }
+  .result-badge {
+    font-size: 10px; padding: 2px 8px; border-radius: 10px;
+    background: var(--bg3); color: var(--text3);
+  }
+  .result-badge.primary { background: var(--text); color: var(--bg); }
+  .result-body { padding: 16px 16px 20px; }
+  .result-form { font-size: 16px; font-weight: 500; margin-bottom: 8px; }
+  .result-scene { font-size: 13px; color: var(--text2); margin-bottom: 14px; line-height: 1.5; }
+  .result-meta { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
+  .result-meta-item { font-size: 11px; color: var(--text3); }
+  .result-meta-item strong { color: var(--text2); font-weight: 500; }
+  .result-cta {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 16px; border-radius: 6px; font-size: 13px;
+    font-family: var(--font); cursor: pointer; text-decoration: none;
+    background: var(--text); color: var(--bg); border: none;
+    transition: opacity .15s;
+  }
+  .result-cta:hover { opacity: .8; }
+  .result-cta.secondary {
+    background: none; color: var(--text2); border: 0.5px solid var(--border);
+  }
+
+  .result-narr { background: var(--bg3); }
+  .result-narr .result-card-head { background: var(--bg3); color: var(--text3); }
+  .result-narr .result-body { background: var(--bg3); }
+  .result-narr .result-form { font-size: 14px; }
+
+  @media (max-width: 520px) {
+    .result-cta { width: 100%; justify-content: center; }
+  }
 
   .section-label { font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--text3); margin-bottom: 12px; }
   .section-title { font-size: 22px; font-weight: 500; margin-bottom: 8px; }
@@ -239,39 +312,27 @@
 <section id="method">
   <div class="section-label">Methodology</div>
   <div class="section-title">结构类型 × 可视化形式</div>
-  <p class="section-desc" style="margin-bottom:8px;">不是每篇文章都适合可视化。这是判断逻辑：</p>
+  <p class="section-desc">勾选你的文章具备的特征，看看适合什么可视化形式。</p>
 
-  <div class="matrix">
-    <div class="matrix-row">
-      <div class="matrix-type t-hier">层级型</div>
-      <div class="matrix-form">有章节嵌套、从属关系、"包括"/"分为"</div>
-      <div class="matrix-tag">→ 思维导图</div>
-    </div>
-    <div class="matrix-row">
-      <div class="matrix-type t-num">数值型</div>
-      <div class="matrix-form">有数字对比、成本/性能数据、优化前后量化结果</div>
-      <div class="matrix-tag">→ 图表 / 计算器</div>
-    </div>
-    <div class="matrix-row">
-      <div class="matrix-type t-seq">时序型</div>
-      <div class="matrix-form">有步骤编号、实施顺序、"先做 A 再做 B"</div>
-      <div class="matrix-tag">→ 地铁图 / 流程</div>
-    </div>
-    <div class="matrix-row">
-      <div class="matrix-type t-comp">对比型</div>
-      <div class="matrix-form">有"A vs B"、取舍分析、多方案评估</div>
-      <div class="matrix-tag">→ 对比表格</div>
-    </div>
-    <div class="matrix-row">
-      <div class="matrix-type t-rel">关系型</div>
-      <div class="matrix-form">多个概念相互引用、系统组件依赖</div>
-      <div class="matrix-tag">→ 知识图谱</div>
-    </div>
-    <div class="matrix-row">
-      <div class="matrix-type t-narr">叙事型</div>
-      <div class="matrix-form">纯散文、情感型、论证密度极高</div>
-      <div class="matrix-tag">⚠ 不建议</div>
-    </div>
+  <div class="method-demo">
+    <span class="method-demo-label">试试这篇文章的特征</span>
+    <button class="demo-btn" id="demo-btn" type="button">
+      <span class="demo-btn-dot"></span>
+      Coding Agent 成本优化 →
+    </button>
+  </div>
+
+  <div class="feature-chips" id="chips" role="group" aria-label="文章结构特征">
+    <button class="chip chip-hier" data-type="hier" type="button" aria-pressed="false">层级型</button>
+    <button class="chip chip-num"  data-type="num"  type="button" aria-pressed="false">数值型</button>
+    <button class="chip chip-seq"  data-type="seq"  type="button" aria-pressed="false">时序型</button>
+    <button class="chip chip-comp" data-type="comp" type="button" aria-pressed="false">对比型</button>
+    <button class="chip chip-rel"  data-type="rel"  type="button" aria-pressed="false">关系型</button>
+    <button class="chip chip-narr" data-type="narr" type="button" aria-pressed="false">叙事型</button>
+  </div>
+
+  <div id="method-result">
+    <div class="method-hint">点击上方特征标签，即时查看推荐的可视化形式和使用场景。</div>
   </div>
 </section>
 
@@ -327,5 +388,194 @@
   </div>
 </footer>
 
+<script>
+(function () {
+  // ── Data ──────────────────────────────────────────────────────
+  // Higher = heavier weight when combining
+  const WEIGHT = { num: 5, seq: 4, hier: 3, comp: 2, rel: 1 };
+
+  const RECS = {
+    hier: {
+      form: '思维导图',
+      scene: '把文章的知识结构一眼看清楚，适合截图发给朋友或导入幕布整理。',
+      platform: 'Markmap',
+      platformUrl: 'https://markmap.js.org/repl',
+      time: '约 5 分钟',
+      cta: '用 Markmap 生成',
+      ctaUrl: 'https://markmap.js.org/repl',
+    },
+    num: {
+      form: '图表 / 交互计算器',
+      scene: '把数字对比和优化前后的量化结果做成可点击的可视化，适合数据密集的技术文章。',
+      platform: 'Interactive HTML',
+      platformUrl: 'https://sharehtml.zhenjia.dev',
+      time: '约 15 分钟',
+      cta: '生成 Interactive HTML',
+      ctaUrl: 'https://sharehtml.zhenjia.dev',
+    },
+    seq: {
+      form: '地铁图 / 流程图',
+      scene: '把实施步骤做成可点击的地铁线路，适合有明确落地顺序的技术指南。',
+      platform: 'Interactive HTML',
+      platformUrl: 'https://sharehtml.zhenjia.dev',
+      time: '约 15 分钟',
+      cta: '生成 Interactive HTML',
+      ctaUrl: 'https://sharehtml.zhenjia.dev',
+    },
+    comp: {
+      form: '对比表格',
+      scene: '把多方案的取舍做成清晰的横向对比，适合工具选型、架构决策类文章。',
+      platform: 'Interactive HTML',
+      platformUrl: 'https://sharehtml.zhenjia.dev',
+      time: '约 15 分钟',
+      cta: '生成 Interactive HTML',
+      ctaUrl: 'https://sharehtml.zhenjia.dev',
+    },
+    rel: {
+      form: '关系图',
+      scene: '展示概念间的引用关系和系统依赖，适合有多个组件相互依赖的架构文章。',
+      platform: 'Interactive HTML',
+      platformUrl: 'https://sharehtml.zhenjia.dev',
+      time: '约 20 分钟',
+      cta: '生成 Interactive HTML',
+      ctaUrl: 'https://sharehtml.zhenjia.dev',
+    },
+  };
+
+  const HTML_REC = {
+    form: 'Interactive HTML（综合可视化）',
+    scene: '文章结构丰富，适合生成一个包含多种模块（图表 + 地铁图 + 对比表）的完整交互页面，上传后直接分享链接。',
+    platform: 'sharehtml.zhenjia.dev',
+    platformUrl: 'https://sharehtml.zhenjia.dev',
+    time: '约 15–30 分钟',
+    cta: '生成 Interactive HTML',
+    ctaUrl: 'https://sharehtml.zhenjia.dev',
+  };
+
+  // ── State ─────────────────────────────────────────────────────
+  const selected = new Set();
+
+  // ── DOM refs ──────────────────────────────────────────────────
+  const chipsEl  = document.getElementById('chips');
+  const resultEl = document.getElementById('method-result');
+  const demoBtn  = document.getElementById('demo-btn');
+
+  // ── Chips interaction ─────────────────────────────────────────
+  chipsEl.addEventListener('click', function (e) {
+    const chip = e.target.closest('.chip');
+    if (!chip || chip.classList.contains('disabled')) return;
+    const type = chip.dataset.type;
+
+    if (type === 'narr') {
+      const wasActive = selected.has('narr');
+      selected.clear();
+      if (!wasActive) selected.add('narr');
+    } else {
+      selected.delete('narr');
+      if (selected.has(type)) {
+        selected.delete(type);
+      } else {
+        selected.add(type);
+      }
+    }
+    render();
+  });
+
+  // ── Demo button ───────────────────────────────────────────────
+  demoBtn.addEventListener('click', function () {
+    selected.clear();
+    ['hier', 'num', 'seq'].forEach(t => selected.add(t));
+    render();
+    // Smooth scroll to result
+    setTimeout(() => {
+      resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 50);
+  });
+
+  // ── Render ────────────────────────────────────────────────────
+  function render() {
+    // Update chip states
+    const narrActive = selected.has('narr');
+    chipsEl.querySelectorAll('.chip').forEach(chip => {
+      const t = chip.dataset.type;
+      const isActive = selected.has(t);
+      chip.classList.toggle('active', isActive);
+      chip.setAttribute('aria-pressed', String(isActive));
+      if (t === 'narr') {
+        chip.classList.toggle('disabled', !narrActive && selected.size > 0 && !isActive);
+      } else {
+        chip.classList.toggle('disabled', narrActive);
+      }
+    });
+
+    // Render result
+    if (selected.size === 0) {
+      resultEl.innerHTML = '<div class="method-hint">点击上方特征标签，即时查看推荐的可视化形式和使用场景。</div>';
+      return;
+    }
+
+    if (narrActive) {
+      resultEl.innerHTML = renderNarr();
+      return;
+    }
+
+    const sorted = [...selected].sort((a, b) => (WEIGHT[b] || 0) - (WEIGHT[a] || 0));
+    let primary, secondary;
+
+    if (sorted.length === 1) {
+      primary = RECS[sorted[0]];
+      secondary = null;
+    } else if (sorted.length === 2) {
+      primary = RECS[sorted[0]];
+      secondary = RECS[sorted[1]];
+    } else {
+      // 3+ → HTML is primary, highest-weight single type as secondary
+      primary = HTML_REC;
+      secondary = RECS[sorted[0]];
+    }
+
+    resultEl.innerHTML =
+      '<div class="result-area">' +
+      renderCard(primary, true) +
+      (secondary ? renderCard(secondary, false) : '') +
+      '</div>';
+  }
+
+  function renderCard(rec, isPrimary) {
+    return `
+      <div class="result-card">
+        <div class="result-card-head">
+          <span>${isPrimary ? '首选推荐' : '备选'}</span>
+          <span class="result-badge ${isPrimary ? 'primary' : ''}">${isPrimary ? '首选' : '备选'}</span>
+        </div>
+        <div class="result-body">
+          <div class="result-form">${rec.form}</div>
+          <div class="result-scene">${rec.scene}</div>
+          <div class="result-meta">
+            <div class="result-meta-item"><strong>平台</strong> <a href="${rec.platformUrl}" target="_blank" style="color:inherit">${rec.platform}</a></div>
+            <div class="result-meta-item"><strong>时间</strong> ${rec.time}</div>
+          </div>
+          <a class="result-cta ${isPrimary ? '' : 'secondary'}" href="${rec.ctaUrl}" target="_blank">${rec.cta} ↗</a>
+        </div>
+      </div>`;
+  }
+
+  function renderNarr() {
+    return `
+      <div class="result-area">
+        <div class="result-card result-narr">
+          <div class="result-card-head">
+            <span>不建议可视化</span>
+            <span class="result-badge">叙事型</span>
+          </div>
+          <div class="result-body">
+            <div class="result-form">⚠ 这篇文章的价值在于语言本身</div>
+            <div class="result-scene">叙事型、情感型或论证密度极高的文章，可视化会保留骨架但丢失推理链条和表达质感——读者看到的是结论，而非作者的思考过程。<br><br><strong style="color:var(--text2)">建议：</strong>直接分享原文链接，或手写摘要笔记。</div>
+          </div>
+        </div>
+      </div>`;
+  }
+})();
+</script>
 </body>
 </html>
