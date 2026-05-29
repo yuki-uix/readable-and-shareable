@@ -462,10 +462,11 @@
   <h2 class="section-title">在 Claude Code 里使用</h2>
 
   <div class="code-block">
-    <span class="comment"># 安装 skill</span><br>
-    <span class="cmd">cp .claude/skills/viz.md ~/.claude/skills/viz.md</span><br>
+    <span class="comment"># 安装命令（全局可用）</span><br>
+    <span class="cmd">mkdir -p ~/.claude/commands</span><br>
+    <span class="cmd">cp .claude/commands/viz.md ~/.claude/commands/viz.md</span><br>
     <br>
-    <span class="comment"># 使用：在 Claude Code 里触发</span><br>
+    <span class="comment"># 在 Claude Code 终端中触发</span><br>
     <span class="cmd">/viz</span><br>
     <br>
     <span class="comment"># 然后粘贴文章内容，或给文件路径 / URL</span>
