@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Screenshot guide: Chrome ⌘+Shift+P → "Capture screenshot" · Window width: 600px -->
+<!-- Style: night — 深色高对比，适合科技/产品内容，截图冲击感强 -->
+<title>{{PAGE_TITLE}}</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --font: -apple-system, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+
+    /* Fixed dark scheme — intentionally NOT responding to prefers-color-scheme
+       Screenshot output must be consistent regardless of system theme           */
+    --bg:      #0f1117;
+    --bg2:     #1a1d27;
+    --bg3:     #252836;
+    --text:    #f0f0ee;
+    --text2:   #a8a8b0;
+    --text3:   #5c5c6e;
+    --border:  rgba(255, 255, 255, 0.08);
+    --accent:  #7c8cf8;
+  }
+
+  html, body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    /* Full viewport background prevents white edge in screenshot */
+    min-height: 100vh;
+  }
+
+  /* ── Card stack ── */
+  .cards-wrap {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* ── Base card ── */
+  .card {
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 52px 48px;
+    background: var(--bg);
+    border-bottom: 0.5px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    /* Print: each card on its own page */
+    page-break-after: always;
+    break-after: page;
+  }
+
+  /* Subtle background accent — decorative, does not affect readability */
+  .card::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: var(--bg2);
+    opacity: .6;
+    pointer-events: none;
+  }
+
+  /* ── Sequence number ── */
+  .card-num {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 28px;
+  }
+
+  /* ── Main observation (≤ 15 chars) ── */
+  .card-title {
+    font-size: clamp(24px, 5.5vw, 34px);
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: -.01em;
+    color: var(--text);
+    margin-bottom: 18px;
+    position: relative; z-index: 1;
+  }
+
+  /* Accent underline — uses accent color for night style */
+  .card-title::after {
+    content: '';
+    display: block;
+    width: 32px; height: 2px;
+    background: var(--accent);
+    margin-top: 14px;
+    border-radius: 1px;
+  }
+
+  /* ── Supporting description (≤ 40 chars) ── */
+  .card-desc {
+    font-size: 15px;
+    color: var(--text2);
+    line-height: 1.75;
+    max-width: 380px;
+    position: relative; z-index: 1;
+  }
+
+  /* ── Footer card (always last) ── */
+  .card-footer {
+    justify-content: flex-end;
+    padding: 40px 48px;
+    background: var(--bg2);
+  }
+  .card-footer::before { display: none; }
+
+  .footer-source {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.8;
+    margin-bottom: 10px;
+  }
+  .footer-source a {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .footer-divider {
+    width: 24px; height: 1.5px;
+    background: var(--bg3);
+    border-radius: 1px;
+    margin-bottom: 10px;
+  }
+  .footer-brand {
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: .02em;
+  }
+</style>
+</head>
+<body>
+<div class="cards-wrap">
+
+<!-- ═══════════════════════════════════════════════
+     FILL IN: Content cards
+     Rules:
+     - card-title  ≤ 15 字，宁可删减不要超长
+     - card-desc   ≤ 40 字，宁可删减不要超长
+     - 卡片数量 4-6 张（不含最后的 footer 卡）
+     - 观点少于 4 条时：补充关联背景凑足 4 张
+     - 观点多于 6 条时：合并相近观点，保留 5-6 条
+     ═══════════════════════════════════════════════ -->
+
+<div class="card">
+  <div class="card-num">01 — {{SERIES_TOTAL}}</div>
+  <div class="card-title">{{POINT_1_TITLE}}</div>
+  <div class="card-desc">{{POINT_1_DESC}}</div>
+</div>
+
+<div class="card">
+  <div class="card-num">02 — {{SERIES_TOTAL}}</div>
+  <div class="card-title">{{POINT_2_TITLE}}</div>
+  <div class="card-desc">{{POINT_2_DESC}}</div>
+</div>
+
+<div class="card">
+  <div class="card-num">03 — {{SERIES_TOTAL}}</div>
+  <div class="card-title">{{POINT_3_TITLE}}</div>
+  <div class="card-desc">{{POINT_3_DESC}}</div>
+</div>
+
+<div class="card">
+  <div class="card-num">04 — {{SERIES_TOTAL}}</div>
+  <div class="card-title">{{POINT_4_TITLE}}</div>
+  <div class="card-desc">{{POINT_4_DESC}}</div>
+</div>
+
+<!-- 根据实际观点数量添加或删除上方的 card 块，保持 4-6 张 -->
+
+<!-- ═══════════════════════════════════════════════
+     Footer card — always the last card, do not remove
+     ═══════════════════════════════════════════════ -->
+<div class="card card-footer">
+  <div class="footer-divider"></div>
+  <div class="footer-source">
+    原文：<a href="{{SOURCE_URL}}" target="_blank" rel="noopener">{{AUTHOR}} · {{SOURCE_LABEL}}</a>
+  </div>
+  <div class="footer-brand">via readable-and-shareable · github.com/yuki-uix/readable-and-shareable</div>
+</div>
+
+</div><!-- .cards-wrap -->
+</body>
+</html>

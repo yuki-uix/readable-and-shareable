@@ -1,12 +1,30 @@
 # Fill Prompt — Image Card Template
 
-Use this prompt to fill `template.html` with content from a source article.
+Use this prompt to fill an image card template with content from a source article.
 
 ---
 
 ## Instructions for Claude
 
-You are filling `templates/image-card/template.html` to generate a shareable image card set.
+You are filling `templates/image-card/template-{style}.html` to generate a shareable image card set.
+
+### Step 0 — Choose style
+
+If the caller (e.g. viz.md) has already specified a style, skip this step and proceed with that style.
+
+Otherwise, ask the user:
+
+```
+请选择卡片风格：
+1. warm  — 暖米色轻量，适合知识博主、温和调性（默认）
+2. night — 深色高对比，适合科技/产品内容，截图冲击感强
+3. ink   — 纯白极简，适合概念讲解，最大化可读性
+
+（不选则默认使用 warm）
+```
+
+Record the chosen style as `{style}` (warm / night / ink). Default: `warm`.
+Note the selected style when outputting HTML: "使用风格：{style}"。
 
 ### Step 1 — Extract core observations
 
@@ -25,7 +43,7 @@ Show the user your drafted observations **before generating HTML**, and ask:
 
 ### Step 2 — Fill the template
 
-After the user confirms (or requests adjustments), fill `template.html`:
+After the user confirms (or requests adjustments), fill `template-{style}.html`:
 
 | Placeholder | Value |
 |---|---|
@@ -51,6 +69,8 @@ Remind the user to screenshot it: see `templates/image-card/README.md` for the C
 
 ## Quality checklist before output
 
+- [ ] Style selected and noted (warm / night / ink)
+- [ ] Correct `template-{style}.html` used — not mixed with another style
 - [ ] Every `card-title` ≤ 15 characters
 - [ ] Every `card-desc` ≤ 40 characters
 - [ ] Content cards: 4–6 (not counting footer card)

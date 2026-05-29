@@ -67,9 +67,24 @@ Use the corresponding template/approach:
 |---|---|
 | 思维导图 | `templates/mindmap/prompt.md` → Markdown 缩进列表（Markmap 可渲染）；按需生成 otml |
 | Interactive HTML | `templates/interactive-html/` → 单文件 HTML；上传至 sharehtml.zhenjia.dev |
-| 图片卡片 | `templates/image-card/prompt.md` → 1:1 单文件 HTML；Chrome 截图后直接发布 |
+| 图片卡片 | 见下方「图片卡片风格选择」→ `templates/image-card/prompt.md` |
 | 概念关系图 | `templates/concept-map/`（建设中）→ Mermaid / D3 |
 | 漫画 | `templates/comic/`（实验性）→ 分镜脚本 + 图像生成提示词 |
+
+#### 图片卡片风格选择
+
+用户选择「图片卡片」后，追加询问风格（在调用 prompt.md 前）：
+
+```
+请选择卡片风格：
+1. warm  — 暖米色轻量，适合知识博主、温和调性（默认）
+2. night — 深色高对比，适合科技/产品内容，截图冲击感强
+3. ink   — 纯白极简，适合概念讲解，最大化可读性
+
+（不选则默认使用 warm）
+```
+
+将用户选定的风格作为上下文传入 `templates/image-card/prompt.md`，prompt.md 会跳过风格询问步骤，直接使用 `template-{style}.html`。
 
 ### Step 5 — Export
 
