@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>readable-and-shareable</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --font: -apple-system, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --bg: #ffffff;
+    --bg2: #f5f5f3;
+    --bg3: #ebebea;
+    --text: #1a1a18;
+    --text2: #6b6a64;
+    --text3: #9c9a92;
+    --border: rgba(0,0,0,0.1);
+    --accent: #1a1a18;
+    --blue: #185fa5; --blue-bg: #e6f1fb;
+    --green: #3b6d11; --green-bg: #eaf3de;
+    --amber: #854f0b; --amber-bg: #faeeda;
+    --purple: #3c3489; --purple-bg: #eeedfe;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1c1a; --bg2: #272725; --bg3: #323230;
+      --text: #e8e6de; --text2: #b4b2a9; --text3: #73726c;
+      --border: rgba(255,255,255,0.1);
+      --blue: #85b7eb; --blue-bg: #042c53;
+      --green: #97c459; --green-bg: #173404;
+      --amber: #ef9f27; --amber-bg: #412402;
+      --purple: #cecbf6; --purple-bg: #26215c;
+    }
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* ── Nav ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--bg);
+    border-bottom: 0.5px solid var(--border);
+    padding: 0 24px;
+    display: flex; align-items: center; gap: 24px;
+    height: 48px;
+  }
+  .nav-logo { font-size: 13px; font-weight: 500; text-decoration: none; color: var(--text); }
+  .nav-links { display: flex; gap: 20px; margin-left: auto; }
+  .nav-links a { font-size: 12px; color: var(--text2); text-decoration: none; }
+  .nav-links a:hover { color: var(--text); }
+
+  /* ── Sections ── */
+  section { padding: 72px 24px; max-width: 800px; margin: 0 auto; }
+  section + section { border-top: 0.5px solid var(--border); }
+
+  /* ── Hero ── */
+  .hero { padding-top: 96px; padding-bottom: 80px; }
+  .hero-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--text3); margin-bottom: 16px; }
+  .hero h1 { font-size: clamp(28px, 5vw, 42px); font-weight: 500; line-height: 1.2; margin-bottom: 20px; }
+  .hero p { font-size: 16px; color: var(--text2); max-width: 520px; margin-bottom: 32px; }
+
+  .hero-cmd {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--bg2); border: 0.5px solid var(--border);
+    border-radius: 8px; padding: 10px 16px;
+    font-size: 13px; font-family: "SF Mono", "Fira Code", monospace;
+    margin-bottom: 40px;
+  }
+  .hero-cmd span { color: var(--text3); }
+
+  .hero-links { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 16px; border-radius: 6px; font-size: 13px;
+    font-family: var(--font); cursor: pointer; text-decoration: none;
+    transition: opacity .15s;
+  }
+  .btn:hover { opacity: .8; }
+  .btn-primary { background: var(--text); color: var(--bg); border: none; }
+  .btn-secondary { background: none; border: 0.5px solid var(--border); color: var(--text2); }
+
+  /* ── How it works ── */
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-top: 32px; }
+  .step { background: var(--bg2); border-radius: 10px; padding: 20px; }
+  .step-num { font-size: 11px; font-weight: 500; color: var(--text3); margin-bottom: 8px; }
+  .step-title { font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+  .step-desc { font-size: 12px; color: var(--text2); line-height: 1.5; }
+
+  /* ── Methodology matrix ── */
+  .matrix { margin-top: 32px; display: flex; flex-direction: column; gap: 8px; }
+  .matrix-row {
+    display: flex; align-items: stretch; gap: 0;
+    border: 0.5px solid var(--border); border-radius: 10px; overflow: hidden;
+    cursor: pointer; transition: box-shadow .15s;
+  }
+  .matrix-row:hover { box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+  .matrix-type {
+    width: 120px; min-width: 120px; padding: 14px 16px;
+    font-size: 12px; font-weight: 500;
+    display: flex; align-items: center;
+    border-right: 0.5px solid var(--border);
+  }
+  .matrix-form {
+    flex: 1; padding: 14px 16px;
+    font-size: 12px; color: var(--text2);
+    display: flex; align-items: center;
+  }
+  .matrix-tag {
+    padding: 14px 16px;
+    font-size: 11px; color: var(--text3);
+    display: flex; align-items: center;
+    white-space: nowrap;
+  }
+  .t-hier  { background: var(--blue-bg);   color: var(--blue); }
+  .t-num   { background: var(--green-bg);  color: var(--green); }
+  .t-seq   { background: var(--amber-bg);  color: var(--amber); }
+  .t-comp  { background: var(--purple-bg); color: var(--purple); }
+  .t-rel   { background: var(--bg2);       color: var(--text2); }
+  .t-narr  { background: var(--bg3);       color: var(--text3); }
+
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--text3); margin-bottom: 12px; }
+  .section-title { font-size: 22px; font-weight: 500; margin-bottom: 8px; }
+  .section-desc  { font-size: 14px; color: var(--text2); margin-bottom: 0; }
+
+  /* ── Example ── */
+  .example-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+  .tag { font-size: 11px; background: var(--bg2); border: 0.5px solid var(--border); border-radius: 4px; padding: 2px 8px; color: var(--text2); }
+
+  .iframe-wrap {
+    border: 0.5px solid var(--border); border-radius: 12px; overflow: hidden;
+    background: var(--bg2);
+  }
+  .iframe-bar {
+    padding: 10px 14px; border-bottom: 0.5px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .iframe-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--bg3); }
+  .iframe-url { font-size: 11px; color: var(--text3); font-family: monospace; margin-left: 4px; }
+  iframe {
+    width: 100%; height: 560px; border: none; display: block;
+    background: var(--bg);
+  }
+
+  /* ── Install ── */
+  .code-block {
+    background: var(--bg2); border: 0.5px solid var(--border);
+    border-radius: 8px; padding: 16px 20px; margin-top: 16px;
+    font-family: "SF Mono", "Fira Code", monospace; font-size: 13px;
+    color: var(--text2); line-height: 1.8;
+    overflow-x: auto;
+  }
+  .code-block .comment { color: var(--text3); }
+  .code-block .cmd { color: var(--text); }
+
+  /* ── Footer ── */
+  footer {
+    border-top: 0.5px solid var(--border);
+    padding: 28px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px;
+    font-size: 12px; color: var(--text3);
+    max-width: 800px; margin: 0 auto;
+  }
+  footer a { color: inherit; text-decoration: none; }
+  footer a:hover { color: var(--text2); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">readable-and-shareable</a>
+  <div class="nav-links">
+    <a href="#how">How it works</a>
+    <a href="#method">Methodology</a>
+    <a href="#example">Example</a>
+    <a href="#install">Install</a>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <div class="hero-eyebrow">Claude Code Skill</div>
+  <h1>把复杂技术文章<br>变成可分享的可视化</h1>
+  <p>输入一篇文章，自动识别结构类型，生成对应的交互式展示——思维导图、地铁图、对比表格，或告诉你这篇文章不适合可视化。</p>
+
+  <div class="hero-cmd">
+    <span>$</span> /viz
+  </div>
+
+  <div class="hero-links">
+    <a class="btn btn-primary" href="https://github.com/yuki-uix/readable-and-shareable" target="_blank">
+      View on GitHub
+    </a>
+    <a class="btn btn-secondary" href="#example">
+      See example ↓
+    </a>
+  </div>
+</section>
+
+<!-- ── How it works ── -->
+<section id="how">
+  <div class="section-label">How it works</div>
+  <div class="section-title">四步，从文章到可分享链接</div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-title">输入文章</div>
+      <div class="step-desc">粘贴文本、给文件路径、或一个 URL。支持中英文。</div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-title">结构分析</div>
+      <div class="step-desc">自动识别层级型、数值型、时序型、对比型、关系型结构。</div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-title">生成可视化</div>
+      <div class="step-desc">每种结构匹配对应形式。不适合可视化的，直接说明原因。</div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-title">一键分享</div>
+      <div class="step-desc">上传到 sharehtml.zhenjia.dev，获得 7 天有效链接，发给任何人。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Methodology ── -->
+<section id="method">
+  <div class="section-label">Methodology</div>
+  <div class="section-title">结构类型 × 可视化形式</div>
+  <p class="section-desc" style="margin-bottom:8px;">不是每篇文章都适合可视化。这是判断逻辑：</p>
+
+  <div class="matrix">
+    <div class="matrix-row">
+      <div class="matrix-type t-hier">层级型</div>
+      <div class="matrix-form">有章节嵌套、从属关系、"包括"/"分为"</div>
+      <div class="matrix-tag">→ 思维导图</div>
+    </div>
+    <div class="matrix-row">
+      <div class="matrix-type t-num">数值型</div>
+      <div class="matrix-form">有数字对比、成本/性能数据、优化前后量化结果</div>
+      <div class="matrix-tag">→ 图表 / 计算器</div>
+    </div>
+    <div class="matrix-row">
+      <div class="matrix-type t-seq">时序型</div>
+      <div class="matrix-form">有步骤编号、实施顺序、"先做 A 再做 B"</div>
+      <div class="matrix-tag">→ 地铁图 / 流程</div>
+    </div>
+    <div class="matrix-row">
+      <div class="matrix-type t-comp">对比型</div>
+      <div class="matrix-form">有"A vs B"、取舍分析、多方案评估</div>
+      <div class="matrix-tag">→ 对比表格</div>
+    </div>
+    <div class="matrix-row">
+      <div class="matrix-type t-rel">关系型</div>
+      <div class="matrix-form">多个概念相互引用、系统组件依赖</div>
+      <div class="matrix-tag">→ 知识图谱</div>
+    </div>
+    <div class="matrix-row">
+      <div class="matrix-type t-narr">叙事型</div>
+      <div class="matrix-form">纯散文、情感型、论证密度极高</div>
+      <div class="matrix-tag">⚠ 不建议</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Example ── -->
+<section id="example">
+  <div class="section-label">Example</div>
+  <div class="section-title">Coding Agent 成本优化路线图</div>
+
+  <div class="example-meta">
+    <span class="tag">层级型</span>
+    <span class="tag">数值型</span>
+    <span class="tag">时序型</span>
+    <span style="font-size:12px;color:var(--text3)">原文 2 万字 · 识别出 3 种结构 · 生成地铁图 + 成本计算</span>
+  </div>
+
+  <div class="iframe-wrap">
+    <div class="iframe-bar">
+      <div class="iframe-dot"></div>
+      <div class="iframe-dot"></div>
+      <div class="iframe-dot"></div>
+      <span class="iframe-url">examples/coding-agent-cost/index.html</span>
+    </div>
+    <iframe
+      src="../examples/coding-agent-cost/index.html"
+      title="Coding Agent 成本优化路线图交互示例"
+      loading="lazy"
+    ></iframe>
+  </div>
+</section>
+
+<!-- ── Install ── -->
+<section id="install">
+  <div class="section-label">Install</div>
+  <div class="section-title">在 Claude Code 里使用</div>
+
+  <div class="code-block">
+    <span class="comment"># 安装 skill</span><br>
+    <span class="cmd">cp .claude/skills/viz.md ~/.claude/skills/viz.md</span><br>
+    <br>
+    <span class="comment"># 使用：在 Claude Code 里触发</span><br>
+    <span class="cmd">/viz</span><br>
+    <br>
+    <span class="comment"># 然后粘贴文章内容，或给文件路径 / URL</span>
+  </div>
+</section>
+
+<footer>
+  <span>readable-and-shareable · MIT</span>
+  <div style="display:flex;gap:16px;">
+    <a href="https://github.com/yuki-uix/readable-and-shareable" target="_blank">GitHub</a>
+    <a href="https://sharehtml.zhenjia.dev" target="_blank">sharehtml</a>
+    <a href="../docs/methodology.md" target="_blank">Methodology</a>
+  </div>
+</footer>
+
+</body>
+</html>
