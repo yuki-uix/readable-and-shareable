@@ -30,7 +30,7 @@ Scan the article for these structure signals. A single article can have multiple
 
 | Structure Type | Signals to look for | Recommended Form |
 |---|---|---|
-| **Hierarchical** | Headings, nested lists, parent-child concepts, "consists of", "includes" | Mind map (otml for Mubu) |
+| **Hierarchical** | Headings, nested lists, parent-child concepts, "consists of", "includes" | Markdown mindmap（[Markmap](https://markmap.js.org/repl) / 幕布） |
 | **Quantitative** | Numbers, percentages, before/after comparisons, cost/performance data | Chart, interactive calculator |
 | **Sequential** | "Step N", "first/then/finally", implementation order, timelines | Flowchart, Scrollytelling |
 | **Comparative** | "A vs B", pros/cons, trade-offs, decision matrices | Comparison table, matrix |
@@ -48,21 +48,54 @@ Before recommending, explicitly answer:
 
 Present findings in this format:
 
+**如果适合可视化：**
+
 ```
 ## 文章结构分析
 
-**文章类型判断：** [适合可视化 / 部分适合 / 不适合，附理由]
+**文章类型判断：** [适合 / 部分适合，一句话说明原因]
+（部分适合时，注明哪些章节适合可视化、哪些建议保留原文）
 
 **检测到的结构类型：**
-- [类型]: [具体位置/内容] → 推荐 [形式]
-- ...
+- [类型]：[具体位置/内容示例]
 
-**推荐优先级：**
-1. [最推荐的形式] — 理由：[认知收益 + 实现难度]
-2. [次推荐] — ...
-3. ...
+---
 
-**不推荐的形式：** [形式] — 理由：[会损失什么]
+**首选：[形式名称]**
+- 适合场景：[具体场景，如"截图发微信" / "发可点击链接给朋友"]
+- 平台：[工具名]（[链接]）
+- 时间：约 [X] 分钟
+- 下一步：[第一个动作，如"用 templates/mindmap/prompt.md，把文章粘进去"]
+
+**备选：[形式名称]**（仅当文章有第二种明显结构时才列）
+- 适合场景：[具体场景]
+- 平台：[工具名]（[链接]）
+- 时间：约 [X] 分钟
+- 下一步：[第一个动作]
+```
+
+时间估算（写死，不要动态判断）：
+- 思维导图：约 5 分钟
+- 交互式 HTML：约 15 分钟
+- Scrollytelling：约 30 分钟（模板建设中）
+
+平台与链接：
+- 思维导图 → [幕布](https://mubu.com) · [Markmap](https://markmap.js.org/repl)
+- 交互式 HTML → [sharehtml.zhenjia.dev](https://sharehtml.zhenjia.dev)（7天有效链接）
+- 掘金嵌入 → Mermaid mindmap 格式（在 prompt 里加"同时输出 Mermaid 版"）
+
+**如果不适合可视化：**
+
+```
+## 文章结构分析
+
+**文章类型判断：** 不适合可视化
+
+**原因：**
+这篇文章的价值在于 [叙事语言的节奏 / 论证链条的完整性 / 情感表达]，
+而不是结构本身。可视化会保留骨架，但丢失 [具体说明会损失什么]。
+
+**建议：** 直接阅读原文。如果需要笔记，手写摘要比结构图更适合这类内容。
 ```
 
 ### Step 5 — Generate
