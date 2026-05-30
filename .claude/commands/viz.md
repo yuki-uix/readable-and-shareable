@@ -12,7 +12,7 @@ Use this skill when the user says any of:
 
 ## What this skill does
 
-Takes a core article as input, detects its structure type, then helps the user generate one or more shareable outputs — so different audiences can find their preferred entry point, and come back to read the original if interested.
+Takes a core article as input, analyzes its structure and saves the analysis, then helps the user generate one or more shareable outputs — so different audiences can find their preferred entry point, and come back to read the original if interested.
 
 Output types: 思维导图 · Interactive HTML · 图片卡片 · 概念关系图 · 漫画（持续扩充）
 
@@ -27,7 +27,11 @@ Accept the article as:
 
 If the article is very long (>5000 words), ask the user if they want a full analysis or a quick scan.
 
-### Step 2 — Structure Analysis
+### Step 2 — Analyze & Save
+
+Read `references/analysis-framework.md` for the full schema, then analyze the article and write the result to `examples/{slug}/analysis.md` (overwrite if exists).
+
+**Slug rules:** 2–4 words, kebab-case, from article title or URL. Example: `coding-agent-cost`.
 
 Scan the article for these structure signals. A single article can have multiple types.
 
@@ -40,20 +44,36 @@ Scan the article for these structure signals. A single article can have multiple
 | **Relational** | Concepts that reference each other, dependency graphs, system architectures | 概念关系图 · 思维导图 |
 | **Narrative/Argumentative** | Story-driven, emotional arc, dense reasoning chains | 漫画（实验性）· 图片卡片（摘要式） |
 
-### Step 3 — Output Selection
-
-Ask the user:
+After saving `analysis.md`, show the user a **3-line summary** in the conversation:
 
 ```
-这篇文章的结构类型是 [X]，以下产出形式都可以生成，你想要哪种？
+📄 分析完成 → examples/{slug}/analysis.md
 
-1. 思维导图      — 展示层级与关系，适合愿意细读的受众；约 5 分钟
-2. Interactive HTML — 数据/流程交互展示，视觉冲击强；约 15 分钟
-3. 图片卡片      — 核心观点提炼，适合快速传播；约 10 分钟
-4. 概念关系图    — 展示概念间连接，适合复杂系统；约 15 分钟（模板建设中）
-5. 漫画          — 轻量叙事，降低阅读门槛；约 30 分钟（实验性）
+主结构：{Primary structure type}（{one-line evidence}）
+核心论点：{N} 条 · 可视化挑战：{one-line summary}
 
-（如果不确定，我推荐 [基于 Step 2 结构类型的首选]）
+如果结构识别不准确，告诉我，我重新分析。
+```
+
+All subsequent steps reference `analysis.md` — do **not** re-read the original article.
+
+### Step 3 — Output Selection
+
+Based on `analysis.md` (written in Step 2), present recommendations with explicit one-line reasons tied to the detected structure type:
+
+```
+根据分析，这篇文章最适合以下产出形式：
+
+1. {首选} — {理由，必须引用结构类型，例："层级型结构清晰，思维导图能展示完整知识框架"}
+2. {次选} — {理由}
+3. {第三选} — {理由}
+
+完整选项：
+① 思维导图      — 展示层级与关系，适合愿意细读的受众；约 5 分钟
+② Interactive HTML — 数据/流程交互展示，视觉冲击强；约 15 分钟
+③ 图片卡片      — 核心观点提炼，适合快速传播；约 10 分钟
+④ 概念关系图    — 展示概念间连接，适合复杂系统；约 15 分钟（模板建设中）
+⑤ 漫画          — 轻量叙事，降低阅读门槛；约 30 分钟（实验性）
 ```
 
 If the article is Narrative/Argumentative and the user still wants visualization, explicitly note:
@@ -61,7 +81,7 @@ If the article is Narrative/Argumentative and the user still wants visualization
 
 ### Step 4 — Generate
 
-Use the corresponding template/approach:
+Use the corresponding template/approach. Extract content from `analysis.md` — do not re-read the original article.
 
 | Output Type | Template / Approach |
 |---|---|
@@ -80,6 +100,7 @@ Use the corresponding template/approach:
 1. warm  — 暖米色轻量，适合知识博主、温和调性（默认）
 2. night — 深色高对比，适合科技/产品内容，截图冲击感强
 3. ink   — 纯白极简，适合概念讲解，最大化可读性
+4. xhs   — 暖珊瑚色封面卡 + pill badge，适合小红书传播
 
 （不选则默认使用 warm）
 ```
