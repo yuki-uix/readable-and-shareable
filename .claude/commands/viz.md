@@ -32,6 +32,7 @@ If the article is very long (>5000 words), ask the user if they want a full anal
 Read `references/analysis-framework.md` for the full schema, then analyze the article and write the result to `examples/{slug}/analysis.md` (overwrite if exists).
 
 **Slug rules:** 2–4 words, kebab-case, from article title or URL. Example: `coding-agent-cost`.
+Conflict: if `examples/{slug}/` already exists for a different article, append `-YYYYMMDD` to the slug.
 
 Scan the article for these structure signals. A single article can have multiple types.
 
