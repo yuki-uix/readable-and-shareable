@@ -41,10 +41,10 @@ Hand-drawn educational infographic with macaron pastel color blocks on warm crea
 Color Palette:
 - Background: Warm cream (#F5F0E8) with subtle paper grain texture
 - Primary text: Deep charcoal (#2D2D2D) for headlines, outlines
-- Macaron Blue (#A8D8EA): step 1 and 2 cards
-- Macaron Mint (#B5E5CF): step 3 card
-- Macaron Lavender (#D5C6E0): step 4 card
-- Macaron Peach (#FFD5C2): step 5 card
+- Macaron Blue (#A8D8EA): ①② 卡片
+- Macaron Mint (#B5E5CF): ③ 卡片
+- Macaron Lavender (#D5C6E0): ④ 卡片
+- Macaron Peach (#FFD5C2): ⑤ 卡片
 - Accent Coral Red (#E8655A): key numbers and emphasis
 - Dashed border summary box at bottom
 
