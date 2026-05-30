@@ -84,11 +84,14 @@ If the article is Narrative/Argumentative and the user still wants visualization
 
 Use the corresponding template/approach. Extract content from `analysis.md` — do not re-read the original article.
 
+**Visual outputs (SVG, HTML cards):** Read `references/design-system.md` before generating. Apply the color palette, typography scale, spacing rules, and SVG layering order defined there.
+
 | Output Type | Template / Approach |
 |---|---|
 | 思维导图 | `templates/mindmap/prompt.md` → Markdown 缩进列表（Markmap 可渲染）；按需生成 otml |
 | Interactive HTML | `templates/interactive-html/` → 单文件 HTML；上传至 sharehtml.zhenjia.dev |
 | 图片卡片 | 见下方「图片卡片风格选择」→ `templates/image-card/prompt.md` |
+| SVG 架构图 | 直接生成 SVG；严格遵循 `references/design-system.md` 的分层顺序和间距规则 |
 | 概念关系图 | `templates/concept-map/`（建设中）→ Mermaid / D3 |
 | 漫画 | `templates/comic/`（实验性）→ 分镜脚本 + 图像生成提示词 |
 
