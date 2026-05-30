@@ -67,6 +67,17 @@ Remind the user to screenshot it: see `templates/image-card/README.md` for the C
 
 ---
 
+## Text Requirements for AI-generated outputs
+
+When this template's content is passed to an AI image generation backend (e.g. baoyu-infographic):
+
+- **步骤标签**：统一使用「步骤 N」或「①②③」，禁止使用英文 `Step N`
+- **技术缩写**：API、MCP、CLAUDE.md、LLM 等保留英文原样，不翻译
+- **中文内容全程中文**：正文、标题、注释均使用中文，不中英混排
+- 目的：防止图像模型截断英文单词（如 "Step" → "tep"）
+
+---
+
 ## Quality checklist before output
 
 - [ ] Style selected and noted (warm / night / ink)
