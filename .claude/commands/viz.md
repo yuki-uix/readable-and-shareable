@@ -106,6 +106,33 @@ Based on `analysis.md`, present recommendations with explicit one-line reasons t
 If the article is Narrative/Argumentative and the user still wants visualization, explicitly note:
 > 这篇文章的价值在于 [叙事节奏 / 论证链条 / 情感表达]，可视化会保留骨架但会丢失 [具体说明]。继续生成 [选定形式]？
 
+## Confirmation Policy
+
+Applies **only to AI image generation outputs** (AI 信息图, and any future output type that calls an image API). HTML-based outputs (图片卡片 HTML, Interactive HTML, 思维导图, SVG 架构图) do not require confirmation — they have no API cost.
+
+**Default behavior: confirm before generating.**
+
+Before invoking any image backend, show the user:
+
+```
+即将生成 AI 信息图，确认以下参数：
+
+- Layout:  {layout}
+- Style:   {style}
+- Aspect:  {aspect}
+- Backend: {backend}
+- Prompt:  将保存至 {prompt-file-path}
+
+确认生成？（回复「确认」或「yes」继续；或直接说「改 style」等来调整）
+```
+
+Wait for explicit confirmation before proceeding. Do **not** auto-generate.
+
+**Skip confirmation** when the user's current request contains any of:
+`--no-confirm` · "直接生成" · "跳过确认" · "不用确认" · "按默认出图"
+
+In skip mode: state the assumed parameters in the next message, then generate immediately.
+
 ### Step 4 — Generate
 
 Use the corresponding template/approach. Extract content from `analysis.md` — do not re-read the original article.
@@ -115,15 +142,15 @@ Use the corresponding template/approach. Extract content from `analysis.md` — 
 2. Read `references/styles/{style}.md` — color tokens, typography, decorative elements
 Apply both together. `references/design-system.md` is the overarching visual standard.
 
-| Output Type | Layout Reference | Style Reference | Template |
-|---|---|---|---|
-| 思维导图 | `references/output-types/mindmap.md` | — | `templates/mindmap/prompt.md` |
-| Interactive HTML | `references/output-types/interactive-html.md` | — | `templates/interactive-html/` |
-| 图片卡片 | `references/output-types/image-card.md` | `references/styles/{style}.md` | `templates/image-card/prompt.md` |
-| SVG 架构图 | `references/output-types/diagram.md` | — (uses design-system.md colors) | 直接生成 SVG |
-| **AI 信息图** | 从 `references/base-prompt.md` 填充 | `references/base-prompt.md` 内含 | 按 `references/prompts-guide.md` 命名保存 |
-| 概念关系图 | `templates/concept-map/`（建设中） | — | Mermaid / D3 |
-| 漫画 | `templates/comic/`（实验性） | — | 分镜脚本 + 图像生成提示词 |
+| Output Type | Layout Reference | Style Reference | Template | Confirm? |
+|---|---|---|---|---|
+| 思维导图 | `references/output-types/mindmap.md` | — | `templates/mindmap/prompt.md` | ❌ |
+| Interactive HTML | `references/output-types/interactive-html.md` | — | `templates/interactive-html/` | ❌ |
+| 图片卡片 | `references/output-types/image-card.md` | `references/styles/{style}.md` | `templates/image-card/prompt.md` | ❌ |
+| SVG 架构图 | `references/output-types/diagram.md` | — (uses design-system.md colors) | 直接生成 SVG | ❌ |
+| **AI 信息图** | 从 `references/base-prompt.md` 填充 | `references/base-prompt.md` 内含 | 按 `references/prompts-guide.md` 命名保存 | **✅ 必须确认** |
+| 概念关系图 | `templates/concept-map/`（建设中） | — | Mermaid / D3 | ❌ |
+| 漫画 | `templates/comic/`（实验性） | — | 分镜脚本 + 图像生成提示词 | ❌ |
 
 #### 图片卡片风格选择
 
