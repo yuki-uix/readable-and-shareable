@@ -1,6 +1,3 @@
-{# Generated from references/base-prompt.md — do not hand-write from scratch #}
-{# Layout: linear-progression | Style: hand-drawn-edu | Aspect: 9:16 | Language: zh #}
-
 Create a professional infographic following these specifications:
 
 ## Image Specifications

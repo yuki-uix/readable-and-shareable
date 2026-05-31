@@ -5,6 +5,7 @@ Rules for generating, naming, and managing prompt files for AI image outputs.
 ## Workflow
 
 1. Read `references/base-prompt.md` — this is the skeleton, never hand-write from scratch
+   - **Do not add comment lines** (`{# ... #}`, `<!-- ... -->`, `// ...`) to the prompt file — the file is passed verbatim to the image API via `--promptfiles`, and any comment syntax becomes part of the prompt text
 2. Fill each `{{PLACEHOLDER}}` with content from `analysis.md` and the chosen layout/style
 3. Save the complete filled prompt to `examples/{slug}/infographic/prompts/`
 4. Invoke the image backend with the saved prompt file
