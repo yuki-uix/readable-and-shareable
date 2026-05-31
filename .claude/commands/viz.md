@@ -140,11 +140,16 @@ Based on `analysis.md`, present recommendations. **Rationale must use scene lang
 **③b AI 图片卡风格选择**（用户选择 ③b 后追加询问）：
 
 ```bash
-# 立即检测 API key
+# Source shell profile first, then check
+for _p in ~/.zshrc ~/.bash_profile ~/.bashrc ~/.profile; do
+  [ -f "$_p" ] && . "$_p" 2>/dev/null || true
+  { [ -n "${DASHSCOPE_API_KEY:-}" ] || [ -n "${OPENAI_API_KEY:-}" ]; } && break
+done
 if [ -z "${DASHSCOPE_API_KEY:-}" ] && [ -z "${OPENAI_API_KEY:-}" ]; then
-  echo "❌ 未检测到 API key，请先配置后再选择此形式"
-  echo "   export DASHSCOPE_API_KEY=your_key  # 国内推荐"
-  echo "   export OPENAI_API_KEY=your_key     # 海外用户"
+  echo "❌ 未检测到 API key"
+  echo "请将以下任一行添加到 ~/.zshrc，重新开启 Claude Code 终端后生效："
+  echo "  export DASHSCOPE_API_KEY=your_key"
+  echo "  export OPENAI_API_KEY=your_key"
 fi
 ```
 

@@ -17,18 +17,27 @@ Output: PNG files via DashScope or OpenAI DALL-E 3.
 
 ### Step 0 — Check API key (BEFORE anything else)
 
-Run this check immediately:
+Run this check immediately (sources shell profile first so keys in ~/.zshrc are found):
 
 ```bash
+# Source common shell profiles to find API keys
+for _p in ~/.zshrc ~/.bash_profile ~/.bashrc ~/.profile; do
+  [ -f "$_p" ] && . "$_p" 2>/dev/null || true
+  { [ -n "${DASHSCOPE_API_KEY:-}" ] || [ -n "${OPENAI_API_KEY:-}" ]; } && break
+done
+
 if [ -z "${DASHSCOPE_API_KEY:-}" ] && [ -z "${OPENAI_API_KEY:-}" ]; then
   echo "❌ 未检测到 API key"
-  echo "请在终端设置以下任一环境变量："
+  echo ""
+  echo "请将以下任一行添加到 ~/.zshrc（永久生效）："
   echo "  export DASHSCOPE_API_KEY=your_key   # 推荐，国内用户"
   echo "  export OPENAI_API_KEY=your_key      # 海外用户"
+  echo ""
+  echo "添加后重新开启 Claude Code 终端即可，无需在会话中手动 export。"
 fi
 ```
 
-If neither key is set, **stop immediately**. Do not proceed to content extraction.
+If neither key is set after sourcing, **stop immediately**. Do not proceed to content extraction.
 
 ### Step 1 — Choose style
 
