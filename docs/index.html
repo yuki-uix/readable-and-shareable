@@ -468,11 +468,11 @@
   <h2 class="section-title">真实产出物示例</h2>
 
   <div role="tablist" aria-label="产出形式" class="tab-bar">
-    <button class="tab-btn" role="tab" id="tab-html" aria-selected="true" aria-controls="panel-html" type="button">Interactive HTML</button>
-    <button class="tab-btn" role="tab" id="tab-card" aria-selected="false" aria-controls="panel-card" type="button">图片卡片</button>
+    <button class="tab-btn" role="tab" id="tab-html" aria-selected="false" aria-controls="panel-html" type="button">Interactive HTML</button>
+    <button class="tab-btn" role="tab" id="tab-card" aria-selected="true" aria-controls="panel-card" type="button">图片卡片</button>
   </div>
 
-  <div role="tabpanel" id="panel-html" aria-labelledby="tab-html">
+  <div role="tabpanel" id="panel-html" aria-labelledby="tab-html" hidden>
     <div class="example-meta">
       <span class="tag">层级型</span>
       <span class="tag">数值型</span>
@@ -495,7 +495,7 @@
     </div>
   </div>
 
-  <div role="tabpanel" id="panel-card" aria-labelledby="tab-card" hidden>
+  <div role="tabpanel" id="panel-card" aria-labelledby="tab-card">
     <div class="example-meta">
       <span class="tag">层级型</span>
       <span class="tag">对比型</span>
@@ -526,12 +526,32 @@
       <p class="mbti-section-desc">同一篇文章，三种信息图风格——从 MBTI 认知偏好推导设计语言。INTJ 演绎框架，INTP 推导草稿，INFP 叙事手记。</p>
       <div class="mbti-cards">
         <a href="showcase-mbti-intj.png" target="_blank" rel="noopener" class="mbti-card" aria-label="INTJ 风格示例">
-          <img src="showcase-mbti-intj.png" alt="INTJ 风格：技术文档图，精确几何，冷蓝语义色，强结论收口" loading="lazy">
+          <img src="showcase-mbti-intj.png" alt="INTJ：技术文档图，精确几何，冷蓝语义色，强结论" loading="lazy">
           <div class="mbti-card-label">INTJ <span>演绎框架</span></div>
         </a>
+        <a href="showcase-mbti-intp.png" target="_blank" rel="noopener" class="mbti-card" aria-label="INTP 风格示例">
+          <img src="showcase-mbti-intp.png" alt="INTP：数学草稿，条件标签，strikethrough 假设，待验证收口" loading="lazy">
+          <div class="mbti-card-label">INTP <span>推导草稿</span></div>
+        </a>
+        <a href="showcase-mbti-entj.png" target="_blank" rel="noopener" class="mbti-card" aria-label="ENTJ 风格示例">
+          <img src="showcase-mbti-entj.png" alt="ENTJ：战略简报，结论前置，对比矩阵，行动指令收口" loading="lazy">
+          <div class="mbti-card-label">ENTJ <span>战略简报</span></div>
+        </a>
+        <a href="showcase-mbti-entp.png" target="_blank" rel="noopener" class="mbti-card" aria-label="ENTP 风格示例">
+          <img src="showcase-mbti-entp.png" alt="ENTP：发散风暴，放射网状，无收口，开放反问" loading="lazy">
+          <div class="mbti-card-label">ENTP <span>发散风暴</span></div>
+        </a>
         <a href="showcase-mbti-infp.png" target="_blank" rel="noopener" class="mbti-card" aria-label="INFP 风格示例">
-          <img src="showcase-mbti-infp.png" alt="INFP 风格：手写日记风，4 色情绪色块，开放邀请收口" loading="lazy">
+          <img src="showcase-mbti-infp.png" alt="INFP：手写日记，4 色情绪色块，开放邀请收口" loading="lazy">
           <div class="mbti-card-label">INFP <span>叙事手记</span></div>
+        </a>
+        <a href="showcase-mbti-infj.png" target="_blank" rel="noopener" class="mbti-card" aria-label="INFJ 风格示例">
+          <img src="showcase-mbti-infj.png" alt="INFJ：意义地图，概念网络，紫青渐变连线，整体感悟收口" loading="lazy">
+          <div class="mbti-card-label">INFJ <span>意义地图</span></div>
+        </a>
+        <a href="showcase-mbti-isfj.png" target="_blank" rel="noopener" class="mbti-card" aria-label="ISFJ 风格示例">
+          <img src="showcase-mbti-isfj.png" alt="ISFJ：步骤手册，编号清单，安全感配色，明确完成收口" loading="lazy">
+          <div class="mbti-card-label">ISFJ <span>步骤手册</span></div>
         </a>
       </div>
     </div>
