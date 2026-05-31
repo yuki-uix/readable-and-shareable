@@ -333,6 +333,45 @@
     .card-showcase-single { width: 120px; }
   }
 
+  /* ── MBTI Note showcase ── */
+  .mbti-section {
+    margin-top: var(--space-8);
+    padding-top: var(--space-6);
+    border-top: 0.5px solid var(--border);
+  }
+  .mbti-section-header {
+    display: flex; align-items: baseline; gap: var(--space-3);
+    margin-bottom: var(--space-2);
+  }
+  .mbti-section-title {
+    font-size: 14px; font-weight: 600; color: var(--text);
+  }
+  .mbti-section-desc {
+    font-size: 12px; color: var(--text3); line-height: 1.6;
+    margin-bottom: var(--space-4);
+  }
+  .mbti-cards {
+    display: flex; gap: var(--space-4); flex-wrap: wrap;
+  }
+  .mbti-card {
+    flex: 0 0 auto; width: 180px;
+    border: 0.5px solid var(--border); border-radius: var(--radius-md); overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    text-decoration: none; color: inherit; display: block;
+  }
+  .mbti-card img { width: 100%; height: auto; display: block; }
+  .mbti-card-label {
+    padding: 6px 10px;
+    font-size: 11px; font-weight: 600; color: var(--text2);
+    background: var(--surface); border-top: 0.5px solid var(--border);
+    display: flex; justify-content: space-between;
+  }
+  .mbti-card-label span { font-weight: 400; color: var(--text3); }
+  @media (max-width: 600px) {
+    .mbti-cards { gap: var(--space-3); }
+    .mbti-card { width: 140px; }
+  }
+
   .iframe-wrap {
     border: 0.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden;
     background: var(--bg2);
@@ -477,6 +516,23 @@
           <div class="card-showcase-meta-row"><strong>生成时间</strong> 约 10 分钟</div>
           <div class="card-showcase-meta-row"><strong>来源标注</strong> 每张卡片底部自动带 <code>via readable-and-shareable</code></div>
         </div>
+      </div>
+    </div>
+
+    <div class="mbti-section">
+      <div class="mbti-section-header">
+        <div class="mbti-section-title">MBTI Note — 按认知风格选择视觉语言</div>
+      </div>
+      <p class="mbti-section-desc">同一篇文章，三种信息图风格——从 MBTI 认知偏好推导设计语言。INTJ 演绎框架，INTP 推导草稿，INFP 叙事手记。</p>
+      <div class="mbti-cards">
+        <a href="showcase-mbti-intj.png" target="_blank" rel="noopener" class="mbti-card" aria-label="INTJ 风格示例">
+          <img src="showcase-mbti-intj.png" alt="INTJ 风格：技术文档图，精确几何，冷蓝语义色，强结论收口" loading="lazy">
+          <div class="mbti-card-label">INTJ <span>演绎框架</span></div>
+        </a>
+        <a href="showcase-mbti-infp.png" target="_blank" rel="noopener" class="mbti-card" aria-label="INFP 风格示例">
+          <img src="showcase-mbti-infp.png" alt="INFP 风格：手写日记风，4 色情绪色块，开放邀请收口" loading="lazy">
+          <div class="mbti-card-label">INFP <span>叙事手记</span></div>
+        </a>
       </div>
     </div>
   </div>

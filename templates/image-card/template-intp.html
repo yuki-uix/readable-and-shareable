@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Screenshot: Chrome ⌘+Shift+P → "Capture screenshot" · Window width: 600px -->
+<title>{{PAGE_TITLE}}</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --font: "Courier New", "SF Mono", "PingFang SC", "Microsoft YaHei", monospace, sans-serif;
+    --font-body: -apple-system, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+
+    /* INTP design tokens
+       Near-colorless. Yellow = logical annotation only (definitions, conditions, struck hypotheses).
+       No emotional color. Color = semantic marker, not atmosphere. */
+    --bg:       #F9F9F7;
+    --surface:  #EFEFED;
+    --text:     #1A1A18;
+    --text2:    #7A7A72;
+    --border:   rgba(0, 0, 0, 0.15);
+    --mark:     #E8B84B;   /* warm yellow — conditions, definitions, key annotations ONLY */
+    --mark-bg:  #FEF9EC;   /* yellow tint — condition label background */
+    --strike:   rgba(0, 0, 0, 0.25);  /* struck-through hypothesis */
+  }
+
+  html, body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    width: 600px;
+    margin: 0 auto;
+    padding: 40px 44px 32px;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  /* ══════════════════════════════════════
+     HEADER
+     ══════════════════════════════════════ */
+  .header {
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .header-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--text2);
+    margin-bottom: 8px;
+    font-family: var(--font);
+  }
+  .header-title {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--text);
+    font-family: var(--font);
+  }
+  .header-subtitle {
+    font-size: 12px;
+    color: var(--text2);
+    margin-top: 5px;
+    line-height: 1.5;
+    font-family: var(--font-body);
+  }
+
+  /* ══════════════════════════════════════
+     PROPOSITION — initial claim
+     ══════════════════════════════════════ */
+  .proposition {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-left: 3px solid var(--text);
+    border-radius: 0 4px 4px 0;
+    padding: 14px 18px;
+    position: relative;
+  }
+  .proposition-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--text2);
+    margin-bottom: 6px;
+    font-family: var(--font);
+  }
+  .proposition-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  /* Struck-through hypothesis — a claim that was later disproved */
+  .struck {
+    text-decoration: line-through;
+    text-decoration-color: var(--strike);
+    color: var(--text2);
+    font-weight: 400;
+  }
+  .struck-reason {
+    font-size: 11px;
+    color: var(--text2);
+    margin-top: 4px;
+    padding-left: 12px;
+    border-left: 2px solid var(--border);
+  }
+  .struck-reason::before { content: '∵ '; }
+
+  /* ══════════════════════════════════════
+     DERIVATION — branching logic body
+     ══════════════════════════════════════ */
+  .derivation {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .branch {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    padding: 14px 16px;
+  }
+  .branch-full { grid-column: 1 / -1; }
+
+  .branch-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 0.5px solid var(--border);
+    font-family: var(--font);
+  }
+  .branch-item {
+    font-size: 12px;
+    color: var(--text2);
+    line-height: 1.6;
+    display: flex;
+    gap: 6px;
+    align-items: baseline;
+  }
+  .branch-item + .branch-item { margin-top: 3px; }
+  .branch-item::before { content: '·'; flex-shrink: 0; }
+  .branch-item strong { color: var(--text); font-weight: 500; }
+
+  /* Condition tag — yellow, inline */
+  .cond {
+    display: inline-block;
+    background: var(--mark-bg);
+    border: 0.5px solid var(--mark);
+    border-radius: 3px;
+    padding: 1px 6px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    font-family: var(--font);
+  }
+
+  /* Margin note — small annotation, right-aligned */
+  .margin-note {
+    font-size: 10px;
+    color: var(--text2);
+    text-align: right;
+    font-style: italic;
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 0.5px solid var(--border);
+  }
+
+  /* Logic symbol row */
+  .logic-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text2);
+    font-family: var(--font);
+    padding: 4px 0;
+  }
+  .logic-sym { color: var(--text); font-weight: 600; }
+
+  /* ══════════════════════════════════════
+     CONDITIONAL CONCLUSION
+     ══════════════════════════════════════ */
+  .conclusion {
+    border: 0.5px solid var(--border);
+    border-left: 3px solid var(--mark);
+    background: var(--mark-bg);
+    border-radius: 0 4px 4px 0;
+    padding: 14px 18px;
+  }
+  .conclusion-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--mark);
+    margin-bottom: 6px;
+    font-family: var(--font);
+  }
+  .conclusion-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
+  }
+  .conclusion-condition {
+    font-size: 11px;
+    color: var(--text2);
+    margin-top: 6px;
+    font-style: italic;
+  }
+
+  /* ══════════════════════════════════════
+     OPEN QUESTION — unverified path
+     ══════════════════════════════════════ */
+  .open-question {
+    border: 1px dashed var(--border);
+    border-radius: 4px;
+    padding: 12px 16px;
+    background: var(--bg);
+  }
+  .open-question-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--text2);
+    margin-bottom: 6px;
+    font-family: var(--font);
+  }
+  .open-question-text {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.5;
+    font-style: italic;
+  }
+  .open-question-text::before { content: '? '; font-weight: 600; color: var(--text2); }
+
+  /* ══════════════════════════════════════
+     FOOTER
+     ══════════════════════════════════════ */
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 0.5px solid var(--border);
+    font-size: 11px;
+    color: var(--text2);
+    font-family: var(--font-body);
+  }
+  .footer a { color: var(--text2); text-decoration: none; }
+  .footer-brand { opacity: .7; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ══ HEADER ══════════════════════════════════════════ -->
+  <div class="header">
+    <div class="header-label">{{TOPIC_LABEL}}</div>
+    <div class="header-title">{{TITLE}}</div>
+    <div class="header-subtitle">{{SUBTITLE}}</div>
+  </div>
+
+  <!-- ══ PROPOSITION ══════════════════════════════════════
+       初始命题 — 可能包含被划掉的错误假设
+       ══════════════════════════════════════════════════ -->
+  <div class="proposition">
+    <div class="proposition-label">命题</div>
+    <div class="proposition-text">{{PROPOSITION}}</div>
+    <!-- 被推翻的假设（optional，删掉整个 div 如果不需要）-->
+    <div class="struck">{{STRUCK_HYPOTHESIS}}</div>
+    <div class="struck-reason">{{STRUCK_REASON}}</div>
+  </div>
+
+  <!-- ══ DERIVATION ════════════════════════════════════════
+       推导区 — 分支拆解，条件标签，边注
+       ══════════════════════════════════════════════════ -->
+  <div class="derivation">
+
+    <!-- Branch A -->
+    <div class="branch">
+      <div class="branch-label">{{BRANCH_A_LABEL}}</div>
+      <div class="branch-item">{{BRANCH_A_ITEM_1}}</div>
+      <div class="branch-item">{{BRANCH_A_ITEM_2}}</div>
+      <div class="branch-item">{{BRANCH_A_ITEM_3}}</div>
+    </div>
+
+    <!-- Branch B — counter / exception -->
+    <div class="branch">
+      <div class="branch-label">{{BRANCH_B_LABEL}}</div>
+      <div class="branch-item">{{BRANCH_B_ITEM_1}}</div>
+      <div class="branch-item">{{BRANCH_B_ITEM_2}}</div>
+      <div class="branch-item">{{BRANCH_B_ITEM_3}}</div>
+    </div>
+
+    <!-- Branch C — full width, condition table -->
+    <div class="branch branch-full">
+      <div class="branch-label">{{BRANCH_C_LABEL}}</div>
+      <div class="logic-row">
+        <span class="logic-sym">∵</span>
+        <span>{{LOGIC_ROW_1}}</span>
+        <span class="cond">{{COND_1}}</span>
+      </div>
+      <div class="logic-row">
+        <span class="logic-sym">∵</span>
+        <span>{{LOGIC_ROW_2}}</span>
+        <span class="cond">{{COND_2}}</span>
+      </div>
+      <div class="logic-row">
+        <span class="logic-sym">∵</span>
+        <span>{{LOGIC_ROW_3}}</span>
+        <span class="cond">{{COND_3}}</span>
+      </div>
+      <div class="margin-note">{{MARGIN_NOTE}}</div>
+    </div>
+
+  </div>
+
+  <!-- ══ CONDITIONAL CONCLUSION ══════════════════════════
+       条件结论 — 黄色左边框，注明成立条件
+       ══════════════════════════════════════════════════ -->
+  <div class="conclusion">
+    <div class="conclusion-label">∴ 条件结论</div>
+    <div class="conclusion-text">{{CONCLUSION}}</div>
+    <div class="conclusion-condition">成立条件：{{CONCLUSION_CONDITION}}</div>
+  </div>
+
+  <!-- ══ OPEN QUESTION ═══════════════════════════════════
+       未解问题 — 虚线边框，斜体，问号开头
+       ══════════════════════════════════════════════════ -->
+  <div class="open-question">
+    <div class="open-question-label">待验证</div>
+    <div class="open-question-text">{{OPEN_QUESTION}}</div>
+  </div>
+
+  <!-- ══ FOOTER ════════════════════════════════════════════ -->
+  <div class="footer">
+    <span>原文：<a href="{{SOURCE_URL}}" target="_blank" rel="noopener">{{AUTHOR}} · {{SOURCE_LABEL}}</a></span>
+    <span class="footer-brand">via readable-and-shareable</span>
+  </div>
+
+</div>
+</body>
+</html>

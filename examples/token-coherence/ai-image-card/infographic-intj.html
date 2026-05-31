@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Screenshot: Chrome ⌘+Shift+P → "Capture screenshot" · Window width: 600px -->
+<title>Token 是否正确，取决于它在哪个 IA 里说话</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --font: -apple-system, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --bg:       #F7F7F5;
+    --surface:  #EBEBEA;
+    --text:     #1C1C1A;
+    --text2:    #6B6A64;
+    --border:   rgba(0, 0, 0, 0.12);
+    --accent:   #2563EB;
+    --accent-bg: #EFF4FF;
+  }
+
+  html, body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    width: 600px;
+    margin: 0 auto;
+    padding: 40px 44px 32px;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ── Header ── */
+  .header {
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .header-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--text2);
+    margin-bottom: 8px;
+  }
+  .header-title {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -.01em;
+    color: var(--text);
+  }
+  .header-subtitle {
+    font-size: 13px;
+    color: var(--text2);
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+
+  /* ── Framework zone ── */
+  .framework {
+    background: var(--accent-bg);
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    padding: 20px 24px;
+  }
+  .framework-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .framework-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .flow-node {
+    background: white;
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .flow-arrow {
+    font-size: 13px;
+    color: var(--text2);
+    flex-shrink: 0;
+  }
+  .flow-conclusion {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 0.5px solid rgba(37, 99, 235, 0.2);
+  }
+  .flow-conclusion-arrow {
+    color: var(--accent);
+    font-size: 16px;
+    line-height: 1;
+  }
+  .flow-conclusion-node {
+    background: var(--accent);
+    border-radius: 4px;
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+  }
+  .framework-note {
+    font-size: 11px;
+    color: var(--text2);
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 0.5px solid rgba(37, 99, 235, 0.2);
+  }
+
+  /* ── Supporting zones ── */
+  .supporting-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .zone {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    padding: 16px 18px;
+  }
+  .zone-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .zone-item {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+  .zone-item + .zone-item { margin-top: 4px; }
+  .zone-item::before { content: '·'; color: var(--text2); flex-shrink: 0; }
+  .zone-item strong { color: var(--text); font-weight: 500; }
+  .zone-full { grid-column: 1 / -1; }
+
+  .zone-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 4px;
+  }
+  .zone-table tr + tr td { border-top: 0.5px solid var(--border); }
+  .zone-table td {
+    padding: 5px 0;
+    font-size: 12px;
+    color: var(--text2);
+    vertical-align: middle;
+  }
+  .zone-table td:first-child {
+    color: var(--text);
+    font-weight: 500;
+    padding-right: 8px;
+    white-space: nowrap;
+    width: 72px;
+  }
+  .arrow { color: var(--text2); margin: 0 3px; font-size: 11px; }
+
+  /* ── Conclusion bar ── */
+  .conclusion {
+    border-left: 4px solid var(--accent);
+    background: var(--surface);
+    border-radius: 0 4px 4px 0;
+    padding: 14px 20px;
+  }
+  .conclusion-text {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(37, 99, 235, 0.4);
+    line-height: 1.4;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 14px;
+    border-top: 0.5px solid var(--border);
+    font-size: 11px;
+    color: var(--text2);
+  }
+  .footer a { color: var(--text2); text-decoration: none; }
+  .footer-brand { opacity: .7; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="header-label">Design Token · IA 结构</div>
+    <div class="header-title">Token 是否正确，取决于它在哪个 IA 里说话</div>
+    <div class="header-subtitle">从「9 种风格都成立」到「三轴约束模型」</div>
+  </div>
+
+  <div class="framework">
+    <div class="framework-label">核心框架</div>
+    <div class="framework-title">三轴约束模型：同向才能「感觉对了」</div>
+    <div class="flow">
+      <div class="flow-node">品牌意图</div>
+      <div class="flow-arrow">×</div>
+      <div class="flow-node">IA 结构</div>
+      <div class="flow-arrow">×</div>
+      <div class="flow-node">Token 选择</div>
+    </div>
+    <div class="flow-conclusion">
+      <div class="flow-conclusion-arrow">↓</div>
+      <div class="flow-conclusion-node">设计「对」的区间</div>
+    </div>
+    <div class="framework-note">三轴偏任意一轴 → 交集消失 · 用户感知到「哪里不对」但说不清楚</div>
+  </div>
+
+  <div class="supporting-row">
+
+    <div class="zone">
+      <div class="zone-label">Token ≠ 主题色</div>
+      <div class="zone-item">换主题色 = 只换<strong>表情</strong></div>
+      <div class="zone-item">换 token = 换<strong>整个人</strong></div>
+      <div class="zone-item">圆角·间距·字重·动效 同时投票</div>
+    </div>
+
+    <div class="zone">
+      <div class="zone-label">Landing Page 是特例</div>
+      <div class="zone-item">认知任务 = token 表达</div>
+      <div class="zone-item"><strong>完全重合</strong>，无功能性约束</div>
+      <div class="zone-item">9 种都成立，不是通则</div>
+    </div>
+
+    <div class="zone zone-full">
+      <div class="zone-label">认知任务 = 约束来源</div>
+      <table class="zone-table">
+        <tr>
+          <td>数据看板</td>
+          <td><span class="arrow">→</span>扫描异常<span class="arrow">→</span>高对比·紧凑间距·低装饰</td>
+        </tr>
+        <tr>
+          <td>支付流程</td>
+          <td><span class="arrow">→</span>核对确认<span class="arrow">→</span>严肃·信任感·无游戏化</td>
+        </tr>
+        <tr>
+          <td>技术文档</td>
+          <td><span class="arrow">→</span>持续阅读<span class="arrow">→</span>安静·低干扰·稳定节奏</td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="conclusion">
+    <div class="conclusion-text">先问认知任务，再问 token</div>
+  </div>
+
+  <div class="footer">
+    <span>原文：Yuki · 微信公众号 2026.05</span>
+    <span class="footer-brand">via readable-and-shareable</span>
+  </div>
+
+</div>
+</body>
+</html>
