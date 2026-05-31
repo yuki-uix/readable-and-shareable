@@ -105,13 +105,35 @@ Based on `analysis.md`, present recommendations. **Rationale must use scene lang
 
 ```
 完整选项：
-① 思维导图        — 适合愿意花时间细读的受众，可截图或导入幕布；约 5 分钟
-② Interactive HTML — 交互式网页，适合数据密集或有流程步骤的内容；通过 sharehtml.zhenjia.dev 一键分享（7天有效链接，可另存本地永久保存）；约 15 分钟
-③ 图片卡片        — 核心观点提炼成卡片，截图后直接发朋友圈 / 小红书；约 10 分钟
-④ SVG 架构图      — 系统关系可视化，适合技术读者；约 10 分钟
-⑤ 概念关系图      — 展示概念间连接，适合复杂系统；约 15 分钟（模板建设中）
-⑥ 漫画            — 轻量叙事，降低阅读门槛；约 30 分钟（实验性）
+① 思维导图           — 适合愿意花时间细读的受众，可截图或导入幕布；约 5 分钟
+② Interactive HTML    — 交互式网页，适合数据密集或有流程步骤的内容；sharehtml.zhenjia.dev 一键分享（7天有效）；约 15 分钟
+③a 图片卡片（HTML）  — 核心观点提炼成卡片，截图即用，无需 API；warm/night/ink 风格；约 10 分钟
+③b AI 图片卡（手绘） — AI 生成手绘风卡片，视觉冲击强；需要 DASHSCOPE_API_KEY 或 OPENAI_API_KEY；约 15 分钟
+④ SVG 架构图         — 系统关系可视化，适合技术读者；约 10 分钟
+⑤ 概念关系图         — 展示概念间连接，适合复杂系统；约 15 分钟（模板建设中）
+⑥ 漫画               — 轻量叙事，降低阅读门槛；约 30 分钟（实验性）
 ```
+
+**③b AI 图片卡风格选择**（用户选择 ③b 后追加询问）：
+
+```bash
+# 立即检测 API key
+if [ -z "${DASHSCOPE_API_KEY:-}" ] && [ -z "${OPENAI_API_KEY:-}" ]; then
+  echo "❌ 未检测到 API key，请先配置后再选择此形式"
+  echo "   export DASHSCOPE_API_KEY=your_key  # 国内推荐"
+  echo "   export OPENAI_API_KEY=your_key     # 海外用户"
+fi
+```
+
+若 key 存在，继续询问风格：
+```
+请选择 AI 图片卡风格：
+1. sketch-notes — 手绘教育风，暖奶油背景，马卡龙色块（默认）
+2. chalkboard   — 粉笔黑板风，深色背景，适合强对比场景
+                  ⚠️ DALL-E 3 + chalkboard 为实验性组合
+```
+
+将选定风格传入 `templates/ai-image-card/prompt.md`，跳过其中的 Step 0 和 Step 1（已完成）。
 
 If the article is Narrative/Argumentative and the user still wants visualization, explicitly note:
 > 这篇文章的价值在于 [叙事节奏 / 论证链条 / 情感表达]，可视化会保留骨架但会丢失 [具体说明]。继续生成 [选定形式]？
@@ -159,6 +181,7 @@ Apply both together. `references/design-system.md` is the overarching visual sta
 | 图片卡片 | `references/output-types/image-card.md` | `references/styles/{style}.md` | `templates/image-card/prompt.md` | ❌ |
 | SVG 架构图 | `references/output-types/diagram.md` | — (uses design-system.md colors) | 直接生成 SVG | ❌ |
 | **AI 信息图** | 从 `references/base-prompt.md` 填充 | `references/base-prompt.md` 内含 | 按 `references/prompts-guide.md` 命名保存 | **✅ 必须确认** |
+| **AI 图片卡** | `templates/ai-image-card/style-{style}.md` | 内含于 style 文件 | `templates/ai-image-card/prompt.md` → `scripts/gen-ai-card.sh` | **✅ 必须确认** |
 | 概念关系图 | `templates/concept-map/`（建设中） | — | Mermaid / D3 | ❌ |
 | 漫画 | `templates/comic/`（实验性） | — | 分镜脚本 + 图像生成提示词 | ❌ |
 

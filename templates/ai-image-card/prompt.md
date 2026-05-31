@@ -1,0 +1,122 @@
+# Fill Prompt — AI Image Card
+
+Use this prompt to generate AI hand-drawn style image cards from a source article.
+Output: PNG files via DashScope or OpenAI DALL-E 3.
+
+---
+
+## Instructions for Claude
+
+### Step 0 — Check API key (BEFORE anything else)
+
+Run this check immediately:
+
+```bash
+if [ -z "${DASHSCOPE_API_KEY:-}" ] && [ -z "${OPENAI_API_KEY:-}" ]; then
+  echo "❌ 未检测到 API key"
+  echo "请在终端设置以下任一环境变量："
+  echo "  export DASHSCOPE_API_KEY=your_key   # 推荐，国内用户"
+  echo "  export OPENAI_API_KEY=your_key      # 海外用户"
+fi
+```
+
+If neither key is set, **stop immediately**. Do not proceed to content extraction.
+
+### Step 1 — Choose style
+
+Ask the user:
+```
+请选择卡片风格：
+1. sketch-notes — 手绘教育风，暖奶油背景，马卡龙色块（默认）
+2. chalkboard   — 粉笔黑板风，深色背景，适合强对比场景
+                  ⚠️ DALL-E 3 + chalkboard 为实验性组合
+
+（不选则默认 sketch-notes）
+```
+
+Load the corresponding style file: `templates/ai-image-card/style-{style}.md`
+
+### Step 2 — Generate slug
+
+Create a slug from the article title: lowercase, hyphens, no special characters.
+Example: "用设计系统的眼光读 baoyu-skills 源码" → `baoyu-skills-design-token`
+
+Tell the user the slug and allow override.
+
+### Step 3 — Extract core observations
+
+Read the article and identify key points. Follow these rules strictly:
+
+- Extract **4–6 core observations**
+- If fewer than 4: supplement with related background to reach 4
+- If more than 6: merge similar ones, keep 5–6
+
+For each observation:
+- **Title** (`zone-title`): ≤ 8 Chinese characters. Core insight. **Cut if over — do not exceed.**
+- **Body** (`zone-body`): ≤ 20 Chinese characters. One concrete sentence. **Cut if over — do not exceed.**
+
+Show the user the drafted observations and ask:
+> "以上是提取的 N 个核心观点，确认后生成 prompt 文件。"
+
+### Step 4 — Write prompt files
+
+Output directory: `examples/{slug}/ai-image-card/`
+
+For each card, write a prompt file: `examples/{slug}/ai-image-card/NN-{style}-{slug}.md`
+
+Each prompt file content:
+
+```
+{Style rules from style-{style}.md}
+
+Content for this card:
+- Zone title: {TITLE} （≤ 8 字）
+- Zone body: {BODY} （≤ 20 字）
+- Card number: {N} of {TOTAL}
+
+Footer: via readable-and-shareable · {SOURCE_TITLE}
+```
+
+Write ALL prompt files before generating any images.
+
+### Step 5 — Generate images
+
+For each prompt file (in order), run:
+
+```bash
+./scripts/gen-ai-card.sh \
+  --prompt examples/{slug}/ai-image-card/NN-{style}-{slug}.md \
+  --output examples/{slug}/ai-image-card/NN.png \
+  --ar portrait-3-4 \
+  --index N \
+  --total {TOTAL}
+```
+
+Wait for each card to complete before starting the next.
+
+If a card fails, show the retry command and ask whether to retry or skip.
+
+### Step 6 — Done
+
+After all cards are generated:
+```
+✅ 生成完成！{N} 张 AI 图片卡已保存到：
+   examples/{slug}/ai-image-card/
+
+分享路径：
+- 直接截图或上传 PNG 到小红书 / 微信朋友圈
+- 每张图片包含 "via readable-and-shareable" 来源标注
+```
+
+---
+
+## Quality checklist before generating
+
+- [ ] API key detected (DASHSCOPE or OPENAI)
+- [ ] Style selected (sketch-notes / chalkboard)
+- [ ] Slug generated and confirmed
+- [ ] Every zone-title ≤ 8 Chinese characters
+- [ ] Every zone-body ≤ 20 Chinese characters
+- [ ] Card count: 4–6
+- [ ] All prompt files written before generation starts
+- [ ] No English `Step N` labels in any prompt file
