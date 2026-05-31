@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Screenshot: Chrome ⌘+Shift+P → "Capture screenshot" · Window width: 600px -->
+<title>ENFJ — Token 成长路线图</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --font: -apple-system, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --bg:       #FDFAF6;
+    --surface:  #F5EFE6;
+    --text:     #2A1F14;
+    --text2:    #8A7060;
+    --border:   rgba(120,80,40,0.12);
+    --amber:    #C97C2A;
+    --amber-bg: #FEF3E2;
+    --amber-light: rgba(201,124,42,0.15);
+    --growth:   #4A7C59;
+    --growth-bg: #EEF3EE;
+  }
+  html, body { font-family: var(--font); background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
+
+  .page {
+    width: 600px; margin: 0 auto;
+    padding: 40px 44px 32px;
+    display: flex; flex-direction: column; gap: 0;
+  }
+
+  /* Header */
+  .header { padding-bottom: 16px; border-bottom: 1px solid var(--border); margin-bottom: 28px; }
+  .header-label { font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text2); margin-bottom: 8px; }
+  .header-title { font-size: 19px; font-weight: 600; line-height: 1.35; color: var(--text); }
+  .header-subtitle { font-size: 12px; color: var(--text2); margin-top: 5px; line-height: 1.5; font-style: italic; }
+
+  /* Journey path */
+  .journey { display: flex; flex-direction: column; gap: 0; }
+
+  /* Start node */
+  .node-start {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+  }
+  .node-start-label { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--text2); margin-bottom: 6px; }
+  .node-start-text { font-size: 14px; color: var(--text); line-height: 1.5; }
+  .node-start-note { font-size: 11px; color: var(--text2); margin-top: 6px; font-style: italic; }
+
+  /* Path connector */
+  .path-connector {
+    display: flex; align-items: stretch; gap: 0;
+    margin: 0 0 0 28px;
+    position: relative;
+  }
+  .path-line {
+    width: 2px; background: linear-gradient(to bottom, var(--amber), var(--amber));
+    flex-shrink: 0; margin: 0 18px 0 0;
+  }
+  .path-note {
+    font-size: 10px; color: var(--amber); font-style: italic;
+    padding: 8px 0;
+    align-self: center;
+  }
+
+  /* Transform node */
+  .node-transform {
+    background: var(--amber-bg);
+    border: 1px solid var(--amber);
+    border-radius: 8px;
+    padding: 14px 20px;
+  }
+  .node-transform-label { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--amber); margin-bottom: 6px; }
+  .node-transform-text { font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.5; }
+  .node-transform-detail { font-size: 12px; color: var(--text2); margin-top: 5px; line-height: 1.6; }
+
+  /* Path connector green */
+  .path-line-green {
+    width: 2px; background: linear-gradient(to bottom, var(--amber), var(--growth));
+    flex-shrink: 0; margin: 0 18px 0 0;
+  }
+
+  /* Arrival node */
+  .node-arrival {
+    background: var(--growth-bg);
+    border: 1px solid var(--growth);
+    border-radius: 8px;
+    padding: 16px 20px;
+    box-shadow: 0 0 0 3px rgba(74,124,89,0.08);
+  }
+  .node-arrival-label { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--growth); margin-bottom: 6px; }
+  .node-arrival-text { font-size: 15px; font-weight: 600; color: var(--text); line-height: 1.4; }
+  .node-arrival-detail { font-size: 12px; color: var(--text2); margin-top: 6px; line-height: 1.6; }
+
+  /* Invitation — closing with "you" perspective */
+  .invitation {
+    margin-top: 24px;
+    padding: 14px 20px;
+    background: var(--amber-bg);
+    border-radius: 6px;
+    border-left: 3px solid var(--amber);
+  }
+  .invitation-text {
+    font-size: 13px; color: var(--text); line-height: 1.6; font-style: italic;
+  }
+  .invitation-text strong { color: var(--amber); font-style: normal; }
+
+  /* Footer */
+  .footer {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 16px; border-top: 0.5px solid var(--border); margin-top: 24px;
+    font-size: 11px; color: var(--text2);
+  }
+  .footer a { color: var(--text2); text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="header-label">Design Token · 成长路线图</div>
+    <div class="header-title">从「9 种都对」到「先问认知任务」</div>
+    <div class="header-subtitle">一段关于 token 判断的认知旅程</div>
+  </div>
+
+  <div class="journey">
+
+    <!-- Start: current confusion -->
+    <div class="node-start">
+      <div class="node-start-label">起点 · 困惑</div>
+      <div class="node-start-text">做完 demo，9 种 token 风格好像都成立——但总觉得哪里奇怪</div>
+      <div class="node-start-note">「每一套都有自己的合法性」——这个解释站不住脚</div>
+    </div>
+
+    <!-- Path 1 -->
+    <div class="path-connector" style="height:48px">
+      <div class="path-line"></div>
+      <div class="path-note">发现了什么 →</div>
+    </div>
+
+    <!-- Transform 1: token ≠ theme color -->
+    <div class="node-transform">
+      <div class="node-transform-label">转化节点 1 · 看见</div>
+      <div class="node-transform-text">换主题色是换表情，换 token 是换整个人</div>
+      <div class="node-transform-detail">圆角、间距、字重、动效——每个值都在为「这个产品是谁」投票</div>
+    </div>
+
+    <!-- Path 2 -->
+    <div class="path-connector" style="height:48px">
+      <div class="path-line"></div>
+      <div class="path-note">继续追问 →</div>
+    </div>
+
+    <!-- Transform 2: IA matters -->
+    <div class="node-transform">
+      <div class="node-transform-label">转化节点 2 · 领悟</div>
+      <div class="node-transform-text">把 Playful 放进数据看板——感觉立刻不对了</div>
+      <div class="node-transform-detail">不是 token 丑，是它和这个 IA 的认知任务之间产生了摩擦。认知任务才是约束的来源。</div>
+    </div>
+
+    <!-- Path 3 — gradient to green -->
+    <div class="path-connector" style="height:48px">
+      <div class="path-line-green"></div>
+      <div class="path-note" style="color:var(--growth)">到达 →</div>
+    </div>
+
+    <!-- Arrival: the framework -->
+    <div class="node-arrival">
+      <div class="node-arrival-label">到达 · 可以去的地方</div>
+      <div class="node-arrival-text">三轴同向——品牌意图 × IA 结构 × Token 选择</div>
+      <div class="node-arrival-detail">Landing page 是特例：认知任务和 token 完全重合，9 种都成立。其他 IA 都有功能性约束——先问「用户在这里需要做什么」，token 的合法区间才能确定。</div>
+    </div>
+
+  </div>
+
+  <div class="invitation">
+    <div class="invitation-text">如果你也在那个「感觉奇怪但说不清楚」的起点——<strong>认知任务</strong>可能是你在找的那个坐标。</div>
+  </div>
+
+  <div class="footer">
+    <span>原文：Yuki · 微信公众号 2026.05</span>
+    <span style="opacity:.7">via readable-and-shareable</span>
+  </div>
+
+</div>
+</body>
+</html>

@@ -333,43 +333,49 @@
     .card-showcase-single { width: 120px; }
   }
 
-  /* ── MBTI Note showcase ── */
+  /* ── MBTI Note matrix ── */
   .mbti-section {
     margin-top: var(--space-8);
     padding-top: var(--space-6);
     border-top: 0.5px solid var(--border);
   }
-  .mbti-section-header {
-    display: flex; align-items: baseline; gap: var(--space-3);
-    margin-bottom: var(--space-2);
+  .mbti-section-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: var(--space-2); }
+  .mbti-section-desc { font-size: 12px; color: var(--text3); line-height: 1.6; margin-bottom: var(--space-5); }
+
+  .mbti-matrix { display: flex; flex-direction: column; gap: var(--space-5); }
+  .mbti-group-label {
+    font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--text3); margin-bottom: var(--space-3);
   }
-  .mbti-section-title {
-    font-size: 14px; font-weight: 600; color: var(--text);
-  }
-  .mbti-section-desc {
-    font-size: 12px; color: var(--text3); line-height: 1.6;
-    margin-bottom: var(--space-4);
-  }
-  .mbti-cards {
-    display: flex; gap: var(--space-4); flex-wrap: wrap;
-  }
+  .mbti-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-3); }
+
+  /* filled card */
   .mbti-card {
-    flex: 0 0 auto; width: 180px;
     border: 0.5px solid var(--border); border-radius: var(--radius-md); overflow: hidden;
-    box-shadow: var(--shadow-sm);
-    text-decoration: none; color: inherit; display: block;
+    box-shadow: var(--shadow-sm); text-decoration: none; color: inherit; display: block;
+    transition: box-shadow .15s;
   }
+  .mbti-card:hover { box-shadow: var(--shadow-md); }
   .mbti-card img { width: 100%; height: auto; display: block; }
   .mbti-card-label {
-    padding: 6px 10px;
-    font-size: 11px; font-weight: 600; color: var(--text2);
+    padding: 5px 8px; font-size: 11px; font-weight: 600; color: var(--text2);
     background: var(--surface); border-top: 0.5px solid var(--border);
-    display: flex; justify-content: space-between;
+    display: flex; justify-content: space-between; align-items: center;
   }
-  .mbti-card-label span { font-weight: 400; color: var(--text3); }
+  .mbti-card-label span { font-weight: 400; color: var(--text3); font-size: 10px; }
+
+  /* empty slot */
+  .mbti-slot {
+    border: 1px dashed var(--border); border-radius: var(--radius-md);
+    aspect-ratio: 2/3; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 4px;
+    background: var(--surface); opacity: .6;
+  }
+  .mbti-slot-type { font-size: 13px; font-weight: 600; color: var(--text3); }
+  .mbti-slot-hint { font-size: 10px; color: var(--text3); }
+
   @media (max-width: 600px) {
-    .mbti-cards { gap: var(--space-3); }
-    .mbti-card { width: 140px; }
+    .mbti-row { grid-template-columns: repeat(2, 1fr); }
   }
 
   .iframe-wrap {
@@ -468,8 +474,8 @@
   <h2 class="section-title">真实产出物示例</h2>
 
   <div role="tablist" aria-label="产出形式" class="tab-bar">
-    <button class="tab-btn" role="tab" id="tab-html" aria-selected="false" aria-controls="panel-html" type="button">Interactive HTML</button>
     <button class="tab-btn" role="tab" id="tab-card" aria-selected="true" aria-controls="panel-card" type="button">图片卡片</button>
+    <button class="tab-btn" role="tab" id="tab-html" aria-selected="false" aria-controls="panel-html" type="button">Interactive HTML</button>
   </div>
 
   <div role="tabpanel" id="panel-html" aria-labelledby="tab-html" hidden>
@@ -520,39 +526,81 @@
     </div>
 
     <div class="mbti-section">
-      <div class="mbti-section-header">
-        <div class="mbti-section-title">MBTI Note — 按认知风格选择视觉语言</div>
-      </div>
-      <p class="mbti-section-desc">同一篇文章，三种信息图风格——从 MBTI 认知偏好推导设计语言。INTJ 演绎框架，INTP 推导草稿，INFP 叙事手记。</p>
-      <div class="mbti-cards">
-        <a href="showcase-mbti-intj.png" target="_blank" rel="noopener" class="mbti-card" aria-label="INTJ 风格示例">
-          <img src="showcase-mbti-intj.png" alt="INTJ：技术文档图，精确几何，冷蓝语义色，强结论" loading="lazy">
-          <div class="mbti-card-label">INTJ <span>演绎框架</span></div>
-        </a>
-        <a href="showcase-mbti-intp.png" target="_blank" rel="noopener" class="mbti-card" aria-label="INTP 风格示例">
-          <img src="showcase-mbti-intp.png" alt="INTP：数学草稿，条件标签，strikethrough 假设，待验证收口" loading="lazy">
-          <div class="mbti-card-label">INTP <span>推导草稿</span></div>
-        </a>
-        <a href="showcase-mbti-entj.png" target="_blank" rel="noopener" class="mbti-card" aria-label="ENTJ 风格示例">
-          <img src="showcase-mbti-entj.png" alt="ENTJ：战略简报，结论前置，对比矩阵，行动指令收口" loading="lazy">
-          <div class="mbti-card-label">ENTJ <span>战略简报</span></div>
-        </a>
-        <a href="showcase-mbti-entp.png" target="_blank" rel="noopener" class="mbti-card" aria-label="ENTP 风格示例">
-          <img src="showcase-mbti-entp.png" alt="ENTP：发散风暴，放射网状，无收口，开放反问" loading="lazy">
-          <div class="mbti-card-label">ENTP <span>发散风暴</span></div>
-        </a>
-        <a href="showcase-mbti-infp.png" target="_blank" rel="noopener" class="mbti-card" aria-label="INFP 风格示例">
-          <img src="showcase-mbti-infp.png" alt="INFP：手写日记，4 色情绪色块，开放邀请收口" loading="lazy">
-          <div class="mbti-card-label">INFP <span>叙事手记</span></div>
-        </a>
-        <a href="showcase-mbti-infj.png" target="_blank" rel="noopener" class="mbti-card" aria-label="INFJ 风格示例">
-          <img src="showcase-mbti-infj.png" alt="INFJ：意义地图，概念网络，紫青渐变连线，整体感悟收口" loading="lazy">
-          <div class="mbti-card-label">INFJ <span>意义地图</span></div>
-        </a>
-        <a href="showcase-mbti-isfj.png" target="_blank" rel="noopener" class="mbti-card" aria-label="ISFJ 风格示例">
-          <img src="showcase-mbti-isfj.png" alt="ISFJ：步骤手册，编号清单，安全感配色，明确完成收口" loading="lazy">
-          <div class="mbti-card-label">ISFJ <span>步骤手册</span></div>
-        </a>
+      <div class="mbti-section-title">MBTI Note — 按认知风格选择视觉语言</div>
+      <p class="mbti-section-desc">同一篇文章，16 种信息图风格——每种从 MBTI 认知偏好推导设计语言。点击已完成的卡片查看示例。</p>
+      <div class="mbti-matrix">
+
+        <!-- NT Analysts -->
+        <div>
+          <div class="mbti-group-label">NT Analysts — 逻辑框架系</div>
+          <div class="mbti-row">
+            <a href="showcase-mbti-intj.png" target="_blank" rel="noopener" class="mbti-card" aria-label="INTJ 演绎框架">
+              <img src="showcase-mbti-intj.png" alt="INTJ：技术文档图，精确几何，冷蓝语义色，强结论" loading="lazy">
+              <div class="mbti-card-label">INTJ <span>演绎框架</span></div>
+            </a>
+            <a href="showcase-mbti-intp.png" target="_blank" rel="noopener" class="mbti-card" aria-label="INTP 推导草稿">
+              <img src="showcase-mbti-intp.png" alt="INTP：数学草稿，条件标签，待验证收口" loading="lazy">
+              <div class="mbti-card-label">INTP <span>推导草稿</span></div>
+            </a>
+            <a href="showcase-mbti-entj.png" target="_blank" rel="noopener" class="mbti-card" aria-label="ENTJ 战略简报">
+              <img src="showcase-mbti-entj.png" alt="ENTJ：结论前置，对比矩阵，行动指令" loading="lazy">
+              <div class="mbti-card-label">ENTJ <span>战略简报</span></div>
+            </a>
+            <a href="showcase-mbti-entp.png" target="_blank" rel="noopener" class="mbti-card" aria-label="ENTP 发散风暴">
+              <img src="showcase-mbti-entp.png" alt="ENTP：放射网状，无收口，开放反问" loading="lazy">
+              <div class="mbti-card-label">ENTP <span>发散风暴</span></div>
+            </a>
+          </div>
+        </div>
+
+        <!-- NF Diplomats -->
+        <div>
+          <div class="mbti-group-label">NF Diplomats — 意义叙事系</div>
+          <div class="mbti-row">
+            <a href="showcase-mbti-infj.png" target="_blank" rel="noopener" class="mbti-card" aria-label="INFJ 意义地图">
+              <img src="showcase-mbti-infj.png" alt="INFJ：概念网络，紫青渐变，整体感悟" loading="lazy">
+              <div class="mbti-card-label">INFJ <span>意义地图</span></div>
+            </a>
+            <a href="showcase-mbti-infp.png" target="_blank" rel="noopener" class="mbti-card" aria-label="INFP 叙事手记">
+              <img src="showcase-mbti-infp.png" alt="INFP：手写日记，情绪色块，开放邀请" loading="lazy">
+              <div class="mbti-card-label">INFP <span>叙事手记</span></div>
+            </a>
+            <a href="showcase-mbti-enfj.png" target="_blank" rel="noopener" class="mbti-card" aria-label="ENFJ 成长路线图">
+              <img src="showcase-mbti-enfj.png" alt="ENFJ：成长路线图，琥珀转化节点，绿色到达，第二人称邀请" loading="lazy">
+              <div class="mbti-card-label">ENFJ <span>成长路线图</span></div>
+            </a>
+            <a href="showcase-mbti-enfp.png" target="_blank" rel="noopener" class="mbti-card" aria-label="ENFP 意义星图">
+              <img src="showcase-mbti-enfp.png" alt="ENFP：意义星图，多色柔和节点，有机曲线，意义确认收口" loading="lazy">
+              <div class="mbti-card-label">ENFP <span>意义星图</span></div>
+            </a>
+          </div>
+        </div>
+
+        <!-- SJ Sentinels -->
+        <div>
+          <div class="mbti-group-label">SJ Sentinels — 秩序执行系</div>
+          <div class="mbti-row">
+            <a href="showcase-mbti-isfj.png" target="_blank" rel="noopener" class="mbti-card" aria-label="ISFJ 步骤手册">
+              <img src="showcase-mbti-isfj.png" alt="ISFJ：编号步骤，安全感配色，明确完成" loading="lazy">
+              <div class="mbti-card-label">ISFJ <span>步骤手册</span></div>
+            </a>
+            <div class="mbti-slot"><div class="mbti-slot-type">ISTJ</div><div class="mbti-slot-hint">规则手册</div></div>
+            <div class="mbti-slot"><div class="mbti-slot-type">ESFJ</div><div class="mbti-slot-hint">关系清单</div></div>
+            <div class="mbti-slot"><div class="mbti-slot-type">ESTJ</div><div class="mbti-slot-hint">流程图表</div></div>
+          </div>
+        </div>
+
+        <!-- SP Explorers -->
+        <div>
+          <div class="mbti-group-label">SP Explorers — 即兴感官系</div>
+          <div class="mbti-row">
+            <div class="mbti-slot"><div class="mbti-slot-type">ISTP</div><div class="mbti-slot-hint">拆解结构</div></div>
+            <div class="mbti-slot"><div class="mbti-slot-type">ESTP</div><div class="mbti-slot-hint">即时行动</div></div>
+            <div class="mbti-slot"><div class="mbti-slot-type">ISFP</div><div class="mbti-slot-hint">感官美学</div></div>
+            <div class="mbti-slot"><div class="mbti-slot-type">ESFP</div><div class="mbti-slot-hint">体验优先</div></div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
