@@ -92,6 +92,7 @@ Use the corresponding template/approach. Extract content from `analysis.md` — 
 | Interactive HTML | `templates/interactive-html/` → 单文件 HTML；上传至 sharehtml.zhenjia.dev |
 | 图片卡片 | 见下方「图片卡片风格选择」→ `templates/image-card/prompt.md` |
 | SVG 架构图 | 直接生成 SVG；严格遵循 `references/design-system.md` 的分层顺序和间距规则 |
+| **AI 信息图** | 从 `references/base-prompt.md` 开始填充，**不要从头手写**；按 `references/prompts-guide.md` 命名和保存 prompt 文件；调用图像 API 生成 |
 | 概念关系图 | `templates/concept-map/`（建设中）→ Mermaid / D3 |
 | 漫画 | `templates/comic/`（实验性）→ 分镜脚本 + 图像生成提示词 |
 
