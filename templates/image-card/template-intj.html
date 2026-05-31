@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Screenshot: Chrome ⌘+Shift+P → "Capture screenshot" · Window width: 600px -->
+<title>{{PAGE_TITLE}}</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --font: -apple-system, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+
+    /* INTJ design tokens
+       Color = semantic only. Blue = primary framework. Gray = supporting detail. */
+    --bg:       #F7F7F5;
+    --surface:  #EBEBEA;
+    --text:     #1C1C1A;
+    --text2:    #6B6A64;
+    --border:   rgba(0, 0, 0, 0.12);
+    --accent:   #2563EB;  /* cold blue — framework nodes + conclusion bar only */
+    --accent-bg: #EFF4FF; /* blue tint — framework zone background */
+  }
+
+  html, body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Page container ── */
+  .page {
+    width: 600px;
+    margin: 0 auto;
+    padding: 40px 44px 32px;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ══════════════════════════════════════
+     HEADER
+     ══════════════════════════════════════ */
+  .header {
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .header-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--text2);
+    margin-bottom: 8px;
+  }
+  .header-title {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -.01em;
+    color: var(--text);
+  }
+  .header-subtitle {
+    font-size: 13px;
+    color: var(--text2);
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+
+  /* ══════════════════════════════════════
+     FRAMEWORK ZONE — primary model, blue accent
+     ══════════════════════════════════════ */
+  .framework {
+    background: var(--accent-bg);
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    padding: 20px 24px;
+  }
+  .framework-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .framework-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+
+  /* Flow row: [node] → [node] → [node] → [conclusion] */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .flow-node {
+    background: white;
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .flow-arrow {
+    font-size: 13px;
+    color: var(--text2);
+    flex-shrink: 0;
+  }
+  .flow-arrow-label {
+    font-size: 10px;
+    color: var(--text2);
+    white-space: nowrap;
+  }
+  .flow-conclusion {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 0.5px solid rgba(37, 99, 235, 0.2);
+  }
+  .flow-conclusion-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    color: var(--accent);
+    font-size: 16px;
+  }
+  .flow-conclusion-node {
+    background: var(--accent);
+    border-radius: 4px;
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+  }
+  .framework-note {
+    font-size: 11px;
+    color: var(--text2);
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 0.5px solid rgba(37, 99, 235, 0.2);
+  }
+
+  /* ══════════════════════════════════════
+     SUPPORTING ZONES — gray surface, subordinate
+     ══════════════════════════════════════ */
+  .supporting-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .zone {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    padding: 16px 18px;
+  }
+  .zone-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .zone-item {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+  .zone-item + .zone-item { margin-top: 4px; }
+  .zone-item::before {
+    content: '·';
+    color: var(--text2);
+    flex-shrink: 0;
+  }
+  .zone-item strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* Full-width supporting zone */
+  .zone-full {
+    grid-column: 1 / -1;
+  }
+
+  /* Table inside zone */
+  .zone-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 4px;
+  }
+  .zone-table tr + tr td { border-top: 0.5px solid var(--border); }
+  .zone-table td {
+    padding: 5px 0;
+    font-size: 12px;
+    color: var(--text2);
+    vertical-align: top;
+  }
+  .zone-table td:first-child {
+    color: var(--text);
+    font-weight: 500;
+    padding-right: 12px;
+    white-space: nowrap;
+  }
+  .zone-table td .arrow {
+    color: var(--text2);
+    margin: 0 4px;
+    font-size: 11px;
+  }
+
+  /* ══════════════════════════════════════
+     CONCLUSION BAR
+     ══════════════════════════════════════ */
+  .conclusion {
+    border-left: 4px solid var(--accent);
+    background: var(--surface);
+    border-radius: 0 4px 4px 0;
+    padding: 14px 20px;
+  }
+  .conclusion-text {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(37, 99, 235, 0.4);
+    line-height: 1.4;
+  }
+
+  /* ══════════════════════════════════════
+     FOOTER
+     ══════════════════════════════════════ */
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 14px;
+    border-top: 0.5px solid var(--border);
+    font-size: 11px;
+    color: var(--text2);
+  }
+  .footer a {
+    color: var(--text2);
+    text-decoration: none;
+  }
+  .footer-brand { color: var(--text2); opacity: .7; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ══ HEADER ══════════════════════════════════════════ -->
+  <div class="header">
+    <div class="header-label">{{TOPIC_LABEL}}</div>
+    <div class="header-title">{{TITLE}}</div>
+    <div class="header-subtitle">{{SUBTITLE}}</div>
+  </div>
+
+  <!-- ══ FRAMEWORK ZONE ══════════════════════════════════
+       核心框架 — 最显眼区域，蓝色强调
+       展示文章的核心模型 / 系统结构
+       ══════════════════════════════════════════════════ -->
+  <div class="framework">
+    <div class="framework-label">核心框架</div>
+    <div class="framework-title">{{FRAMEWORK_TITLE}}</div>
+
+    <!-- 三节点流：[A] → [B] → [C] -->
+    <div class="flow">
+      <div class="flow-node">{{NODE_A}}</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">{{NODE_B}}</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">{{NODE_C}}</div>
+    </div>
+
+    <!-- 收敛结论节点 -->
+    <div class="flow-conclusion">
+      <div class="flow-conclusion-arrow">↓</div>
+      <div class="flow-conclusion-node">{{FRAMEWORK_CONCLUSION}}</div>
+    </div>
+
+    <div class="framework-note">{{FRAMEWORK_NOTE}}</div>
+  </div>
+
+  <!-- ══ SUPPORTING ZONES ═════════════════════════════════
+       支撑区域 — 灰色底，视觉权重低于框架区
+       ══════════════════════════════════════════════════ -->
+  <div class="supporting-row">
+
+    <!-- Zone A -->
+    <div class="zone">
+      <div class="zone-label">{{ZONE_A_LABEL}}</div>
+      <div class="zone-item">{{ZONE_A_ITEM_1}}</div>
+      <div class="zone-item">{{ZONE_A_ITEM_2}}</div>
+    </div>
+
+    <!-- Zone B -->
+    <div class="zone">
+      <div class="zone-label">{{ZONE_B_LABEL}}</div>
+      <div class="zone-item">{{ZONE_B_ITEM_1}}</div>
+      <div class="zone-item">{{ZONE_B_ITEM_2}}</div>
+    </div>
+
+    <!-- Zone C — full width, table layout -->
+    <div class="zone zone-full">
+      <div class="zone-label">{{ZONE_C_LABEL}}</div>
+      <table class="zone-table">
+        <tr>
+          <td>{{ROW_1_KEY}}</td>
+          <td><span class="arrow">→</span>{{ROW_1_TASK}}<span class="arrow">→</span>{{ROW_1_NEED}}</td>
+        </tr>
+        <tr>
+          <td>{{ROW_2_KEY}}</td>
+          <td><span class="arrow">→</span>{{ROW_2_TASK}}<span class="arrow">→</span>{{ROW_2_NEED}}</td>
+        </tr>
+        <tr>
+          <td>{{ROW_3_KEY}}</td>
+          <td><span class="arrow">→</span>{{ROW_3_TASK}}<span class="arrow">→</span>{{ROW_3_NEED}}</td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- ══ CONCLUSION BAR ═══════════════════════════════════
+       结论框 — 蓝色左边框，单句，下划线
+       ══════════════════════════════════════════════════ -->
+  <div class="conclusion">
+    <div class="conclusion-text">{{CONCLUSION}}</div>
+  </div>
+
+  <!-- ══ FOOTER ════════════════════════════════════════════ -->
+  <div class="footer">
+    <span>原文：<a href="{{SOURCE_URL}}" target="_blank" rel="noopener">{{AUTHOR}} · {{SOURCE_LABEL}}</a></span>
+    <span class="footer-brand">via readable-and-shareable</span>
+  </div>
+
+</div>
+</body>
+</html>
