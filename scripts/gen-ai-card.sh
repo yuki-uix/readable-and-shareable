@@ -10,6 +10,14 @@
 
 set -euo pipefail
 
+# ── Auto-load API keys from shell profile if not in environment ───────────────
+if [[ -z "${DASHSCOPE_API_KEY:-}" && -z "${OPENAI_API_KEY:-}" ]]; then
+  for _profile in ~/.zshrc ~/.bash_profile ~/.bashrc ~/.profile; do
+    [[ -f "$_profile" ]] && source "$_profile" 2>/dev/null || true
+    [[ -n "${DASHSCOPE_API_KEY:-}" || -n "${OPENAI_API_KEY:-}" ]] && break
+  done
+fi
+
 # ── Parse args ────────────────────────────────────────────────────────────────
 PROMPT_FILE=""
 OUTPUT_PATH=""
