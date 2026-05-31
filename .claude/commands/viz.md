@@ -85,22 +85,32 @@ Scan the user's original request for keywords from the table above.
 
 **Step 3.2 — Content-based recommendation** (when no keyword matched)
 
-Based on `analysis.md`, present recommendations with explicit one-line reasons tied to the detected structure type:
+Based on `analysis.md`, present recommendations. **Rationale must use scene language** — write in terms of "适合发到哪里/给谁看/用在什么场景"，不要在用户侧呈现"层级型/时序型"等内部结构类型术语。
 
 ```
 根据分析，这篇文章最适合以下产出形式：
 
-1. {首选} — {理由，必须引用结构类型，例："层级型结构清晰，思维导图能展示完整知识框架"}
-2. {次选} — {理由}
-3. {第三选} — {理由}
+✦ 首选：{产出形式} — {场景理由，例："适合截图发朋友圈 / 分享给想快速了解的朋友"}
+  备选：{产出形式} — {场景理由，例："适合需要深读的受众，可导入幕布整理"}
+  备选：{产出形式} — {场景理由}
+```
 
+**多结构类型文章**（analysis.md 命中多种结构）：在推荐列表前加一行说明主结构与优先级依据：
+> 主结构是 {X}，首推 {形式}；若你更想突出 {Y 部分}，可以选 {备选形式}。
+
+**单一推荐**（只有一种形式明显适合）：同样附理由，并说明其他形式不适合的原因（一句话即可）：
+> 这篇最适合 {形式}。其他形式不太合适：思维导图会丢失 {原因}，图片卡片难以体现 {原因}。
+
+完整选项（用户可随时指定其他形式）：
+
+```
 完整选项：
-① 思维导图      — 展示层级与关系，适合愿意细读的受众；约 5 分钟
-② Interactive HTML — 数据/流程交互展示，视觉冲击强；约 15 分钟
-③ 图片卡片      — 核心观点提炼，适合快速传播；约 10 分钟
-④ SVG 架构图    — 系统关系可视化，适合技术读者；约 10 分钟
-⑤ 概念关系图    — 展示概念间连接，适合复杂系统；约 15 分钟（模板建设中）
-⑥ 漫画          — 轻量叙事，降低阅读门槛；约 30 分钟（实验性）
+① 思维导图        — 适合愿意花时间细读的受众，可截图或导入幕布；约 5 分钟
+② Interactive HTML — 交互式网页，适合数据密集或有流程步骤的内容；通过 sharehtml.zhenjia.dev 一键分享（7天有效链接，可另存本地永久保存）；约 15 分钟
+③ 图片卡片        — 核心观点提炼成卡片，截图后直接发朋友圈 / 小红书；约 10 分钟
+④ SVG 架构图      — 系统关系可视化，适合技术读者；约 10 分钟
+⑤ 概念关系图      — 展示概念间连接，适合复杂系统；约 15 分钟（模板建设中）
+⑥ 漫画            — 轻量叙事，降低阅读门槛；约 30 分钟（实验性）
 ```
 
 If the article is Narrative/Argumentative and the user still wants visualization, explicitly note:
