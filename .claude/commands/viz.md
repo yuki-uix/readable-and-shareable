@@ -131,6 +131,12 @@ Based on `analysis.md`, present recommendations. **Rationale must use scene lang
 ⑥ 漫画               — 轻量叙事，降低阅读门槛；约 30 分钟（实验性）
 ```
 
+**⛔ AI 图片卡硬性禁令（③b 路径）**
+
+- **绝对禁止**用 HTML / CSS / SVG / canvas 来模拟或替代 AI 图片卡的输出。
+- 如果 API key 不可用，必须明确告知用户并停止，不得悄悄降级为 HTML。
+- 产出物必须是通过 `scripts/gen-ai-card.sh` 生成的 PNG 文件，没有例外。
+
 **③b AI 图片卡风格选择**（用户选择 ③b 后追加询问）：
 
 ```bash
