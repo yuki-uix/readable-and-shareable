@@ -128,7 +128,7 @@ Based on `analysis.md`, present recommendations. **Rationale must use scene lang
 ③b AI 图片卡（手绘） — AI 生成手绘风卡片，视觉冲击强；需要 DASHSCOPE_API_KEY 或 OPENAI_API_KEY；约 15 分钟
 ④ SVG 架构图         — 系统关系可视化，适合技术读者；约 10 分钟
 ⑤ 概念关系图         — 展示概念间连接，适合复杂系统；约 15 分钟（模板建设中）
-⑥ 漫画               — 轻量叙事，降低阅读门槛；约 30 分钟（实验性）
+⑥ 漫画               — 轻量叙事，降低阅读门槛（模板建设中，暂不可用）
 ```
 
 **⛔ AI 图片卡硬性禁令（③b 路径）**
@@ -206,7 +206,7 @@ Apply both together. `references/design-system.md` is the overarching visual sta
 | **AI 信息图** | 从 `references/base-prompt.md` 填充 | `references/base-prompt.md` 内含 | 按 `references/prompts-guide.md` 命名保存 | **✅ 必须确认** |
 | **AI 图片卡** | `templates/ai-image-card/style-{style}.md` | 内含于 style 文件 | `templates/ai-image-card/prompt.md` → `scripts/gen-ai-card.sh` | **✅ 必须确认** |
 | 概念关系图 | `templates/concept-map/`（建设中） | — | Mermaid / D3 | ❌ |
-| 漫画 | `templates/comic/`（实验性） | — | 分镜脚本 + 图像生成提示词 | ❌ |
+| 漫画 | `templates/comic/`（建设中，尚未可用） | — | **模板未就绪，不得使用任何外部工具（包括 baoyu-comic）替代** | ❌ |
 
 #### 图片卡片风格选择
 
@@ -246,3 +246,13 @@ via readable-and-shareable · github.com/yuki-uix/readable-and-shareable
 - If a section shouldn't be visualized, say so explicitly — don't force a form onto every part.
 - The platform where the user shares is their choice — this skill focuses on generating the right output type, not prescribing platforms.
 - The otml mind map format is for import into Mubu (幕布). See `templates/mindmap/` for the format spec.
+
+## ⛔ Scope Boundary — External Tools Prohibited
+
+This skill operates **only within the readable-and-shareable repository**. When a template or feature is marked "建设中" or "暂不可用":
+
+- **Do NOT** reach for external tools or skills (e.g. `baoyu-comic`, `baoyu-infographic`, `baoyu-xhs-images`) as substitutes.
+- **Do NOT** silently downgrade to HTML/CSS/SVG when the user requested AI-generated raster images.
+- **Instead**: tell the user clearly — "此功能模板尚未就绪，无法生成。" and stop.
+
+The presence of baoyu-skills in the environment does **not** authorize its use within this skill's flows.
