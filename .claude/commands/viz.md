@@ -84,17 +84,20 @@ If the article is Narrative/Argumentative and the user still wants visualization
 
 Use the corresponding template/approach. Extract content from `analysis.md` — do not re-read the original article.
 
-**Visual outputs (SVG, HTML cards):** Read `references/design-system.md` before generating. Apply the color palette, typography scale, spacing rules, and SVG layering order defined there.
+**Two-layer loading for image-card outputs:**
+1. Read `references/output-types/{output-type}.md` — layout rules, content constraints, save path
+2. Read `references/styles/{style}.md` — color tokens, typography, decorative elements
+Apply both together. `references/design-system.md` is the overarching visual standard.
 
-| Output Type | Template / Approach |
-|---|---|
-| 思维导图 | `templates/mindmap/prompt.md` → Markdown 缩进列表（Markmap 可渲染）；按需生成 otml |
-| Interactive HTML | `templates/interactive-html/` → 单文件 HTML；上传至 sharehtml.zhenjia.dev |
-| 图片卡片 | 见下方「图片卡片风格选择」→ `templates/image-card/prompt.md` |
-| SVG 架构图 | 直接生成 SVG；严格遵循 `references/design-system.md` 的分层顺序和间距规则 |
-| **AI 信息图** | 从 `references/base-prompt.md` 开始填充，**不要从头手写**；按 `references/prompts-guide.md` 命名和保存 prompt 文件；调用图像 API 生成 |
-| 概念关系图 | `templates/concept-map/`（建设中）→ Mermaid / D3 |
-| 漫画 | `templates/comic/`（实验性）→ 分镜脚本 + 图像生成提示词 |
+| Output Type | Layout Reference | Style Reference | Template |
+|---|---|---|---|
+| 思维导图 | `references/output-types/mindmap.md` | — | `templates/mindmap/prompt.md` |
+| Interactive HTML | `references/output-types/interactive-html.md` | — | `templates/interactive-html/` |
+| 图片卡片 | `references/output-types/image-card.md` | `references/styles/{style}.md` | `templates/image-card/prompt.md` |
+| SVG 架构图 | `references/output-types/diagram.md` | — (uses design-system.md colors) | 直接生成 SVG |
+| **AI 信息图** | 从 `references/base-prompt.md` 填充 | `references/base-prompt.md` 内含 | 按 `references/prompts-guide.md` 命名保存 |
+| 概念关系图 | `templates/concept-map/`（建设中） | — | Mermaid / D3 |
+| 漫画 | `templates/comic/`（实验性） | — | 分镜脚本 + 图像生成提示词 |
 
 #### 图片卡片风格选择
 
