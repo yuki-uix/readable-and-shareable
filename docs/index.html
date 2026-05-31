@@ -280,6 +280,59 @@
   .example-guide { font-size: 13px; color: var(--text2); margin-bottom: 16px; }
   .tag { font-size: 11px; background: var(--bg2); border: 0.5px solid var(--border); border-radius: 4px; padding: 2px 8px; color: var(--text2); }
 
+  /* ── Tabs ── */
+  .tab-bar {
+    display: flex; gap: 2px;
+    border-bottom: 0.5px solid var(--border);
+    margin-bottom: var(--space-6);
+  }
+  .tab-btn {
+    padding: 8px 16px; font-size: 13px; font-family: var(--font);
+    color: var(--text3); background: none; border: none;
+    border-bottom: 2px solid transparent; margin-bottom: -0.5px;
+    cursor: pointer; transition: color .15s, border-color .15s;
+  }
+  .tab-btn:hover { color: var(--text2); }
+  .tab-btn[aria-selected="true"] { color: var(--text); border-bottom-color: var(--text); }
+  [role="tabpanel"][hidden] { display: none; }
+
+  /* ── Image card showcase ── */
+  .card-showcase {
+    display: flex; gap: var(--space-6); align-items: flex-start; flex-wrap: wrap;
+  }
+  .card-showcase-main {
+    flex: 0 0 auto;
+    width: 280px;
+    border: 0.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+  .card-showcase-main img {
+    width: 100%; height: auto; display: block;
+  }
+  .card-showcase-single {
+    flex: 0 0 auto;
+    width: 160px;
+    border: 0.5px solid var(--border); border-radius: var(--radius-md); overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+  .card-showcase-single img {
+    width: 100%; height: auto; display: block;
+  }
+  .card-showcase-info {
+    flex: 1; min-width: 200px;
+    display: flex; flex-direction: column; gap: var(--space-4);
+    padding-top: var(--space-2);
+  }
+  .card-showcase-desc { font-size: 13px; color: var(--text2); line-height: 1.6; }
+  .card-showcase-meta { display: flex; flex-direction: column; gap: var(--space-2); }
+  .card-showcase-meta-row { font-size: 12px; color: var(--text3); }
+  .card-showcase-meta-row strong { color: var(--text2); font-weight: 500; }
+  @media (max-width: 600px) {
+    .card-showcase { flex-direction: column; }
+    .card-showcase-main { width: 100%; max-width: 320px; }
+    .card-showcase-single { width: 120px; }
+  }
+
   .iframe-wrap {
     border: 0.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden;
     background: var(--bg2);
@@ -373,29 +426,59 @@
 <!-- ── Example ── -->
 <section id="example">
   <div class="section-label">Example</div>
-  <h2 class="section-title">Coding Agent 成本优化路线图</h2>
+  <h2 class="section-title">真实产出物示例</h2>
 
-  <div class="example-meta">
-    <span class="tag">层级型</span>
-    <span class="tag">数值型</span>
-    <span class="tag">时序型</span>
-    <span style="font-size:12px;color:var(--text3)">原文 2 万字 · 识别出 3 种结构 · 生成地铁图 + 成本计算</span>
+  <div role="tablist" aria-label="产出形式" class="tab-bar">
+    <button class="tab-btn" role="tab" id="tab-html" aria-selected="true" aria-controls="panel-html" type="button">Interactive HTML</button>
+    <button class="tab-btn" role="tab" id="tab-card" aria-selected="false" aria-controls="panel-card" type="button">图片卡片</button>
   </div>
 
-  <p class="example-guide">↓ 点击任意站点，查看对应的优化路径和成本说明</p>
-
-  <div class="iframe-wrap">
-    <div class="iframe-bar">
-      <div class="iframe-dot"></div>
-      <div class="iframe-dot"></div>
-      <div class="iframe-dot"></div>
-      <span class="iframe-url">examples/coding-agent-cost/index.html</span>
+  <div role="tabpanel" id="panel-html" aria-labelledby="tab-html">
+    <div class="example-meta">
+      <span class="tag">层级型</span>
+      <span class="tag">数值型</span>
+      <span class="tag">时序型</span>
+      <span style="font-size:12px;color:var(--text3)">原文 2 万字 · 识别出 3 种结构 · 生成地铁图 + 成本计算</span>
     </div>
-    <iframe
-      src="examples/coding-agent-cost/index.html"
-      title="Coding Agent 成本优化路线图交互示例"
-      loading="lazy"
-    ></iframe>
+    <p class="example-guide">↓ 点击任意站点，查看对应的优化路径和成本说明</p>
+    <div class="iframe-wrap">
+      <div class="iframe-bar">
+        <div class="iframe-dot"></div>
+        <div class="iframe-dot"></div>
+        <div class="iframe-dot"></div>
+        <span class="iframe-url">examples/coding-agent-cost/index.html</span>
+      </div>
+      <iframe
+        src="examples/coding-agent-cost/index.html"
+        title="Coding Agent 成本优化路线图交互示例"
+        loading="lazy"
+      ></iframe>
+    </div>
+  </div>
+
+  <div role="tabpanel" id="panel-card" aria-labelledby="tab-card" hidden>
+    <div class="example-meta">
+      <span class="tag">层级型</span>
+      <span class="tag">对比型</span>
+      <span style="font-size:12px;color:var(--text3)">技术文章 · 识别出 2 种结构 · 生成综合信息图 + 单条观点卡</span>
+    </div>
+    <p class="example-guide">↓ 两种粒度的图片卡片，截图即分享，无需链接</p>
+    <div class="card-showcase">
+      <a href="showcase-image-card-infographic.png" target="_blank" rel="noopener" class="card-showcase-main" aria-label="查看原图：baoyu-skills 架构解析综合信息图">
+        <img src="showcase-image-card-infographic.png" alt="综合信息图示例：baoyu-skills 不是工具集——五个 zone 解析 Design Token 视角下的工程类比，macaron 手绘风格" loading="lazy">
+      </a>
+      <a href="showcase-image-card-single.png" target="_blank" rel="noopener" class="card-showcase-single" aria-label="查看原图：单条观点卡示例">
+        <img src="showcase-image-card-single.png" alt="单条观点卡示例：感觉变成参数——01/06，五维正交参数把「高级感」拆成独立维度" loading="lazy">
+      </a>
+      <div class="card-showcase-info">
+        <p class="card-showcase-desc">图片卡片适合截图分享——不需要链接，直接发给朋友或发到社交平台，感兴趣的人自然来问原文在哪。</p>
+        <div class="card-showcase-meta">
+          <div class="card-showcase-meta-row"><strong>两种粒度</strong> 综合信息图（多 zone 总结全文）+ 单条观点卡（一图一观点）</div>
+          <div class="card-showcase-meta-row"><strong>生成时间</strong> 约 10 分钟</div>
+          <div class="card-showcase-meta-row"><strong>来源标注</strong> 每张卡片底部自动带 <code>via readable-and-shareable</code></div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -490,6 +573,33 @@
 </div>
 
 <script>
+(function () {
+  // ── Tab switching ──────────────────────────────────────────────
+  const tabBtns = document.querySelectorAll('.tab-bar [role="tab"]');
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => activateTab(btn));
+    btn.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+        const tabs = [...tabBtns];
+        const idx = tabs.indexOf(btn);
+        const next = e.key === 'ArrowRight'
+          ? tabs[(idx + 1) % tabs.length]
+          : tabs[(idx - 1 + tabs.length) % tabs.length];
+        next.focus();
+        activateTab(next);
+      }
+    });
+  });
+
+  function activateTab(btn) {
+    tabBtns.forEach(b => {
+      const isSelected = b === btn;
+      b.setAttribute('aria-selected', String(isSelected));
+      document.getElementById(b.getAttribute('aria-controls')).hidden = !isSelected;
+    });
+  }
+})();
+
 (function () {
   // ── Data ──────────────────────────────────────────────────────
   // Higher = heavier weight when combining

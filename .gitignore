@@ -1,1 +1,17 @@
 PRODUCT.md
+DESIGN.md
+node_modules/
+.DS_Store
+
+# Local IDE / dev config
+.claude/launch.json
+
+# Local R&D experiments (Issue #21 prompt iteration)
+examples/baoyu-skills-design-token/
+examples/design-token-signals/
+
+# Generated outputs and spikes (not tracked in repo)
+examples/coding-agent-cost/infographic/infographic.png
+examples/coding-agent-cost/infographic/structured-content.md
+examples/coding-agent-cost/cards-xhs*
+examples/coding-agent-cost/diagram.svg
