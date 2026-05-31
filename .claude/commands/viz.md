@@ -58,9 +58,34 @@ After saving `analysis.md`, show the user a **3-line summary** in the conversati
 
 All subsequent steps reference `analysis.md` — do **not** re-read the original article.
 
+## Keyword Shortcuts
+
+When the user's request contains these keywords, use the mapped output type and style as the **leading recommendation** in Step 3. Skip content-based output inference for matched keywords — go straight to the mapped option as #1.
+
+**Step 2 analysis still runs regardless** — shortcuts only affect Step 3 recommendation order, not content consistency.
+
+| User Keyword | Output Type | Style | Notes |
+|---|---|---|---|
+| 小红书 / 发小红书 / xhs / 红书 | 图片卡片 | xhs | 直接推 xhs 风格作为首选 |
+| 思维导图 / mindmap / 脑图 | 思维导图 | — | 用户已明确形式，跳过推断 |
+| 信息图 / infographic / 手绘图 | AI 信息图 | hand-drawn-edu | 提醒用户需要图像 API |
+| 地铁图 / subway / 交互 / interactive | Interactive HTML | — | 提醒 7 天链接有效期 |
+| 卡片 / 观点卡 / 知识卡 | 图片卡片 | warm | 默认 warm，可追问风格偏好 |
+| 黑白 / 极简 / 纯白 | 图片卡片 | ink | 最大化可读性场景 |
+| 深色 / 暗色 / 科技感 / dark | 图片卡片 | night | 高对比冲击感场景 |
+| 架构图 / 系统图 / 关系图 / diagram | SVG 架构图 | — | 读 design-system.md 生成 SVG |
+
 ### Step 3 — Output Selection
 
-Based on `analysis.md` (written in Step 2), present recommendations with explicit one-line reasons tied to the detected structure type:
+**Step 3.1 — Check Keyword Shortcuts first**
+
+Scan the user's original request for keywords from the table above.
+- **Match found** → use mapped output + style as Recommendation #1; promote associated options to top; skip content-based inference for #1
+- **No match** → proceed to Step 3.2
+
+**Step 3.2 — Content-based recommendation** (when no keyword matched)
+
+Based on `analysis.md`, present recommendations with explicit one-line reasons tied to the detected structure type:
 
 ```
 根据分析，这篇文章最适合以下产出形式：
@@ -73,8 +98,9 @@ Based on `analysis.md` (written in Step 2), present recommendations with explici
 ① 思维导图      — 展示层级与关系，适合愿意细读的受众；约 5 分钟
 ② Interactive HTML — 数据/流程交互展示，视觉冲击强；约 15 分钟
 ③ 图片卡片      — 核心观点提炼，适合快速传播；约 10 分钟
-④ 概念关系图    — 展示概念间连接，适合复杂系统；约 15 分钟（模板建设中）
-⑤ 漫画          — 轻量叙事，降低阅读门槛；约 30 分钟（实验性）
+④ SVG 架构图    — 系统关系可视化，适合技术读者；约 10 分钟
+⑤ 概念关系图    — 展示概念间连接，适合复杂系统；约 15 分钟（模板建设中）
+⑥ 漫画          — 轻量叙事，降低阅读门槛；约 30 分钟（实验性）
 ```
 
 If the article is Narrative/Argumentative and the user still wants visualization, explicitly note:
