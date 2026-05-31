@@ -66,13 +66,15 @@ When the user's request contains these keywords, use the mapped output type and 
 
 | User Keyword | Output Type | Style | Notes |
 |---|---|---|---|
-| 小红书 / 发小红书 / xhs / 红书 | 图片卡片 | xhs | 直接推 xhs 风格作为首选 |
+| 小红书 / 发小红书 / xhs / 红书 | 图片卡片（HTML） | xhs | 直接推 xhs 风格作为首选 |
 | 思维导图 / mindmap / 脑图 | 思维导图 | — | 用户已明确形式，跳过推断 |
-| 信息图 / infographic / 手绘图 | AI 信息图 | hand-drawn-edu | 提醒用户需要图像 API |
+| 信息图 / infographic | AI 信息图 | hand-drawn-edu | 提醒用户需要图像 API |
 | 地铁图 / subway / 交互 / interactive | Interactive HTML | — | 提醒 7 天链接有效期 |
-| 卡片 / 观点卡 / 知识卡 | 图片卡片 | warm | 默认 warm，可追问风格偏好 |
-| 黑白 / 极简 / 纯白 | 图片卡片 | ink | 最大化可读性场景 |
-| 深色 / 暗色 / 科技感 / dark | 图片卡片 | night | 高对比冲击感场景 |
+| 手绘 / 插画 / 手绘卡 / 手绘图片 / ai图片 / ai卡片 | AI 图片卡 | sketch-notes | 直接走 ③b 流程，检测 API key |
+| 粉笔 / 黑板 / chalkboard | AI 图片卡 | chalkboard | 直接走 ③b chalkboard 风格 |
+| 卡片 / 观点卡 / 知识卡 | 图片卡片（HTML） | warm | 默认 warm，可追问风格偏好 |
+| 黑白 / 极简 / 纯白 | 图片卡片（HTML） | ink | 最大化可读性场景 |
+| 深色 / 暗色 / 科技感 / dark | 图片卡片（HTML） | night | 高对比冲击感场景 |
 | 架构图 / 系统图 / 关系图 / diagram | SVG 架构图 | — | 读 design-system.md 生成 SVG |
 
 ### Step 3 — Output Selection
@@ -82,6 +84,21 @@ When the user's request contains these keywords, use the mapped output type and 
 Scan the user's original request for keywords from the table above.
 - **Match found** → use mapped output + style as Recommendation #1; promote associated options to top; skip content-based inference for #1
 - **No match** → proceed to Step 3.2
+
+**Step 3.1.5 — 消歧：用户说「图片」时**
+
+If the user says only `图片` / `生成图片` / `图片卡` / `做成图片` without further qualification:
+
+**Do NOT assume ③a.** Ask one clarifying question:
+
+```
+你想要哪种图片格式？
+
+A. 图片卡片（HTML 截图）— 即用，无需 API，warm/night/ink 风格
+B. AI 手绘图片卡          — 手绘插画风格，需要 DASHSCOPE_API_KEY 或 OPENAI_API_KEY
+```
+
+Wait for the user's answer before proceeding.
 
 **Step 3.2 — Content-based recommendation** (when no keyword matched)
 
