@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>INTP</title>
+<script src="/mermaid.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#FAFAF8;--surface:#F2F2EE;--text:#1A1A18;--text2:#888880;--border:rgba(0,0,0,0.12);--key:#E8B84B;--font:-apple-system,"Helvetica Neue","PingFang SC","Microsoft YaHei",sans-serif;--mono:"Courier New","SF Mono",monospace}
+html,body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+.page{width:600px;margin:0 auto;padding:40px 44px 32px;display:flex;flex-direction:column;gap:20px}
+.header{padding-bottom:14px;border-bottom:1px solid var(--border)}
+.header-label{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text2);margin-bottom:8px;font-family:var(--mono)}
+.header-title{font-size:18px;font-weight:600;line-height:1.35}
+.header-sub{font-size:12px;color:var(--text2);margin-top:6px;line-height:1.5}
+
+.struck{display:inline-block;position:relative;color:var(--text2);font-size:13px;padding:8px 12px;background:var(--surface);border-radius:4px;font-family:var(--mono)}
+.struck::after{content:'';position:absolute;left:12px;right:12px;top:50%;height:1.5px;background:var(--text2)}
+.struck-wrap{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--text2)}
+.struck-arrow{font-size:16px;color:var(--text2)}
+
+.diagram-wrap .mermaid{display:flex;justify-content:center}
+
+.condition-row{display:flex;gap:8px;flex-wrap:wrap}
+.condition-tag{font-size:11px;font-family:var(--mono);padding:4px 10px;border:1px solid var(--key);border-radius:3px;color:var(--text);background:#FEF9EC}
+.condition-tag.dim{border-color:var(--border);background:var(--surface);color:var(--text2)}
+
+.conclusion{background:var(--text);color:#fff;border-radius:4px;padding:10px 14px;font-size:13px;font-weight:500;display:flex;align-items:center;gap:10px}
+.conclusion-label{font-size:10px;font-family:var(--mono);letter-spacing:.08em;opacity:.5;text-transform:uppercase}
+
+.open-q{border:1.5px dashed var(--border);border-radius:4px;padding:10px 14px;font-size:12px;color:var(--text2);font-family:var(--mono);line-height:1.7}
+.open-q-label{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text2);margin-bottom:6px}
+
+.footer{display:flex;justify-content:space-between;padding-top:12px;border-top:0.5px solid var(--border);font-size:11px;color:var(--text2)}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="header">
+  <div class="header-label">Design Token · 命题推导</div>
+  <div class="header-title">Token 一致性：命题拆解链</div>
+  <div class="header-sub">从直觉断言出发，分解为可验证条件</div>
+</div>
+
+<div class="struck-wrap">
+  <span class="struck">Token 要跟品牌保持一致</span>
+  <span class="struck-arrow">→</span>
+  <span style="font-size:12px;color:var(--text)">「一致」是什么？</span>
+</div>
+
+<div class="diagram-wrap">
+<div class="mermaid">
+%%{init:{"theme":"base","themeVariables":{"primaryColor":"#F2F2EE","primaryTextColor":"#1A1A18","primaryBorderColor":"#C8C8C4","lineColor":"#888880","fontSize":"13px","fontFamily":"PingFang SC,Helvetica Neue,sans-serif"}}}%%
+flowchart TD
+    A["命题：Token 要跟品牌保持一致"]
+    A --> B["拆解：一致 = 三轴同向"]
+    A --> R["反例检验\nLanding page 无 IA 约束\n→ 9 种 token 组合均合法"]
+    B --> C["认知任务\n← 关键约束变量"]
+    B --> D["品牌意图\n传达性格"]
+    B --> E["Token 系统\n值的集合"]
+    C --> F(["条件成立\n→ 三轴同向 = 感觉对了"])
+    D --> F
+    E --> F
+    R -.->|修正命题范围| C
+    style C fill:#FEF9EC,stroke:#E8B84B,color:#1A1A18,font-weight:bold
+    style F fill:#1A1A18,stroke:#1A1A18,color:#ffffff
+    style R fill:#F2F2EE,stroke:#C8C8C4,color:#888880
+</div>
+</div>
+
+<div>
+  <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text2);margin-bottom:8px;font-family:var(--mono)">成立条件</div>
+  <div class="condition-row">
+    <span class="condition-tag">认知任务已知</span>
+    <span class="condition-tag">品牌意图明确</span>
+    <span class="condition-tag">Token 集合已定义</span>
+    <span class="condition-tag dim">IA 存在功能约束</span>
+  </div>
+</div>
+
+<div class="conclusion">
+  <div>
+    <div class="conclusion-label">推导结论</div>
+    <div>「一致性」= 三轴（认知任务 · 品牌意图 · Token）投票方向相同</div>
+  </div>
+</div>
+
+<div>
+  <div class="open-q-label" style="font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text2);margin-bottom:6px;font-family:var(--mono)">开放问题</div>
+  <div class="open-q">
+    // 三轴中哪一轴权重更高？<br>
+    // 当品牌意图 ≠ 认知任务时，如何裁决？<br>
+    // token 系统如何编码「性格」——这是一个语义问题
+  </div>
+</div>
+
+<div class="footer"><span>原文：Yuki · 微信公众号 2026.05</span><span style="opacity:.7">via readable-and-shareable</span></div>
+</div>
+<script>mermaid.initialize({startOnLoad:true,securityLevel:'loose'});</script>
+</body>
+</html>

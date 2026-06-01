@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>ISTP</title>
+<script src="/mermaid.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#F9F9F8;--surface:#F0F0EE;--text:#1A1A18;--text2:#888880;--border:rgba(0,0,0,0.14);--key:#D44000;--font:-apple-system,"Helvetica Neue","PingFang SC","Microsoft YaHei",sans-serif;--mono:"Courier New","SF Mono",monospace}
+html,body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+.page{width:600px;margin:0 auto;padding:40px 44px 32px;display:flex;flex-direction:column;gap:20px}
+.header{padding-bottom:14px;border-bottom:1px solid var(--border)}
+.header-label{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text2);margin-bottom:8px;font-family:var(--mono)}
+.header-title{font-size:18px;font-weight:600;line-height:1.35}
+.diagram-wrap .mermaid{display:flex;justify-content:center}
+.breakdown{border:0.5px solid var(--border);border-radius:4px;overflow:hidden}
+.breakdown-row{display:grid;grid-template-columns:90px 1fr}
+.breakdown-row+.breakdown-row{border-top:0.5px solid var(--border)}
+.breakdown-cell{padding:8px 12px;font-size:12px}
+.breakdown-cell:first-child{background:var(--surface);font-family:var(--mono);font-size:11px;font-weight:600;border-right:0.5px solid var(--border);white-space:nowrap}
+.key-row{color:var(--key);font-weight:500}
+.tech-note{font-size:11px;color:var(--text2);font-family:var(--mono);border-left:2px solid var(--border);padding-left:10px;line-height:1.7}
+.footer{display:flex;justify-content:space-between;padding-top:12px;border-top:0.5px solid var(--border);font-size:11px;color:var(--text2)}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="header">
+<div class="header-label">Design Token · 机制拆解</div>
+<div class="header-title">Token × IA：摩擦是怎么产生的</div>
+</div>
+<div class="diagram-wrap">
+<div class="mermaid">
+%%{init:{"theme":"base","themeVariables":{"primaryColor":"#F0F0EE","primaryTextColor":"#1A1A18","primaryBorderColor":"#C0C0BC","lineColor":"#888880","fontSize":"13px","fontFamily":"PingFang SC,Helvetica Neue,sans-serif"}}}%%
+flowchart TD
+    A["品牌意图 × IA 结构 × Token\n三个约束来源同时起作用"]
+    A --> B["品牌意图\n传达什么性格"]
+    A --> C["认知任务\n← 关键约束变量"]
+    A --> D["Token 选择\n值的完整集合"]
+    B --> E(["三轴同向 → 「感觉对了」"])
+    C --> E
+    D --> E
+    C -->|特例路径| F["Landing page\nIA 约束 → 0"]
+    C -->|一般路径| G["其他 IA\n有功能性约束"]
+    G -.->|三轴偏移 × 交集消失| E
+    style C fill:#FFF0EA,stroke:#D44000,color:#D44000,font-weight:bold
+    style E fill:#1A1A18,stroke:#1A1A18,color:#ffffff
+</div>
+</div>
+<div class="breakdown">
+<div class="breakdown-row"><div class="breakdown-cell">token 系统</div><div class="breakdown-cell">颜色 + 圆角 + 间距 + 字重 + 动效的完整集合</div></div>
+<div class="breakdown-row"><div class="breakdown-cell">认知任务</div><div class="breakdown-cell key-row">扫描 / 确认 / 阅读 / 感受品牌 — 约束来源</div></div>
+<div class="breakdown-row"><div class="breakdown-cell">摩擦条件</div><div class="breakdown-cell">token 投票方向 ≠ 认知任务方向</div></div>
+<div class="breakdown-row"><div class="breakdown-cell">失效路径</div><div class="breakdown-cell">三轴任意一轴偏移 → 交集消失，用户感知不适</div></div>
+</div>
+<div class="tech-note">// landing page: 认知任务 = token 表达，无独立功能约束 → 9 种均合法<br>// 其他 IA: 认知任务独立于 token 之外，功能性约束明确</div>
+<div class="footer"><span>原文：Yuki · 微信公众号 2026.05</span><span style="opacity:.7">via readable-and-shareable</span></div>
+</div>
+<script>mermaid.initialize({startOnLoad:true,securityLevel:'loose'});</script>
+</body>
+</html>
