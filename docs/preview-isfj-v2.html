@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>ISFJ — 步骤手册</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#FDFCF8;
+  --text:#242018;
+  --text2:#7A7268;
+  --border:rgba(0,0,0,0.09);
+  --green:#4A7C59;
+  --green-pale:#EEF3EE;
+  --orange:#B5622A;
+  --orange-pale:#FBF2EB;
+  --blue-pale:#EEF1F8;
+  --step-bg:#4A7C59;
+  --font:-apple-system,"Helvetica Neue","PingFang SC","Microsoft YaHei",sans-serif;
+}
+html,body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+.page{width:600px;margin:0 auto;padding:44px 48px 36px;display:flex;flex-direction:column;gap:0}
+
+/* Header */
+.header{margin-bottom:28px}
+.eyebrow{font-size:10px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--text2);margin-bottom:10px}
+.title{font-size:20px;font-weight:700;line-height:1.35;color:var(--text);margin-bottom:5px}
+.subtitle{font-size:12px;color:var(--text2);line-height:1.6}
+.progress-bar{height:3px;background:var(--border);border-radius:2px;margin-top:14px;overflow:hidden}
+.progress-fill{height:100%;width:75%;background:var(--green);border-radius:2px}
+.progress-label{font-size:10px;color:var(--text2);margin-top:5px}
+
+/* Step */
+.step{display:flex;gap:14px;margin-bottom:4px;align-items:flex-start}
+.step-num{
+  min-width:32px;height:32px;border-radius:50%;
+  background:var(--step-bg);color:#fff;
+  font-size:14px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin-top:2px;
+}
+.step-num.done{background:var(--green);opacity:.7}
+.step-body{flex:1;border:0.5px solid var(--border);border-radius:5px;overflow:hidden;background:#fff}
+.step-head{padding:10px 14px 8px;display:flex;align-items:baseline;gap:8px}
+.step-title{font-size:14px;font-weight:600;color:var(--text);line-height:1.3}
+.step-tag{font-size:10px;padding:2px 7px;border-radius:2px;font-weight:600}
+.step-tag.done{background:var(--green-pale);color:var(--green)}
+.step-tag.active{background:var(--blue-pale);color:#2563EB}
+.step-desc{padding:0 14px 10px;font-size:12px;color:var(--text2);line-height:1.6}
+.step-check{padding:8px 14px;background:var(--green-pale);border-top:0.5px solid rgba(74,124,89,0.15);font-size:11px;color:var(--green);display:flex;align-items:center;gap:6px}
+.step-check::before{content:'✓';font-weight:700}
+
+/* Warning block */
+.warn-block{
+  background:var(--orange-pale);border-left:3px solid var(--orange);
+  border-radius:0 4px 4px 0;padding:10px 14px;
+  margin:0 0 0 46px;
+}
+.warn-head{font-size:11px;font-weight:700;color:var(--orange);margin-bottom:4px}
+.warn-head::before{content:'⚠  '}
+.warn-text{font-size:11px;color:var(--text2);line-height:1.55}
+
+/* Connector */
+.step-connector{margin-left:16px;width:0;border-left:2px dashed rgba(74,124,89,0.25);height:12px}
+
+/* Done state */
+.done-bar{
+  background:var(--green);color:#fff;
+  border-radius:5px;padding:12px 18px;
+  display:flex;align-items:center;gap:12px;
+  margin-top:8px;
+}
+.done-icon{font-size:20px}
+.done-text{font-size:14px;font-weight:600}
+.done-sub{font-size:11px;opacity:.75;margin-top:2px}
+
+/* Footer */
+.footer{display:flex;justify-content:space-between;padding-top:16px;margin-top:24px;border-top:0.5px solid var(--border);font-size:10px;color:var(--text2)}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="eyebrow">Design Token · 步骤手册</div>
+    <div class="title">Token 一致性的操作流程</div>
+    <div class="subtitle">按步骤检查三轴是否同向，确认后再执行 Token 决策</div>
+    <div class="progress-bar"><div class="progress-fill"></div></div>
+    <div class="progress-label">共 4 步 · 建议在设计评审前完成</div>
+  </div>
+
+  <!-- Step 1 -->
+  <div class="step">
+    <div class="step-num done">1</div>
+    <div class="step-body">
+      <div class="step-head">
+        <div class="step-title">明确认知任务</div>
+        <span class="step-tag done">已完成</span>
+      </div>
+      <div class="step-desc">确认用户在这个页面的主要任务是什么：扫描信息、完成操作、感受品牌，还是阅读详细内容？认知任务不同，Token 的合法范围完全不同。</div>
+      <div class="step-check">认知任务已写入设计说明</div>
+    </div>
+  </div>
+  <div class="step-connector"></div>
+
+  <!-- Step 2 -->
+  <div class="step">
+    <div class="step-num done">2</div>
+    <div class="step-body">
+      <div class="step-head">
+        <div class="step-title">确认品牌意图</div>
+        <span class="step-tag done">已完成</span>
+      </div>
+      <div class="step-desc">这个界面要传达什么性格？专业 / 亲切 / 高效 / 创意——品牌意图决定了 Token 的情绪方向，需要在选 Token 之前就对齐。</div>
+      <div class="step-check">品牌意图与设计团队对齐</div>
+    </div>
+  </div>
+  <div class="step-connector"></div>
+
+  <!-- Step 3 active -->
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <div class="step-head">
+        <div class="step-title">检查三轴是否同向</div>
+        <span class="step-tag active">进行中</span>
+      </div>
+      <div class="step-desc">品牌意图 · 认知任务 · Token 系统 — 三个轴的投票方向是否一致？将每个 Token 决策对照三轴逐项核对，找出偏移点。</div>
+    </div>
+  </div>
+
+  <!-- Warning block -->
+  <div class="warn-block">
+    <div class="warn-head">注意：Landing page 是例外</div>
+    <div class="warn-text">Landing page 没有独立的 IA 功能约束，认知任务 = Token 表达本身。此时 9 种 Token 组合均合法，无需强行对齐三轴。</div>
+  </div>
+  <div class="step-connector"></div>
+
+  <!-- Step 4 -->
+  <div class="step">
+    <div class="step-num" style="background:#C8C4BC">4</div>
+    <div class="step-body" style="opacity:.65">
+      <div class="step-head">
+        <div class="step-title">执行 Token 决策</div>
+      </div>
+      <div class="step-desc">确认三轴同向后，从 Token 系统中选取满足条件的集合。交集非空 = 合法选择。有摩擦感 = 回到步骤 3 重新检查。</div>
+    </div>
+  </div>
+
+  <!-- Done bar -->
+  <div class="done-bar">
+    <div class="done-icon">✅</div>
+    <div>
+      <div class="done-text">三轴同向 → Token 决策可执行</div>
+      <div class="done-sub">完成以上 4 步后，「感觉对了」是可预期的结构结果</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>原文：Yuki · 微信公众号 2026.05</span>
+    <span>via readable-and-shareable</span>
+  </div>
+</div>
+</body>
+</html>

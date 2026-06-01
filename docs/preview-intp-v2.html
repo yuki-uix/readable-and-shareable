@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>INTP — 推导草稿</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F9F9F7;
+  --text:#1A1A18;
+  --text2:#7A7A72;
+  --border:rgba(0,0,0,0.13);
+  --mark:#E8B84B;
+  --mark-pale:#FEF9EC;
+  --mono:"Courier New","SF Mono","Menlo",monospace;
+  --font:-apple-system,"Helvetica Neue","PingFang SC",sans-serif;
+}
+html,body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+
+/* Page with margin-note gutter */
+.page{
+  width:600px;margin:0 auto;
+  display:grid;
+  grid-template-columns:1fr 136px;
+  grid-template-rows:auto;
+  column-gap:0;
+}
+.main{padding:44px 16px 36px 44px;display:flex;flex-direction:column;gap:18px}
+.gutter{padding:44px 20px 36px 4px;display:flex;flex-direction:column;gap:0;position:relative}
+
+/* Header */
+.header{padding-bottom:14px;border-bottom:1px solid var(--border)}
+.eyebrow{font-size:10px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--text2);margin-bottom:8px;font-family:var(--mono)}
+.title{font-size:17px;font-weight:600;line-height:1.35;color:var(--text)}
+
+/* Strikethrough proposition */
+.struck-block{display:flex;flex-direction:column;gap:4px}
+.struck-label{font-size:10px;font-family:var(--mono);color:var(--text2);letter-spacing:.06em}
+.struck-text{
+  display:inline-block;position:relative;
+  font-family:var(--mono);font-size:13px;color:var(--text2);
+  padding:7px 12px;background:rgba(0,0,0,0.04);border-radius:3px;
+  line-height:1.4;
+}
+.struck-text::after{
+  content:'';position:absolute;left:12px;right:12px;
+  top:calc(50% - 1px);height:1.5px;background:var(--text2);
+}
+.struck-because{font-size:11px;color:var(--text2);font-family:var(--mono);margin-top:4px;padding-left:2px}
+.struck-because::before{content:'∵  '}
+
+/* Derivation chain */
+.chain{display:flex;flex-direction:column;gap:0}
+.chain-item{display:flex;gap:12px;align-items:flex-start}
+.chain-sym{font-family:var(--mono);font-size:15px;color:var(--text2);min-width:20px;padding-top:8px;text-align:center}
+.chain-body{flex:1;border:0.5px solid var(--border);border-radius:3px;padding:9px 12px;background:#fff;font-size:12px;line-height:1.55}
+.chain-body strong{font-weight:600;color:var(--text)}
+.chain-connector{margin-left:20px;display:flex;align-items:center;gap:6px;padding:3px 0}
+.chain-connector::before{content:'↓';font-family:var(--mono);color:var(--text2);font-size:13px}
+.chain-connector-label{font-size:10px;font-family:var(--mono);color:var(--text2)}
+
+/* Condition tags */
+.cond-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.cond-label{font-size:10px;font-family:var(--mono);color:var(--text2);margin-right:2px}
+.cond-tag{
+  font-size:11px;font-family:var(--mono);
+  padding:3px 9px;border:1px solid var(--mark);
+  border-radius:2px;color:var(--text);background:var(--mark-pale);
+  line-height:1.4;
+}
+.cond-tag.false{border-color:var(--border);background:transparent;color:var(--text2);text-decoration:line-through;opacity:.6}
+
+/* Conclusion (conditional) */
+.conc-block{border-left:3px solid var(--mark);padding:9px 12px;background:var(--mark-pale)}
+.conc-sym{font-family:var(--mono);font-size:11px;color:var(--text2);margin-bottom:4px}
+.conc-text{font-size:13px;font-weight:600;color:var(--text);line-height:1.4}
+.conc-cond{font-size:11px;color:var(--text2);font-family:var(--mono);margin-top:5px;line-height:1.5}
+
+/* Open question */
+.open-q{border:1.5px dashed var(--border);border-radius:3px;padding:10px 13px}
+.open-q-sym{font-family:var(--mono);font-size:10px;color:var(--text2);margin-bottom:6px;letter-spacing:.06em}
+.open-q-item{font-size:12px;font-family:var(--mono);color:var(--text2);line-height:1.7}
+.open-q-item::before{content:'? ';color:var(--mark);font-weight:700}
+
+/* Margin notes */
+.mnote{
+  font-size:10px;font-family:var(--mono);color:var(--text2);
+  line-height:1.6;padding:6px 0;border-left:2px solid var(--border);
+  padding-left:8px;margin-bottom:16px;
+}
+.mnote-tag{
+  display:inline-block;font-size:9px;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;
+  color:var(--mark);margin-bottom:3px;
+}
+
+/* Footer */
+.footer{
+  grid-column:1/3;
+  display:flex;justify-content:space-between;
+  padding:14px 44px 0 44px;margin-top:0;
+  border-top:0.5px solid var(--border);font-size:10px;color:var(--text2)
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- MAIN COLUMN -->
+  <div class="main">
+
+    <div class="header">
+      <div class="eyebrow">Design Token · 推导草稿</div>
+      <div class="title">Token 一致性：命题的第一原理拆解</div>
+    </div>
+
+    <!-- Struck proposition -->
+    <div class="struck-block">
+      <div class="struck-label">// 初始命题（待检验）</div>
+      <span class="struck-text">Token 要跟品牌保持一致</span>
+      <div class="struck-because">「一致」是未定义项，命题无法验证</div>
+    </div>
+
+    <!-- Derivation chain -->
+    <div class="chain">
+      <div class="chain-item">
+        <div class="chain-sym">①</div>
+        <div class="chain-body">
+          <strong>拆解「一致」</strong>：一致 ≠ 相似，而是三轴同向投票<br>
+          <span style="color:var(--text2)">品牌意图 · 认知任务 · Token 系统 — 三个独立变量</span>
+        </div>
+      </div>
+      <div class="chain-connector"><span class="chain-connector-label">引入关键变量</span></div>
+      <div class="chain-item">
+        <div class="chain-sym" style="color:var(--mark);font-weight:700">★</div>
+        <div class="chain-body" style="border-color:var(--mark)">
+          <strong>认知任务 — 关键约束变量</strong><br>
+          <span style="color:var(--text2)">由 IA 结构决定，独立于 Token 系统之外。<br>扫描 / 确认 / 阅读 / 感受品牌 → 不同任务需要不同投票方向</span>
+        </div>
+      </div>
+      <div class="chain-connector"><span class="chain-connector-label">代入特殊情形</span></div>
+      <div class="chain-item">
+        <div class="chain-sym">②</div>
+        <div class="chain-body">
+          <strong>反例检验</strong>：Landing page — IA 约束 → 0<br>
+          <span style="color:var(--text2)">∴ 认知任务 = Token 表达本身，9 种组合均合法<br>∴ 「一致性」在此处约束消失 — 命题范围缩小</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Conditions -->
+    <div>
+      <div class="cond-row">
+        <span class="cond-label">成立条件：</span>
+        <span class="cond-tag">认知任务已知</span>
+        <span class="cond-tag">IA 有功能约束</span>
+        <span class="cond-tag">三轴同向</span>
+        <span class="cond-tag false">Landing page</span>
+      </div>
+    </div>
+
+    <!-- Conditional conclusion -->
+    <div class="conc-block">
+      <div class="conc-sym">∴ 条件结论</div>
+      <div class="conc-text">「感觉对了」= 三轴交集非空的结构结果</div>
+      <div class="conc-cond">当 IA 存在功能约束 ∧ 三轴投票方向已知 时成立</div>
+    </div>
+
+    <!-- Open questions -->
+    <div class="open-q">
+      <div class="open-q-sym">// 未解问题</div>
+      <div class="open-q-item">三轴权重相等还是存在优先级？</div>
+      <div class="open-q-item">品牌意图 ≠ 认知任务时的裁决规则？</div>
+      <div class="open-q-item">Token 如何编码「性格」这一语义变量？</div>
+    </div>
+
+  </div>
+
+  <!-- GUTTER / MARGIN NOTES -->
+  <div class="gutter">
+    <div style="height:62px"></div><!-- align with content start -->
+
+    <div class="mnote">
+      <div class="mnote-tag">定义</div>
+      三轴 = 品牌意图<br>+ 认知任务<br>+ Token 系统
+    </div>
+
+    <div class="mnote">
+      <div class="mnote-tag">关键</div>
+      认知任务由<br>IA 决定，不<br>由设计师决定
+    </div>
+
+    <div class="mnote">
+      <div class="mnote-tag">边界</div>
+      Landing page<br>是特例——<br>IA 约束 = 0
+    </div>
+
+    <div class="mnote" style="border-left-color:var(--mark)">
+      <div class="mnote-tag">待验证</div>
+      混合场景下<br>三轴如何加权？
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>原文：Yuki · 微信公众号 2026.05</span>
+    <span>via readable-and-shareable</span>
+  </div>
+</div>
+</body>
+</html>
