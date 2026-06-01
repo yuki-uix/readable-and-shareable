@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>INFJ</title>
+<script src="/mermaid.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#F8F7FC;--surface:#EEE9F8;--text:#1A1A18;--text2:#888880;--border:rgba(91,63,166,0.15);--key:#5B3FA6;--font:-apple-system,"Helvetica Neue","PingFang SC","Microsoft YaHei",sans-serif;--mono:"Courier New","SF Mono",monospace}
+html,body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+.page{width:600px;margin:0 auto;padding:40px 44px 32px;display:flex;flex-direction:column;gap:20px}
+.header{padding-bottom:14px;border-bottom:1px solid var(--border)}
+.header-label{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--key);opacity:.7;margin-bottom:8px;font-family:var(--mono)}
+.header-title{font-size:18px;font-weight:600;line-height:1.35}
+.header-sub{font-size:12px;color:var(--text2);margin-top:6px;line-height:1.5}
+
+.diagram-wrap .mermaid{display:flex;justify-content:center}
+
+.depth-block{border-left:3px solid var(--key);padding:8px 12px 8px 14px;background:var(--surface);border-radius:0 4px 4px 0;margin-bottom:1px}
+.depth-block-label{font-size:10px;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--key);opacity:.7;margin-bottom:4px}
+.depth-block-text{font-size:12px;line-height:1.6;color:var(--text)}
+.depth-block.dim{border-left-color:rgba(91,63,166,0.25);background:transparent}
+.depth-block.dim .depth-block-text{color:var(--text2)}
+
+.gestalt{text-align:center;padding:14px;background:var(--key);border-radius:4px;color:#fff;font-size:13px;font-weight:500;line-height:1.5}
+.gestalt-label{font-size:10px;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;opacity:.6;margin-bottom:6px}
+
+.footer{display:flex;justify-content:space-between;padding-top:12px;border-top:0.5px solid var(--border);font-size:11px;color:var(--text2)}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="header">
+  <div class="header-label">Design Token · 概念网络</div>
+  <div class="header-title">Token 一致性：意义的连接网络</div>
+  <div class="header-sub">每个概念都指向中心张力：为什么「感觉不对」？</div>
+</div>
+
+<div class="diagram-wrap">
+<div class="mermaid">
+%%{init:{"theme":"base","themeVariables":{"primaryColor":"#EEE9F8","primaryTextColor":"#1A1A18","primaryBorderColor":"#9B85D4","lineColor":"#9B85D4","fontSize":"13px","fontFamily":"PingFang SC,Helvetica Neue,sans-serif"}}}%%
+graph TD
+    CORE(["认知任务\n← 意义的核心张力"])
+    CORE --- A["品牌意图\n传达什么性格"]
+    CORE --- B["Token 系统\n颜色·圆角·间距·字重·动效"]
+    CORE --- C["IA 结构\n信息层级与导航逻辑"]
+    A --- D["性格信号\n视觉语言的情绪方向"]
+    B --- E["一致性\n三轴同向 = 感觉对了"]
+    C --- E
+    D --- E
+    C --- F["特例：Landing page\nIA 约束消失 → 9种合法"]
+    B --- G["摩擦\n三轴偏移 → 用户感知不适"]
+    CORE --- G
+    style CORE fill:#5B3FA6,stroke:#5B3FA6,color:#ffffff,font-weight:bold
+    style E fill:#EEE9F8,stroke:#5B3FA6,color:#5B3FA6,font-weight:bold
+    style G fill:#FFF0EA,stroke:#D44000,color:#D44000
+    style F fill:#F2F2EE,stroke:#C8C8C4,color:#888880
+</div>
+</div>
+
+<div>
+  <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--key);opacity:.7;margin-bottom:10px;font-family:var(--mono)">深度层级</div>
+  <div class="depth-block">
+    <div class="depth-block-label">核心张力</div>
+    <div class="depth-block-text">认知任务 — 用户在这个界面实际需要完成什么？这个问题的答案决定了所有 token 选择的方向</div>
+  </div>
+  <div class="depth-block">
+    <div class="depth-block-label">一阶概念</div>
+    <div class="depth-block-text">品牌意图 · Token 系统 · IA 结构 — 三个约束来源，必须同向才能形成共识</div>
+  </div>
+  <div class="depth-block dim">
+    <div class="depth-block-label">边界条件</div>
+    <div class="depth-block-text">Landing page 是特例：IA 约束归零，token 表达空间最大，9 种组合均合法</div>
+  </div>
+</div>
+
+<div class="gestalt">
+  <div class="gestalt-label">格式塔闭合</div>
+  「感觉对了」不是偏好问题，而是三个系统同时指向同一个认知目标的结构结果
+</div>
+
+<div class="footer"><span>原文：Yuki · 微信公众号 2026.05</span><span style="opacity:.7">via readable-and-shareable</span></div>
+</div>
+<script>mermaid.initialize({startOnLoad:true,securityLevel:'loose'});</script>
+</body>
+</html>
