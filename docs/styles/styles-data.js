@@ -25,8 +25,8 @@ const STYLES_DATA = {
     primaryColor: "#2A5CAA",
     accentColor: "#EBF0FA",
     previewImg: "../showcase-mbti-intj-v2.png",
-    exampleImg: null,
-    exampleSource: null,
+    exampleImg: '../../examples/coding-agent-cost/cards/card-1-overview.png',
+    exampleSource: 'Context Engineering 的隐藏逻辑 · INTJ 框架演绎系列（6/6）',
     tokens: {
       bg: "#F5F7FA",
       surface: "#EBF0FA",
@@ -81,8 +81,8 @@ const STYLES_DATA = {
     primaryColor: "#5B3FA6",
     accentColor: "#EDE8F8",
     previewImg: "../preview-infj-v2.png",
-    exampleImg: null,
-    exampleSource: "CE article · Context Engineering 的隐藏逻辑",
+    exampleImg: '../../examples/token-coherence/ai-image-card/infographic-infj-v2.png',
+    exampleSource: 'Token 一致性的设计哲学 · INFJ 意义连接',
     tokens: { bg: "#F7F5FB", surface: "#EEEAF5", core: "#5B3FA6" }
   },
   infp: {
@@ -107,8 +107,8 @@ const STYLES_DATA = {
     primaryColor: "#C05070",
     accentColor: "#FFE8EC",
     previewImg: "../showcase-mbti-infp-v2.png",
-    exampleImg: null,
-    exampleSource: null,
+    exampleImg: '../../examples/token-coherence/ai-image-card/infographic-infp-v1.png',
+    exampleSource: 'Token 一致性的设计哲学 · INFP 叙事弧线',
     tokens: { bg: "#FFFDF7", surface: "#FFE8EC", core: "#C05070" }
   },
   entj: {
@@ -159,8 +159,8 @@ const STYLES_DATA = {
     primaryColor: "#C05020",
     accentColor: "#FFF0E6",
     previewImg: "../showcase-mbti-entp-v2.png",
-    exampleImg: null,
-    exampleSource: null,
+    exampleImg: '../../examples/token-coherence/ai-image-card/infographic-entp-v2.png',
+    exampleSource: 'Token 一致性的设计哲学 · ENTP 发散风暴',
     tokens: { bg: "#FEFAF5", surface: "#FFF0E6", core: "#C05020" }
   },
   enfp: {
@@ -185,8 +185,8 @@ const STYLES_DATA = {
     primaryColor: "#E8832A",
     accentColor: "#FFF0DC",
     previewImg: "../preview-enfp-v2.png",
-    exampleImg: null,
-    exampleSource: null,
+    exampleImg: '../../examples/token-coherence/ai-image-card/infographic-enfp-v1.png',
+    exampleSource: 'Token 一致性的设计哲学 · ENFP 星座聚焦',
     tokens: { bg: "#FEFCF7", surface: "#FFF5E6", core: "#E8832A" }
   },
   enfj: {
@@ -287,8 +287,8 @@ const STYLES_DATA = {
     primaryColor: "#7A5030",
     accentColor: "#F5EDE6",
     previewImg: "../showcase-mbti-isfp-v2.png",
-    exampleImg: null,
-    exampleSource: null,
+    exampleImg: '../../examples/token-coherence/ai-image-card/infographic-isfp-v2.png',
+    exampleSource: 'Token 一致性的设计哲学 · ISFP 色彩故事',
     tokens: { bg: "#FDFAF7", surface: "#F5EDE6", core: "#7A5030" }
   },
   estj: {
@@ -387,8 +387,8 @@ const STYLES_DATA = {
     primaryColor: "#D4402A",
     accentColor: "#FDEAE6",
     previewImg: "../showcase-mbti-esfp-v2.png",
-    exampleImg: null,
-    exampleSource: null,
+    exampleImg: '../../examples/token-coherence/ai-image-card/infographic-esfp-v2.png',
+    exampleSource: 'Token 一致性的设计哲学 · ESFP 体验海报',
     tokens: { bg: "#FDF6F5", surface: "#FDEAE6", core: "#D4402A" }
   },
   istp: {
