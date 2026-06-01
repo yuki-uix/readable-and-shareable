@@ -345,6 +345,30 @@
     .card-showcase-single { width: 120px; }
   }
 
+  /* ── Series cards ── */
+  .series-section { margin-top: var(--space-8); }
+  .series-header { margin-bottom: var(--space-4); }
+  .series-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: var(--space-2); }
+  .series-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+  .series-desc { font-size: 13px; color: var(--text2); line-height: 1.6; }
+  .series-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 4px; }
+  .series-cards { display: flex; gap: var(--space-3); width: max-content; }
+  .series-card {
+    width: 180px; flex-shrink: 0;
+    border-radius: var(--radius-sm); overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--bg2);
+    cursor: pointer;
+    transition: box-shadow .15s, transform .15s;
+  }
+  .series-card:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+  .series-card img { width: 100%; height: auto; display: block; }
+  .series-card-label {
+    padding: 6px 10px; font-size: 11px; font-weight: 600;
+    color: var(--text2); background: var(--bg2);
+  }
+  .series-card-label span { font-weight: 400; color: var(--text3); }
+
   /* ── MBTI Note matrix ── */
   .mbti-section {
     margin-top: var(--space-8);
@@ -604,6 +628,71 @@
           <div class="card-showcase-meta-row"><strong>两种粒度</strong> 综合信息图（多 zone 总结全文）+ 单条观点卡（一图一观点）</div>
           <div class="card-showcase-meta-row"><strong>生成时间</strong> 约 10 分钟</div>
           <div class="card-showcase-meta-row"><strong>来源标注</strong> 每张卡片底部自动带 <code>via readable-and-shareable</code></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Series cards case study -->
+    <div class="series-section">
+      <div class="series-header">
+        <div class="series-title">系列卡片案例：长文拆解（6 张）</div>
+        <div class="series-meta">
+          <span class="tag">论述型</span>
+          <span class="tag">层级型</span>
+          <span style="font-size:12px;color:var(--text3)">23 页 PDF · 识别为多卡场景 · INTJ 框架演绎风格</span>
+        </div>
+        <p class="series-desc">一篇文章篇幅过长时，<code>/viz</code> 会自动检测并拆成系列卡片，全系列统一一种视觉风格。<br>案例原文：《怎么优化 Coding Agent 的成本：从 Prompt Cache 到 Context Engineering》</p>
+      </div>
+      <div class="series-scroll">
+        <div class="series-cards">
+          <div class="series-card" role="button" tabindex="0"
+               data-src="examples/coding-agent-cost/cards/card-1-overview.png"
+               data-label="1 / 6" data-title="框架总览"
+               aria-label="查看系列卡片 1：框架总览">
+            <img src="examples/coding-agent-cost/cards/card-1-overview.png"
+                 alt="Card 1：Select/Compress/Isolate/Write 框架总览" loading="lazy">
+            <div class="series-card-label">1 / 6 <span>框架总览</span></div>
+          </div>
+          <div class="series-card" role="button" tabindex="0"
+               data-src="examples/coding-agent-cost/cards/card-2-cost-structure.png"
+               data-label="2 / 6" data-title="成本结构"
+               aria-label="查看系列卡片 2：成本结构">
+            <img src="examples/coding-agent-cost/cards/card-2-cost-structure.png"
+                 alt="Card 2：Prefill/Decode 成本结构 + Cache 原理" loading="lazy">
+            <div class="series-card-label">2 / 6 <span>成本结构</span></div>
+          </div>
+          <div class="series-card" role="button" tabindex="0"
+               data-src="examples/coding-agent-cost/cards/card-3-select.png"
+               data-label="3 / 6" data-title="Select"
+               aria-label="查看系列卡片 3：Select">
+            <img src="examples/coding-agent-cost/cards/card-3-select.png"
+                 alt="Card 3：Indexing vs Grep vs LSP 召回精度决策" loading="lazy">
+            <div class="series-card-label">3 / 6 <span>Select</span></div>
+          </div>
+          <div class="series-card" role="button" tabindex="0"
+               data-src="examples/coding-agent-cost/cards/card-4-compress.png"
+               data-label="4 / 6" data-title="Compress"
+               aria-label="查看系列卡片 4：Compress">
+            <img src="examples/coding-agent-cost/cards/card-4-compress.png"
+                 alt="Card 4：预防 vs 压缩工具对比" loading="lazy">
+            <div class="series-card-label">4 / 6 <span>Compress</span></div>
+          </div>
+          <div class="series-card" role="button" tabindex="0"
+               data-src="examples/coding-agent-cost/cards/card-5-isolate-write.png"
+               data-label="5 / 6" data-title="Isolate + Write"
+               aria-label="查看系列卡片 5：Isolate + Write">
+            <img src="examples/coding-agent-cost/cards/card-5-isolate-write.png"
+                 alt="Card 5：模型分级 + 外置记忆架构" loading="lazy">
+            <div class="series-card-label">5 / 6 <span>Isolate + Write</span></div>
+          </div>
+          <div class="series-card" role="button" tabindex="0"
+               data-src="examples/coding-agent-cost/cards/card-6-roadmap.png"
+               data-label="6 / 6" data-title="落地路线图"
+               aria-label="查看系列卡片 6：落地路线图">
+            <img src="examples/coding-agent-cost/cards/card-6-roadmap.png"
+                 alt="Card 6：$11.30 到 $4–5 的 6 步落地路线图" loading="lazy">
+            <div class="series-card-label">6 / 6 <span>落地路线图</span></div>
+          </div>
         </div>
       </div>
     </div>
@@ -1042,8 +1131,8 @@
   const lbStyle = document.getElementById('lb-style');
   const lbCounter = document.getElementById('lb-counter');
 
-  // Collect all cards in DOM order
-  const cards = Array.from(document.querySelectorAll('.mbti-card[data-src]'));
+  // Collect all cards in DOM order (MBTI + series)
+  const cards = Array.from(document.querySelectorAll('.mbti-card[data-src], .series-card[data-src]'));
   let current = 0;
 
   function open(idx) {
@@ -1051,8 +1140,8 @@
     const c = cards[current];
     lbImg.src = c.dataset.src;
     lbImg.alt = c.querySelector('img').alt;
-    lbType.textContent = c.dataset.mbti;
-    lbStyle.textContent = c.dataset.style;
+    lbType.textContent = c.dataset.mbti || c.dataset.label || '';
+    lbStyle.textContent = c.dataset.style || c.dataset.title || '';
     lbCounter.textContent = `${current + 1} / ${cards.length}`;
     lb.classList.add('open');
     document.body.style.overflow = 'hidden';
