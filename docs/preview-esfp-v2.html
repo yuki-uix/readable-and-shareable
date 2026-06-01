@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>ESFP v2 — 体验海报</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#FFFDF7;
+  --oa:#FF6B35;
+  --ob:#FFB800;
+  --oc:#4ECDC4;
+  --od:#FF6B9D;
+  --oe:#7BC67E;
+  --text:#1A1A18;
+  --text2:#6A6A60;
+  --font:-apple-system,"Helvetica Neue","PingFang SC",sans-serif;
+}
+html,body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+.card{width:600px;margin:0 auto;background:var(--bg)}
+
+/* Hero banner */
+.hero{
+  background:var(--oa);padding:28px 36px 24px;position:relative;overflow:hidden;
+}
+.hero::before{
+  content:"✦";position:absolute;right:24px;top:16px;
+  font-size:48px;color:rgba(255,255,255,.15);line-height:1;
+}
+.hero::after{
+  content:"●";position:absolute;right:60px;bottom:10px;
+  font-size:28px;color:rgba(255,255,255,.1);line-height:1;
+}
+.hero-eyebrow{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:8px}
+.hero-title{font-size:26px;font-weight:800;color:#fff;line-height:1.2}
+
+/* Feel list */
+.feel-list{padding:24px 36px 8px;display:flex;flex-direction:column;gap:0}
+.feel-item{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:14px 0;border-bottom:0.5px solid rgba(0,0,0,0.06);
+}
+.feel-item:last-child{border-bottom:none}
+.feel-bullet{
+  font-size:18px;flex-shrink:0;margin-top:1px;line-height:1;
+}
+.feel-content{}
+.feel-main{font-size:15px;font-weight:700;margin-bottom:3px}
+.feel-sub{font-size:12px;color:var(--text2);line-height:1.5}
+
+/* Deco dots */
+.deco-row{
+  padding:0 36px;display:flex;gap:6px;align-items:center;margin-bottom:4px;
+}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* Invite */
+.invite{
+  margin:8px 28px 28px;padding:16px 20px;
+  border-radius:8px;text-align:center;
+  background:linear-gradient(135deg,var(--ob),var(--oc));
+  color:#fff;
+}
+.invite-text{font-size:15px;font-weight:700;line-height:1.4}
+.invite-sub{font-size:12px;opacity:.85;margin-top:4px}
+
+.footer-meta{padding:0 36px 20px;font-size:10px;color:var(--text2)}
+</style>
+</head>
+<body>
+<div class="card">
+
+  <div class="hero">
+    <div class="hero-eyebrow">体验海报 · 体验海报式</div>
+    <div class="hero-title">$11 → $4<br>不是魔法，是感受到了</div>
+  </div>
+
+  <div class="feel-list">
+
+    <div class="feel-item">
+      <div class="feel-bullet" style="color:var(--oa)">✦</div>
+      <div class="feel-content">
+        <div class="feel-main">每次跑完 Agent，钱就莫名其妙少了</div>
+        <div class="feel-sub">你以为在省，其实在花——input token 占了 99%</div>
+      </div>
+    </div>
+
+    <div class="feel-item">
+      <div class="feel-bullet" style="color:var(--oc)">✦</div>
+      <div class="feel-content">
+        <div class="feel-main">Select 之后，感觉它「清醒」了</div>
+        <div class="feel-sub">上下文瘦下来，回答变快、变准，而且更便宜</div>
+      </div>
+    </div>
+
+    <div class="feel-item">
+      <div class="feel-bullet" style="color:var(--od)">✦</div>
+      <div class="feel-content">
+        <div class="feel-main">Prompt Cache 命中的瞬间，有点爽</div>
+        <div class="feel-sub">价格 ÷10，同样的问题，全然不同的成本感</div>
+      </div>
+    </div>
+
+    <div class="feel-item">
+      <div class="feel-bullet" style="color:var(--oe)">✦</div>
+      <div class="feel-content">
+        <div class="feel-main">Write 出去之后，它「记住」了</div>
+        <div class="feel-sub">不用每次重复，CLAUDE.md 像给它的一封备忘录</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="deco-row">
+    <div class="dot" style="background:var(--oa)"></div>
+    <div class="dot" style="background:var(--ob)"></div>
+    <div class="dot" style="background:var(--oc)"></div>
+    <div class="dot" style="background:var(--od)"></div>
+    <div class="dot" style="background:var(--oe)"></div>
+  </div>
+
+  <div class="invite">
+    <div class="invite-text">来感受一下——从 Select 开始，不用想太多</div>
+    <div class="invite-sub">github.com/yuki-uix/readable-and-shareable</div>
+  </div>
+
+  <div class="footer-meta">原文：Context Engineering · via readable-and-shareable</div>
+
+</div>
+</body>
+</html>
