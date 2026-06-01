@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>INTJ — 成本结构：钱花在哪里</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F7F7F5;
+  --surface:#FFFFFF;
+  --surface2:#F0F0EE;
+  --text:#1C1C1A;
+  --text2:#6B6A64;
+  --text3:#9B9A94;
+  --border:rgba(0,0,0,0.12);
+  --blue:#2563EB;
+  --blue-pale:#EEF3FB;
+  --red:#C0392B;
+  --font:-apple-system,"Helvetica Neue","PingFang SC",sans-serif;
+  --mono:"SF Mono","Menlo","Courier New",monospace;
+}
+html,body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+.page{width:600px;margin:0 auto;padding:40px 44px 36px;display:flex;flex-direction:column;gap:20px}
+.header{border-bottom:0.5px solid var(--border);padding-bottom:14px}
+.eyebrow{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);font-family:var(--mono);margin-bottom:8px}
+.title{font-size:18px;font-weight:600;line-height:1.35;color:var(--text)}
+.title em{font-style:normal;color:var(--text2);font-weight:400;font-size:14px}
+.fw-box{position:relative;border:1.5px solid var(--blue);border-radius:5px;background:var(--blue-pale);padding:16px 18px 14px}
+.fw-label{position:absolute;top:-9px;left:14px;background:var(--blue);color:#fff;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:2px;font-family:var(--mono)}
+.fw-title{font-size:15px;font-weight:700;color:var(--blue);line-height:1.3;margin-bottom:5px}
+.fw-def{font-size:12px;color:var(--text2);line-height:1.6}
+.section-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);font-family:var(--mono);margin-bottom:8px}
+.tbl-wrap{border:0.5px solid var(--border);border-radius:4px;overflow:hidden}
+.tbl-head{display:grid;gap:0}
+.tbl-row{display:grid;border-top:0.5px solid var(--border);background:var(--surface)}
+.tbl-row:nth-child(even){background:var(--surface2)}
+.tbl-cell{font-size:11.5px;color:var(--text2);line-height:1.5;padding:8px 10px}
+.tbl-cell strong{color:var(--text);font-weight:600}
+.tbl-cell.head{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);font-family:var(--mono);padding:6px 10px;background:var(--surface2)}
+.tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:2px;font-family:var(--mono);font-weight:600}
+.tag-blue{background:#DBEAFE;color:#1D4ED8}
+.tag-red{background:#FEE2E2;color:#B91C1C}
+.tag-gray{background:#E5E5E3;color:var(--text3)}
+
+/* Phase comparison grid */
+.phase-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.phase-card{border:0.5px solid var(--border);border-radius:4px;background:var(--surface);padding:12px 14px}
+.phase-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px}
+.phase-sub{font-size:10px;font-family:var(--mono);color:var(--text3);margin-bottom:8px}
+.phase-row{display:flex;justify-content:space-between;align-items:baseline;padding:3px 0;border-bottom:0.5px solid var(--border)}
+.phase-row:last-child{border-bottom:none}
+.phase-key{font-size:11px;color:var(--text2)}
+.phase-val{font-size:11px;font-weight:600;color:var(--text);font-family:var(--mono)}
+.phase-val.blue{color:var(--blue)}
+.phase-val.red{color:var(--red)}
+
+/* Cache grid 3 cols */
+.cache-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.cache-card{border:0.5px solid var(--border);border-radius:4px;background:var(--surface);padding:10px 12px}
+.cache-name{font-size:12px;font-weight:700;color:var(--text);margin-bottom:3px}
+.cache-sub{font-size:10px;font-family:var(--mono);color:var(--text3);margin-bottom:6px}
+.cache-item{font-size:11px;color:var(--text2);line-height:1.5}
+.cache-item span{color:var(--text);font-weight:600}
+
+.conc{border-left:4px solid var(--blue);background:var(--surface);padding:12px 15px}
+.conc-sym{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);font-family:var(--mono);margin-bottom:5px}
+.conc-text{font-size:14px;font-weight:600;color:var(--text);line-height:1.4}
+.conc-cond{font-size:11px;color:var(--text2);margin-top:5px;line-height:1.5}
+.footer{border-top:0.5px solid var(--border);padding-top:12px;display:flex;justify-content:space-between;font-size:10px;color:var(--text3);font-family:var(--mono)}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="eyebrow">框架演绎 · 2 of 6</div>
+    <div class="title">成本结构：钱花在哪里<br><em>— Prefill / Decode / Prompt Cache 原理</em></div>
+  </div>
+
+  <div class="fw-box">
+    <div class="fw-label">核心框架</div>
+    <div class="fw-title">Prefill 阶段 O(n²) 是成本核心，Prompt Cache 跳过它</div>
+    <div class="fw-def">每次 API 调用，所有 input token 先经过 Prefill（一次性并行处理），计算量 O(n²)。这是最贵的阶段。Prompt Cache 在前缀完全匹配时直接复用上次的 KV Cache，跳过整个 Prefill 重算。</div>
+  </div>
+
+  <!-- Prefill vs Decode -->
+  <div>
+    <div class="section-label">两个阶段对比</div>
+    <div class="phase-grid">
+      <div class="phase-card">
+        <div class="phase-title">Prefill 阶段</div>
+        <div class="phase-sub">一次性处理全部 input</div>
+        <div class="phase-row"><span class="phase-key">计算量</span><span class="phase-val red">O(n²)</span></div>
+        <div class="phase-row"><span class="phase-key">费用（Opus 4.6）</span><span class="phase-val">$5 / MTok</span></div>
+        <div class="phase-row"><span class="phase-key">Cache 命中后</span><span class="phase-val blue">$0.50 / MTok</span></div>
+        <div class="phase-row"><span class="phase-key">副产品</span><span class="phase-val">KV Cache</span></div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-title">Decode 阶段</div>
+        <div class="phase-sub">逐 token 生成 output</div>
+        <div class="phase-row"><span class="phase-key">计算量</span><span class="phase-val">O(n)× token 数</span></div>
+        <div class="phase-row"><span class="phase-key">费用（Opus 4.6）</span><span class="phase-val red">$25 / MTok</span></div>
+        <div class="phase-row"><span class="phase-key">GPU 利用率</span><span class="phase-val">较低</span></div>
+        <div class="phase-row"><span class="phase-key">复用 KV Cache</span><span class="phase-val blue">只算新 token</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 三种 Cache -->
+  <div>
+    <div class="section-label">LLM 语境下的三种 Cache</div>
+    <div class="cache-grid">
+      <div class="cache-card">
+        <div class="cache-name">KV Cache</div>
+        <div class="cache-sub">同一请求内部</div>
+        <div class="cache-item">缓存当前请求已算的 K/V</div>
+        <div class="cache-item">跨请求：<span>不能</span></div>
+        <div class="cache-item">你控制：<span>不能</span></div>
+        <div class="cache-item">账单影响：<span>透明</span></div>
+      </div>
+      <div class="cache-card">
+        <div class="cache-name">Prompt Cache</div>
+        <div class="cache-sub">跨请求复用 Prefill</div>
+        <div class="cache-item">前缀完全一致才命中</div>
+        <div class="cache-item">跨请求：<span>能</span></div>
+        <div class="cache-item">你控制：<span>部分</span></div>
+        <div class="cache-item">账单：<span>直接降 input 费率</span></div>
+      </div>
+      <div class="cache-card">
+        <div class="cache-name">Semantic Cache</div>
+        <div class="cache-sub">语义相似返回旧答案</div>
+        <div class="cache-item">跳过整个 API 调用</div>
+        <div class="cache-item">跨请求：<span>能</span></div>
+        <div class="cache-item">你控制：<span>完全</span></div>
+        <div class="cache-item">Coding Agent：<span>不适合</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cache killers constraint table -->
+  <div>
+    <div class="section-label">Cache 命中率杀手</div>
+    <div class="tbl-wrap">
+      <div class="tbl-row" style="grid-template-columns:1.2fr 1fr 1.2fr">
+        <div class="tbl-cell head">杀手</div>
+        <div class="tbl-cell head">为什么</div>
+        <div class="tbl-cell head">怎么修</div>
+      </div>
+      <div class="tbl-row" style="grid-template-columns:1.2fr 1fr 1.2fr">
+        <div class="tbl-cell"><strong>system prompt 有时间戳</strong></div>
+        <div class="tbl-cell">每秒都变</div>
+        <div class="tbl-cell">时间截移到消息末尾</div>
+      </div>
+      <div class="tbl-row" style="grid-template-columns:1.2fr 1fr 1.2fr">
+        <div class="tbl-cell"><strong>MCP 工具注册随机</strong></div>
+        <div class="tbl-cell">列表每次不同</div>
+        <div class="tbl-cell">固定注册顺序</div>
+      </div>
+      <div class="tbl-row" style="grid-template-columns:1.2fr 1fr 1.2fr">
+        <div class="tbl-cell"><strong>attribution header</strong></div>
+        <div class="tbl-cell">本地模型每次都变</div>
+        <div class="tbl-cell">settings.json 关掉</div>
+      </div>
+      <div class="tbl-row" style="grid-template-columns:1.2fr 1fr 1.2fr">
+        <div class="tbl-cell"><strong>不用的 MCP 未清理</strong></div>
+        <div class="tbl-cell">占据前缀空间</div>
+        <div class="tbl-cell">定期清理 schema</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="conc">
+    <div class="conc-sym">∴ 演绎结论</div>
+    <div class="conc-text">最有效的省钱路径是 Prompt Cache，不是减少提问次数</div>
+    <div class="conc-cond">前缀稳定 + MCP 有序 + 关掉 attribution header → 70% cache 命中率 → input 成本直接打二折</div>
+  </div>
+
+  <div class="footer">
+    <span>原文：Zhenjia Zhou · Thoughtworks 2026</span>
+    <span>via readable-and-shareable</span>
+  </div>
+
+</div>
+</body>
+</html>

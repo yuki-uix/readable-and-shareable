@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>INTJ — 落地路线图：从 $11.30 到 $4–5</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F7F7F5;--surface:#FFFFFF;--surface2:#F0F0EE;
+  --text:#1C1C1A;--text2:#6B6A64;--text3:#9B9A94;
+  --border:rgba(0,0,0,0.12);
+  --blue:#2563EB;--blue-pale:#EEF3FB;--red:#C0392B;
+  --green:#16A34A;
+  --font:-apple-system,"Helvetica Neue","PingFang SC",sans-serif;
+  --mono:"SF Mono","Menlo","Courier New",monospace;
+}
+html,body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+.page{width:600px;margin:0 auto;padding:40px 44px 36px;display:flex;flex-direction:column;gap:20px}
+.header{border-bottom:0.5px solid var(--border);padding-bottom:14px}
+.eyebrow{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);font-family:var(--mono);margin-bottom:8px}
+.title{font-size:18px;font-weight:600;line-height:1.35;color:var(--text)}
+.title em{font-style:normal;color:var(--text2);font-weight:400;font-size:14px}
+.fw-box{position:relative;border:1.5px solid var(--blue);border-radius:5px;background:var(--blue-pale);padding:16px 18px 14px}
+.fw-label{position:absolute;top:-9px;left:14px;background:var(--blue);color:#fff;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:2px;font-family:var(--mono)}
+.fw-title{font-size:15px;font-weight:700;color:var(--blue);line-height:1.3;margin-bottom:5px}
+.fw-def{font-size:12px;color:var(--text2);line-height:1.6}
+.section-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);font-family:var(--mono);margin-bottom:8px}
+.conc{border-left:4px solid var(--blue);background:var(--surface);padding:12px 15px}
+.conc-sym{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);font-family:var(--mono);margin-bottom:5px}
+.conc-text{font-size:14px;font-weight:600;color:var(--text);line-height:1.4}
+.conc-cond{font-size:11px;color:var(--text2);margin-top:5px;line-height:1.5}
+.footer{border-top:0.5px solid var(--border);padding-top:12px;display:flex;justify-content:space-between;font-size:10px;color:var(--text3);font-family:var(--mono)}
+
+/* Step rows */
+.step-list{display:flex;flex-direction:column;gap:0}
+.step-row{display:grid;grid-template-columns:48px 1fr 72px;align-items:start;padding:9px 0;border-bottom:0.5px solid var(--border);gap:12px}
+.step-row:last-child{border-bottom:none}
+.step-num{display:flex;flex-direction:column;align-items:center;gap:2px}
+.step-badge{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--blue);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--blue);font-family:var(--mono);background:var(--surface);flex-shrink:0}
+.step-badge.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.step-badge.done{background:var(--green);color:#fff;border-color:var(--green)}
+.step-conn{width:1px;height:14px;background:rgba(37,99,235,0.25);margin:2px auto 0}
+.step-body{}
+.step-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px}
+.step-sub{font-size:11px;color:var(--text2);line-height:1.5}
+.step-sub code{font-family:var(--mono);font-size:10.5px;color:var(--text);background:var(--surface2);padding:1px 4px;border-radius:2px}
+.step-cost{font-size:12px;font-weight:700;font-family:var(--mono);color:var(--green);text-align:right;padding-top:2px}
+.step-tag{font-size:10px;color:var(--text3);text-align:right;margin-top:2px}
+
+/* Cost summary table */
+.cost-tbl{border:0.5px solid var(--border);border-radius:4px;overflow:hidden}
+.cost-row{display:grid;grid-template-columns:1fr 80px 80px;border-top:0.5px solid var(--border);background:var(--surface)}
+.cost-row:first-child{border-top:none;background:var(--surface2)}
+.cost-row:last-child{background:var(--blue-pale);border-top:1.5px solid var(--blue)}
+.cost-cell{font-size:11.5px;color:var(--text2);padding:7px 10px;line-height:1.4}
+.cost-cell.head{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);font-family:var(--mono);padding:6px 10px}
+.cost-cell strong{color:var(--text);font-weight:600}
+.cost-cell.num{font-family:var(--mono);font-weight:600;color:var(--text)}
+.cost-cell.saved{font-family:var(--mono);font-weight:700;color:var(--green)}
+.cost-cell.final{font-family:var(--mono);font-weight:700;color:var(--blue);font-size:13px}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="eyebrow">框架演绎 · 6 of 6</div>
+    <div class="title">落地路线图：从 $11.30 到 $4–5<br><em>— 按投入产出排序的 6 步执行顺序</em></div>
+  </div>
+
+  <div class="fw-box">
+    <div class="fw-label">核心框架</div>
+    <div class="fw-title">最大贡献：Cache 命中（Step 1）+ 减少无效 token（Step 2）</div>
+    <div class="fw-def">真实数据：Input 1.62M tokens，Output 128.1K tokens（Opus 4.6）。什么都不做 = $11.30/天。假设全部优化措施到位 = $4–5。数字基于 70% cache 命中率等合理假设，不是实测结果。</div>
+  </div>
+
+  <!-- Step list -->
+  <div>
+    <div class="section-label">执行路线（按优先级）</div>
+    <div class="step-list">
+      <div class="step-row">
+        <div class="step-num"><div class="step-badge active">0</div><div class="step-conn"></div></div>
+        <div class="step-body">
+          <div class="step-title">观测：先看清楚钱花在哪</div>
+          <div class="step-sub">装 <code>ccusage</code> 或 <code>tokscale</code>，区分 input/output/cache 三类 token。不看数据就优化是盲人摸象。</div>
+        </div>
+        <div><div class="step-cost">必做</div><div class="step-tag">一次性</div></div>
+      </div>
+      <div class="step-row">
+        <div class="step-num"><div class="step-badge active">1</div><div class="step-conn"></div></div>
+        <div class="step-body">
+          <div class="step-title">缓存纪律（改一次配置，长期受益）</div>
+          <div class="step-sub">固定 system prompt + MCP 顺序，清理不用的 MCP 工具，本地模型关 attribution header，装 <code>claude-code-cache-fix</code>。假设 70% cache 命中：input 从 $8.10 → $3.00。</div>
+        </div>
+        <div><div class="step-cost">省 45%</div><div class="step-tag">配置层</div></div>
+      </div>
+      <div class="step-row">
+        <div class="step-num"><div class="step-badge active">2</div><div class="step-conn"></div></div>
+        <div class="step-body">
+          <div class="step-title">减少无效搜索（花半天，长期受益）</div>
+          <div class="step-sub">写好 CLAUDE.md 路标（≤200 行），静态语言项目开 LSP，大型项目装 CodeGraph 索引。session 总 token 估算砍掉 30%：$5.20 → $5.30 合计。</div>
+        </div>
+        <div><div class="step-cost">省 15%</div><div class="step-tag">一次性</div></div>
+      </div>
+      <div class="step-row">
+        <div class="step-num"><div class="step-badge active">3</div><div class="step-conn"></div></div>
+        <div class="step-body">
+          <div class="step-title">预防膨胀（装工具）</div>
+          <div class="step-sub">装 RTK 压缩 CLI 输出（80% 压缩率），agent 大量做文件读取和 MCP 调用则考虑 lean-ctx，不用的 Skill 定期清理。session 再瘦 15%：总计约 $4.70。</div>
+        </div>
+        <div><div class="step-cost">省 10%</div><div class="step-tag">工具层</div></div>
+      </div>
+      <div class="step-row">
+        <div class="step-num"><div class="step-badge">4</div><div class="step-conn"></div></div>
+        <div class="step-body">
+          <div class="step-title">隔离（改使用习惯）</div>
+          <div class="step-sub">重约搜索任务给 Haiku sub-agent，不同任务之间 <code>/clear</code>，并行 agent 用 worktree 避免冲突。节省取决于有多少任务适合拆给便宜模型。</div>
+        </div>
+        <div><div class="step-cost">按比例</div><div class="step-tag">习惯层</div></div>
+      </div>
+      <div class="step-row">
+        <div class="step-num"><div class="step-badge">5</div></div>
+        <div class="step-body">
+          <div class="step-title">Write + 输出控制（锦上添花）</div>
+          <div class="step-sub">复杂任务先生成 SPEC.md 再执行，长期任务用 planning-with-files 持久化工作状态。简单任务降 <code>/effort</code>，自动化流水线走 structured output + Batch API（50% 折扣）。</div>
+        </div>
+        <div><div class="step-cost">~$4–5</div><div class="step-tag">总计</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cost summary -->
+  <div>
+    <div class="section-label">成本粗算（Opus 4.6，70% cache 命中假设）</div>
+    <div class="cost-tbl">
+      <div class="cost-row">
+        <div class="cost-cell head">阶段</div>
+        <div class="cost-cell head">成本/天</div>
+        <div class="cost-cell head">节省</div>
+      </div>
+      <div class="cost-row">
+        <div class="cost-cell"><strong>基准（什么都不做）</strong></div>
+        <div class="cost-cell num">$11.30</div>
+        <div class="cost-cell">—</div>
+      </div>
+      <div class="cost-row">
+        <div class="cost-cell">Step 1：缓存纪律</div>
+        <div class="cost-cell num">$6.20</div>
+        <div class="cost-cell saved">-45%</div>
+      </div>
+      <div class="cost-row">
+        <div class="cost-cell">Step 2：减少无效搜索</div>
+        <div class="cost-cell num">$5.30</div>
+        <div class="cost-cell saved">-15%</div>
+      </div>
+      <div class="cost-row">
+        <div class="cost-cell">Step 3：预防膨胀</div>
+        <div class="cost-cell num">$4.70</div>
+        <div class="cost-cell saved">-10%</div>
+      </div>
+      <div class="cost-row">
+        <div class="cost-cell"><strong>全部措施到位（估算）</strong></div>
+        <div class="cost-cell final">~$4–5</div>
+        <div class="cost-cell saved">-60%+</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="conc">
+    <div class="conc-sym">∴ 演绎结论</div>
+    <div class="conc-text">指标要同时看三类：成本（cache 占比）+ 效率（tool call 次数）+ 质量（是否漏 context）</div>
+    <div class="conc-cond">好的优化是成本下降但质量不掉。如果 Agent 开始漏 context、走错路、产出质量下降，说明过度压缩了。</div>
+  </div>
+
+  <div class="footer">
+    <span>原文：Zhenjia Zhou · Thoughtworks 2026</span>
+    <span>via readable-and-shareable</span>
+  </div>
+
+</div>
+</body>
+</html>

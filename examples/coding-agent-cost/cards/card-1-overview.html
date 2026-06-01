@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>INTJ — Context Engineering 框架总览</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F7F7F5;
+  --surface:#FFFFFF;
+  --surface2:#F0F0EE;
+  --text:#1C1C1A;
+  --text2:#6B6A64;
+  --text3:#9B9A94;
+  --border:rgba(0,0,0,0.12);
+  --blue:#2563EB;
+  --blue-pale:#EEF3FB;
+  --red:#C0392B;
+  --font:-apple-system,"Helvetica Neue","PingFang SC",sans-serif;
+  --mono:"SF Mono","Menlo","Courier New",monospace;
+}
+html,body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+.page{width:600px;margin:0 auto;padding:40px 44px 36px;display:flex;flex-direction:column;gap:20px}
+
+/* Header */
+.header{border-bottom:0.5px solid var(--border);padding-bottom:14px}
+.eyebrow{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);font-family:var(--mono);margin-bottom:8px}
+.title{font-size:18px;font-weight:600;line-height:1.35;color:var(--text)}
+.title em{font-style:normal;color:var(--text2);font-weight:400;font-size:14px}
+
+/* Framework Box */
+.fw-box{position:relative;border:1.5px solid var(--blue);border-radius:5px;background:var(--blue-pale);padding:16px 18px 14px}
+.fw-label{position:absolute;top:-9px;left:14px;background:var(--blue);color:#fff;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:2px;font-family:var(--mono)}
+.fw-title{font-size:15px;font-weight:700;color:var(--blue);line-height:1.3;margin-bottom:5px}
+.fw-def{font-size:12px;color:var(--text2);line-height:1.6}
+
+/* Node grid */
+.grid-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);font-family:var(--mono);margin-bottom:8px}
+.node-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.node{border:1px solid var(--blue);border-radius:4px;padding:10px 10px 9px;background:var(--surface)}
+.node-label{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);font-family:var(--mono);margin-bottom:4px}
+.node-title{font-size:13px;font-weight:700;color:var(--blue);line-height:1.2;margin-bottom:4px}
+.node-desc{font-size:11px;color:var(--text2);line-height:1.5}
+
+/* Arrow rows */
+.arrow-section{}
+.arrow-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:0.5px solid var(--border)}
+.arrow-row:last-child{border-bottom:none}
+.ar-subject{font-size:12px;font-weight:600;color:var(--text);min-width:120px;flex-shrink:0}
+.ar-arrow{display:flex;align-items:center;gap:4px}
+.ar-arrow-line{width:18px;height:1px;background:var(--blue)}
+.ar-arrow-head{border-left:5px solid var(--blue);border-top:3px solid transparent;border-bottom:3px solid transparent}
+.ar-pill{font-size:10px;border:0.5px solid var(--border);border-radius:2px;padding:1px 6px;color:var(--text2);background:var(--surface);white-space:nowrap;font-family:var(--mono)}
+.ar-target{font-size:12px;color:var(--text2);flex:1;line-height:1.4}
+.ar-target strong{color:var(--text);font-weight:600}
+
+/* Constraint table */
+.tbl-wrap{border:0.5px solid var(--border);border-radius:4px;overflow:hidden}
+.tbl-head{display:grid;grid-template-columns:1fr 1fr 1fr;background:var(--surface2);padding:6px 10px;gap:8px}
+.tbl-hcell{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);font-family:var(--mono)}
+.tbl-row{display:grid;grid-template-columns:1fr 1fr 1fr;padding:8px 10px;gap:8px;border-top:0.5px solid var(--border);background:var(--surface)}
+.tbl-row:nth-child(odd){background:var(--surface2)}
+.tbl-cell{font-size:11.5px;color:var(--text2);line-height:1.5}
+.tbl-cell strong{color:var(--text);font-weight:600}
+.tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:2px;font-family:var(--mono);font-weight:600}
+.tag-blue{background:#DBEAFE;color:#1D4ED8}
+.tag-red{background:#FEE2E2;color:#B91C1C}
+.tag-gray{background:var(--surface2);color:var(--text3)}
+
+/* Conclusion bar */
+.conc{border-left:4px solid var(--blue);background:var(--surface);padding:12px 15px}
+.conc-sym{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);font-family:var(--mono);margin-bottom:5px}
+.conc-text{font-size:14px;font-weight:600;color:var(--text);line-height:1.4}
+.conc-cond{font-size:11px;color:var(--text2);margin-top:5px;line-height:1.5}
+
+/* Footer */
+.footer{border-top:0.5px solid var(--border);padding-top:12px;display:flex;justify-content:space-between;font-size:10px;color:var(--text3);font-family:var(--mono)}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="eyebrow">框架演绎 · 1 of 6</div>
+    <div class="title">怎么优化 Coding Agent 的成本<br><em>— Context Engineering 调研笔记</em></div>
+  </div>
+
+  <!-- Framework Box -->
+  <div class="fw-box">
+    <div class="fw-label">核心框架</div>
+    <div class="fw-title">Context Engineering：让 Agent 在正确时间获得正确上下文</div>
+    <div class="fw-def">Input token 占 API 成本的 93–99%。优化 Coding Agent 成本的核心不是减少使用，而是提升每个 token 的信息密度——让进来的信息对，让已有的信息精简，让独立的任务隔离。</div>
+  </div>
+
+  <!-- Four quadrant nodes -->
+  <div>
+    <div class="grid-label">四个操作方向</div>
+    <div class="node-grid">
+      <div class="node">
+        <div class="node-label">Select</div>
+        <div class="node-title">让正确信息进来</div>
+        <div class="node-desc">精准召回相关代码，不把整个仓库塞进上下文</div>
+      </div>
+      <div class="node">
+        <div class="node-label">Compress</div>
+        <div class="node-title">减少已有 token</div>
+        <div class="node-desc">预防膨胀或主动压缩，Cache 和压缩是对立的</div>
+      </div>
+      <div class="node">
+        <div class="node-label">Isolate</div>
+        <div class="node-title">拆任务换模型</div>
+        <div class="node-desc">子任务独立上下文，便宜模型做简单事</div>
+      </div>
+      <div class="node">
+        <div class="node-label">Write</div>
+        <div class="node-title">信息搬到文件</div>
+        <div class="node-desc">不需要时刻在场的信息存文件系统，按需读回</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Arrow rows: cost structure -->
+  <div>
+    <div class="grid-label">为什么 Input Token 是核心</div>
+    <div class="arrow-section">
+      <div class="arrow-row">
+        <span class="ar-subject">每轮 API 调用</span>
+        <div class="ar-arrow"><div class="ar-arrow-line"></div><div class="ar-arrow-head"></div></div>
+        <span class="ar-pill">重发整个上下文</span>
+        <div class="ar-arrow"><div class="ar-arrow-line"></div><div class="ar-arrow-head"></div></div>
+        <span class="ar-target">Input token 占 <strong>93–99%</strong></span>
+      </div>
+      <div class="arrow-row">
+        <span class="ar-subject">Prompt Cache</span>
+        <div class="ar-arrow"><div class="ar-arrow-line"></div><div class="ar-arrow-head"></div></div>
+        <span class="ar-pill">跳过 Prefill</span>
+        <div class="ar-arrow"><div class="ar-arrow-line"></div><div class="ar-arrow-head"></div></div>
+        <span class="ar-target">Cached input <strong>便宜 10×</strong>，一次配置长期受益</span>
+      </div>
+      <div class="arrow-row">
+        <span class="ar-subject">模型分级</span>
+        <div class="ar-arrow"><div class="ar-arrow-line"></div><div class="ar-arrow-head"></div></div>
+        <span class="ar-pill">Haiku/Sonnet/Opus</span>
+        <div class="ar-arrow"><div class="ar-arrow-line"></div><div class="ar-arrow-head"></div></div>
+        <span class="ar-target">token 总量不变，成本降 <strong>几倍</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Conclusion bar -->
+  <div class="conc">
+    <div class="conc-sym">∴ 演绎结论</div>
+    <div class="conc-text">优先做 Prompt Cache → 再精简 Input → 最后控制 Output</div>
+    <div class="conc-cond">从 $11.30/天（什么都不做）→ $4–5（全部措施到位），估算基于 70% cache 命中率假设</div>
+  </div>
+
+  <div class="footer">
+    <span>原文：Zhenjia Zhou · Thoughtworks 2026</span>
+    <span>via readable-and-shareable</span>
+  </div>
+
+</div>
+</body>
+</html>
