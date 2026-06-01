@@ -75,6 +75,36 @@
 - **检查清单**：`□` 方框，可打勾，安全感的来源
 - **时间估算**：每步旁边可标注「约 X 分钟」
 
+### 签名视觉元素（v2）— 必须实现的布局语法
+
+**① 进度条 + 总数标注（header 末尾）**
+- 3px 高度，背景 `--border`，填充色 `--green`，`border-radius: 2px`
+- 下方小字：「共 N 步 · [使用建议]」
+
+**② 步骤圆形编号**
+- 32×32px 圆形（`border-radius: 50%`），背景 `--step-bg`（苔藓绿 `#4A7C59`），白色数字
+- 已完成步骤：`opacity: .7`（视觉降调，表示"已过"）
+- 未来步骤：背景换灰色（`#C8C4BC`），整个 step-body 加 `opacity: .65`
+- 步骤之间用虚线连接器（`border-left: 2px dashed rgba(74,124,89,0.25); height:12px`）
+
+**③ 步骤 card 内部结构**
+每个步骤 card 由三层组成：
+- `step-head`：标题（14px bold）+ 状态 tag（`已完成` 绿色 / `进行中` 蓝色）
+- `step-desc`：12px 灰色说明，行距 1.6
+- `step-check`（已完成步骤才有）：绿色背景条，`✓ [完成条件]`
+
+**④ Warning Block（注意事项）**
+- 不在 step card 内部，而是独立缩进块（左边距 46px，与圆形编号错开）
+- 左侧 3px 暖橙色 accent bar，背景 `--orange-pale`
+- `⚠  注意：` 前缀（`--orange` 色，bold）+ 正文
+
+**⑤ ✅ Done Bar（收口）**
+- 全宽绿色块（`background: --green`），白色文字
+- 左侧大 ✅ emoji + 右侧标题（14px bold）+ 副文（11px，opacity .75）
+- 位于最后一步下方，视觉上"封口"整个流程
+
+**参考实现**：`docs/preview-isfj-v2.html`（2026.06）
+
 ---
 
 ## 收口方式
