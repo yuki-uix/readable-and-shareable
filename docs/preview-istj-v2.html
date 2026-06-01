@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>ISTJ v2 — 规则档案</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F8F8F7;--surface:#EEEEED;--surface-b:#E4E4E2;--authority:#2E2E2C;
+  --text:#1C1C1A;--text2:#72726A;--text3:#A0A09A;
+  --border:rgba(0,0,0,0.14);
+  --rule:#3D3D3A;--source:#6B6B62;
+  --tag-active-bg:#E8F5E8;--tag-active:#2D6B2D;
+  --tag-archive-bg:#EBEBEA;
+  --tag-review-bg:#FFF3E0;--tag-review:#8B5E00;
+  --font:-apple-system,"Helvetica Neue","PingFang SC",sans-serif;
+  --mono:"SF Mono","Menlo","Courier New",monospace;
+}
+html,body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+.page{width:600px;margin:0 auto;padding:40px 44px 36px;display:flex;flex-direction:column;gap:20px}
+
+.header{border-bottom:0.5px solid var(--border);padding-bottom:13px}
+.eyebrow{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);font-family:var(--mono);margin-bottom:7px}
+.title{font-size:17px;font-weight:600;line-height:1.35;color:var(--text)}
+.section-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);font-family:var(--mono);margin-bottom:9px}
+
+/* ① Rule Cards */
+.rule-card{border-left:3px solid var(--rule);background:var(--surface);border-radius:0 3px 3px 0;padding:10px 14px;position:relative}
+.rule-num{font-size:11px;font-weight:700;color:var(--rule);font-family:var(--mono);letter-spacing:.06em;margin-bottom:5px}
+.rule-text{font-size:12.5px;color:var(--text);line-height:1.6}
+.rule-source{font-size:10px;color:var(--source);font-family:var(--mono);margin-top:6px}
+.archive-tag{position:absolute;top:8px;right:10px;font-size:9px;font-weight:600;padding:2px 7px;border-radius:2px;font-family:var(--mono)}
+.tag-active{background:var(--tag-active-bg);color:var(--tag-active)}
+.tag-archive{background:var(--tag-archive-bg);color:var(--text3)}
+.tag-review{background:var(--tag-review-bg);color:var(--tag-review)}
+
+/* ② Authority Block */
+.authority{background:var(--authority);border-radius:4px;padding:14px 16px}
+.auth-label{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);font-family:var(--mono);margin-bottom:6px}
+.auth-text{font-size:13px;font-weight:600;color:#fff;line-height:1.45}
+.auth-sub{font-size:11px;color:rgba(255,255,255,.55);margin-top:5px;line-height:1.5}
+
+/* ③ Precedent Rows */
+.prec-row{display:grid;grid-template-columns:1fr 1px 1fr;gap:0;border:0.5px solid var(--border);border-radius:3px;overflow:hidden}
+.prec-cell{padding:9px 12px;background:var(--surface)}
+.prec-cell+.prec-cell{border-left:none}
+.prec-sep{background:var(--border)}
+.prec-label{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);font-family:var(--mono);margin-bottom:4px}
+.prec-val{font-size:12px;color:var(--text);line-height:1.5}
+
+.footer{border-top:0.5px solid var(--border);padding-top:12px;display:flex;justify-content:space-between;font-size:10px;color:var(--text3);font-family:var(--mono)}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="eyebrow">规则档案 · 档案归纳式</div>
+    <div class="title">Context Engineering 规范手册<br><small style="font-size:13px;font-weight:400;color:var(--text2)">Coding Agent 上下文管理标准·第 1 版</small></div>
+  </div>
+
+  <!-- ② Authority Block -->
+  <div class="authority">
+    <div class="auth-label">核心规范</div>
+    <div class="auth-text">Prompt Cache 命中率低于 50% 时，必须审查前缀稳定性，不得直接新增 MCP 工具</div>
+    <div class="auth-sub">适用范围：所有使用 Claude Code 的开发团队 · 优先级：P0</div>
+  </div>
+
+  <!-- ① Rule Cards -->
+  <div>
+    <div class="section-label">操作规则</div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+
+      <div class="rule-card">
+        <span class="archive-tag tag-active">现行</span>
+        <div class="rule-num">R-001</div>
+        <div class="rule-text">System prompt 中不得包含动态时间戳。时间信息必须移至消息末尾，以保证前缀稳定性。</div>
+        <div class="rule-source">来源：Prompt Cache 核心规则 · cache miss 成本分析 2026.05</div>
+      </div>
+
+      <div class="rule-card">
+        <span class="archive-tag tag-active">现行</span>
+        <div class="rule-num">R-002</div>
+        <div class="rule-text">MCP 工具注册顺序必须固定，不允许随机化或按使用频率动态排序。</div>
+        <div class="rule-source">来源：Cache 杀手分析 · 社区实测数据 2026.04</div>
+      </div>
+
+      <div class="rule-card">
+        <span class="archive-tag tag-review">待审核</span>
+        <div class="rule-num">R-003</div>
+        <div class="rule-text">CLAUDE.md 控制在 200 行以内。超出部分须拆分至独立的 topic 文件按需加载。</div>
+        <div class="rule-source">来源：Anthropic 官方建议 · 待团队实测验证</div>
+      </div>
+
+      <div class="rule-card">
+        <span class="archive-tag tag-archive">已归档</span>
+        <div class="rule-num">R-004</div>
+        <div class="rule-text">使用 Semantic Cache 替代 Prompt Cache 处理 Coding Agent 请求。</div>
+        <div class="rule-source">来源：早期方案评估 · 2025.12 · 废止原因：代码变更导致语义相似问题的答案频繁错误</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ③ Precedent Row -->
+  <div>
+    <div class="section-label">先例对照</div>
+    <div class="prec-row">
+      <div class="prec-cell">
+        <div class="prec-label">先例</div>
+        <div class="prec-val">使用 RAG + 本地向量数据库做代码库索引（Claude Code 早期版本）</div>
+      </div>
+      <div class="prec-sep"></div>
+      <div class="prec-cell">
+        <div class="prec-label">现行标准</div>
+        <div class="prec-val">Agentic search（grep + glob + read），零配置，实时鲜度，无向量延迟</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>原文：Zhenjia Zhou · Thoughtworks 2026</span>
+    <span>via readable-and-shareable</span>
+  </div>
+</div>
+</body>
+</html>
