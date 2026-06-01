@@ -241,12 +241,29 @@ Apply both together. `references/design-system.md` is the overarching visual sta
 via readable-and-shareable · github.com/yuki-uix/readable-and-shareable
 ```
 
-分享路径建议：
-- 思维导图 → [Markmap](https://markmap.js.org/repl) 渲染预览 · [幕布](https://mubu.com) otml 导入
-- Interactive HTML → [sharehtml.zhenjia.dev](https://sharehtml.zhenjia.dev)（7天有效链接）
-  ⚠️ sharehtml 链接7天后失效。建议同时另存本地副本（浏览器 → 文件 → 存储网页），需要永久分享时可托管到 GitHub Pages。
-- 图片卡片 → 详见 `templates/image-card/README.md`（Chrome 截图指引）
-- 其他形式 → 直接保存文件，嵌入博客或上传平台
+生成完成后，**必须**在对话里输出一个固定格式的产出物摘要块，不得用自然语言段落替代：
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ 产出物已生成
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  文件  → {相对路径，如 examples/my-article/image-card-warm.html}
+  截图  → {相对路径，如 examples/my-article/image-card-warm.png}（如已生成）
+  分享  → {分享链接或提示，如 sharehtml.zhenjia.dev/... (7天有效)}
+
+  📋 分享前 checklist
+  □ 手机端预览过？
+  □ 原文链接在产出物内？
+  □ 目标平台支持此格式？
+
+  下一步：满意直接分享 ｜ 不满意告诉我哪里需要调整
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+规则：
+- 没有截图路径时省略截图行；没有分享链接时写"直接使用文件"
+- checklist 不展开解释，保持简洁
+- "下一步"固定显示，作为迭代入口的明确信号
 
 ## Notes
 
