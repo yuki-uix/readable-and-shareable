@@ -391,9 +391,9 @@
   .mbti-card {
     border: 0.5px solid var(--border); border-radius: var(--radius-md); overflow: hidden;
     box-shadow: var(--shadow-sm); text-decoration: none; color: inherit; display: block;
-    transition: box-shadow .15s;
+    transition: box-shadow .15s, transform .15s;
   }
-  .mbti-card:hover { box-shadow: var(--shadow-md); }
+  .mbti-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
   .mbti-card img { width: 100%; height: auto; display: block; }
   .mbti-card-label {
     padding: 5px 8px; font-size: 12px; font-weight: 600; color: var(--text);
@@ -1140,8 +1140,23 @@
   const lbCounter = document.getElementById('lb-counter');
   const lbDesc = document.getElementById('lb-desc');
 
-  // Collect all cards in DOM order (MBTI + series)
-  const cards = Array.from(document.querySelectorAll('.mbti-card[data-src], .series-card[data-src]'));
+  // MBTI cards → navigate to style detail page
+  document.querySelectorAll('.mbti-card[data-mbti]').forEach(card => {
+    card.addEventListener('click', () => {
+      const code = card.dataset.mbti.toLowerCase();
+      window.location.href = `styles/?style=${code}`;
+    });
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        const code = card.dataset.mbti.toLowerCase();
+        window.location.href = `styles/?style=${code}`;
+      }
+    });
+  });
+
+  // Series cards → lightbox only
+  const cards = Array.from(document.querySelectorAll('.series-card[data-src]'));
   let current = 0;
 
   function open(idx) {
@@ -1149,8 +1164,8 @@
     const c = cards[current];
     lbImg.src = c.dataset.src;
     lbImg.alt = c.querySelector('img').alt;
-    lbType.textContent = c.dataset.mbti || c.dataset.label || '';
-    lbStyle.textContent = c.dataset.style || c.dataset.title || '';
+    lbType.textContent = c.dataset.label || '';
+    lbStyle.textContent = c.dataset.title || '';
     lbDesc.textContent = c.dataset.desc || '';
     lbCounter.textContent = `${current + 1} / ${cards.length}`;
     lb.classList.add('open');
@@ -1161,7 +1176,7 @@
   function close() {
     lb.classList.remove('open');
     document.body.style.overflow = '';
-    cards[current].focus();
+    if (cards[current]) cards[current].focus();
   }
 
   cards.forEach((card, i) => {

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>风格详情 — readable-and-shareable</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --bg: #F8F8F6;
+  --surface: #EFEFED;
+  --text: #1A1A18;
+  --text2: #7A7A70;
+  --text3: #A8A89E;
+  --border: rgba(0,0,0,0.10);
+  --radius: 8px;
+  --font: -apple-system,"Helvetica Neue","PingFang SC","Noto Sans SC",sans-serif;
+  --mono: "SF Mono","Menlo","Courier New",monospace;
+  /* overridden per style */
+  --core: #333;
+  --accent: #eee;
+}
+
+html { font-family: var(--font); background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
+body { min-height: 100vh; }
+
+/* ── NAV ── */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(248,248,246,0.92); backdrop-filter: blur(8px);
+  border-bottom: 0.5px solid var(--border);
+  padding: 0 24px;
+  height: 48px; display: flex; align-items: center; gap: 8px;
+}
+.nav-back {
+  font-size: 13px; color: var(--text2); text-decoration: none;
+  display: flex; align-items: center; gap: 4px;
+  transition: color .15s;
+}
+.nav-back:hover { color: var(--text); }
+.nav-back svg { width: 14px; height: 14px; }
+.nav-sep { color: var(--text3); font-size: 13px; }
+.nav-title { font-size: 13px; color: var(--text); font-weight: 500; }
+
+/* ── LAYOUT ── */
+.page { max-width: 800px; margin: 0 auto; padding: 48px 24px 80px; }
+
+/* ── HERO ── */
+.hero { margin-bottom: 48px; }
+.hero-eyebrow {
+  font-size: 11px; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; font-family: var(--mono);
+  color: var(--core); margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.hero-code-tag {
+  font-size: 10px; font-weight: 600;
+  background: var(--accent); color: var(--core);
+  padding: 2px 8px; border-radius: 4px; letter-spacing: .08em;
+}
+.hero-name { font-size: 36px; font-weight: 700; line-height: 1.2; margin-bottom: 12px; }
+.hero-tagline { font-size: 16px; color: var(--text2); line-height: 1.6; max-width: 560px; }
+
+/* ── PREVIEW ── */
+.section { margin-bottom: 48px; }
+.section-label {
+  font-size: 11px; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; font-family: var(--mono);
+  color: var(--text3); margin-bottom: 16px;
+}
+.preview-wrap {
+  border-radius: var(--radius); overflow: hidden;
+  border: 0.5px solid var(--border);
+  background: var(--surface);
+  cursor: zoom-in;
+  transition: box-shadow .15s;
+}
+.preview-wrap:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.12); }
+.preview-wrap img { width: 100%; display: block; }
+
+/* ── FIT / NOT FIT ── */
+.fit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 560px) { .fit-grid { grid-template-columns: 1fr; } }
+.fit-card {
+  background: #fff; border: 0.5px solid var(--border);
+  border-radius: var(--radius); padding: 20px;
+}
+.fit-card-title {
+  font-size: 12px; font-weight: 600; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 6px;
+}
+.fit-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.fit-dot.yes { background: #3A8A4A; }
+.fit-dot.no { background: #C04040; }
+.fit-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.fit-list li { font-size: 13px; color: var(--text2); line-height: 1.5; padding-left: 12px; position: relative; }
+.fit-list li::before { content: "·"; position: absolute; left: 0; color: var(--text3); }
+
+/* ── HOW TO GET ── */
+.steps { display: flex; flex-direction: column; gap: 0; }
+.step {
+  display: flex; gap: 16px; padding: 20px 0;
+  border-bottom: 0.5px solid var(--border);
+}
+.step:last-child { border-bottom: none; }
+.step-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--accent); color: var(--core);
+  font-size: 12px; font-weight: 700; font-family: var(--mono);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+.step-body {}
+.step-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.step-desc { font-size: 13px; color: var(--text2); line-height: 1.6; }
+.step-desc a { color: var(--core); text-decoration: underline; text-underline-offset: 2px; }
+
+/* ── SIMILAR STYLES ── */
+.similar-grid { display: flex; gap: 12px; flex-wrap: wrap; }
+.similar-card {
+  flex: 1; min-width: 140px; max-width: 200px;
+  background: #fff; border: 0.5px solid var(--border);
+  border-radius: var(--radius); padding: 16px;
+  text-decoration: none; color: var(--text);
+  transition: box-shadow .15s, transform .15s;
+  cursor: pointer;
+}
+.similar-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.1); transform: translateY(-2px); }
+.similar-card-code {
+  font-size: 10px; font-weight: 700; font-family: var(--mono);
+  letter-spacing: .1em; margin-bottom: 6px;
+}
+.similar-card-name { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.similar-card-method { font-size: 11px; color: var(--text2); }
+
+/* ── DESCRIPTION BLOCK ── */
+.desc-block {
+  background: #fff; border: 0.5px solid var(--border);
+  border-radius: var(--radius); padding: 24px;
+  font-size: 14px; color: var(--text2); line-height: 1.8;
+}
+.desc-block strong { color: var(--text); font-weight: 600; }
+
+/* ── EXAMPLE ── */
+.example-wrap {
+  border-radius: var(--radius); overflow: hidden;
+  border: 0.5px solid var(--border); background: var(--surface);
+}
+.example-wrap img { width: 100%; display: block; }
+.example-source {
+  padding: 10px 16px; font-size: 11px; color: var(--text3);
+  font-family: var(--mono); border-top: 0.5px solid var(--border);
+}
+
+/* ── LIGHTBOX ── */
+.lb-overlay {
+  display: none; position: fixed; inset: 0; z-index: 999;
+  background: rgba(0,0,0,0.85); align-items: center; justify-content: center;
+  padding: 24px;
+}
+.lb-overlay.active { display: flex; }
+.lb-img { max-width: 90vw; max-height: 90vh; border-radius: 4px; }
+.lb-close {
+  position: fixed; top: 20px; right: 20px;
+  background: none; border: none; color: #fff; font-size: 28px;
+  cursor: pointer; line-height: 1; padding: 4px;
+}
+
+/* ── LOADING / ERROR ── */
+.state-msg { text-align: center; padding: 80px 24px; color: var(--text2); font-size: 15px; }
+.state-msg a { color: var(--text); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="../" class="nav-back">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 12L6 8l4-4"/></svg>
+    所有风格
+  </a>
+  <span class="nav-sep">/</span>
+  <span class="nav-title" id="nav-title">风格详情</span>
+</nav>
+
+<div class="page" id="page-content">
+  <div class="state-msg" id="loading">加载中…</div>
+</div>
+
+<!-- Lightbox -->
+<div class="lb-overlay" id="lb-overlay">
+  <button class="lb-close" id="lb-close">✕</button>
+  <img class="lb-img" id="lb-img" src="" alt="">
+</div>
+
+<script src="styles-data.js"></script>
+<script>
+(function() {
+  const params = new URLSearchParams(location.search);
+  const code = (params.get('style') || '').toLowerCase();
+  const data = STYLES_DATA[code];
+  const page = document.getElementById('page-content');
+
+  if (!data) {
+    page.innerHTML = `<div class="state-msg">未找到风格「${code}」。<br><a href="../">← 返回所有风格</a></div>`;
+    return;
+  }
+
+  // Set CSS vars
+  document.documentElement.style.setProperty('--core', data.primaryColor);
+  document.documentElement.style.setProperty('--accent', data.accentColor);
+
+  // Nav title
+  document.getElementById('nav-title').textContent = data.name;
+  document.title = `${data.name}（${data.code}）— readable-and-shareable`;
+
+  // Similar styles HTML
+  const similarHTML = (data.similarStyles || []).map(s => {
+    const sd = STYLES_DATA[s];
+    if (!sd) return '';
+    return `<a class="similar-card" href="?style=${s}">
+      <div class="similar-card-code" style="color:${sd.primaryColor}">${sd.code}</div>
+      <div class="similar-card-name">${sd.name}</div>
+      <div class="similar-card-method">${sd.fullName}</div>
+    </a>`;
+  }).join('');
+
+  // Example section
+  const exampleHTML = data.exampleImg ? `
+    <div class="section">
+      <div class="section-label">真实案例</div>
+      <div class="example-wrap">
+        <img src="${data.exampleImg}" alt="${data.name}示例" class="preview-clickable" data-src="${data.exampleImg}">
+        ${data.exampleSource ? `<div class="example-source">来源：${data.exampleSource}</div>` : ''}
+      </div>
+    </div>` : '';
+
+  page.innerHTML = `
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero-eyebrow">
+        信息组织方式
+        <span class="hero-code-tag">${data.code}</span>
+      </div>
+      <div class="hero-name">${data.name}</div>
+      <div class="hero-tagline">${data.tagline}</div>
+    </div>
+
+    <!-- Preview -->
+    <div class="section">
+      <div class="section-label">风格预览</div>
+      <div class="preview-wrap" id="preview-wrap">
+        <img src="${data.previewImg}" alt="${data.name}预览" id="preview-img">
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="section">
+      <div class="section-label">这种风格在做什么</div>
+      <div class="desc-block">${data.description}</div>
+    </div>
+
+    <!-- Fit / Not Fit -->
+    <div class="section">
+      <div class="section-label">适合与不适合</div>
+      <div class="fit-grid">
+        <div class="fit-card">
+          <div class="fit-card-title">
+            <span class="fit-dot yes"></span>
+            适合这类文章
+          </div>
+          <ul class="fit-list">
+            ${data.fitFor.map(s => `<li>${s}</li>`).join('')}
+          </ul>
+        </div>
+        <div class="fit-card">
+          <div class="fit-card-title">
+            <span class="fit-dot no"></span>
+            不太适合
+          </div>
+          <ul class="fit-list">
+            ${data.notFor.map(s => `<li>${s}</li>`).join('')}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    ${exampleHTML}
+
+    <!-- How to get -->
+    <div class="section">
+      <div class="section-label">如何得到一张这样的图</div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">打开项目 + 准备文章</div>
+            <div class="step-desc">在 Claude Code 中克隆并打开 <a href="https://github.com/yuki-uix/readable-and-shareable" target="_blank">readable-and-shareable</a>，然后把你的文章粘贴进来或提供文件路径。</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">运行 /viz 指令</div>
+            <div class="step-desc">输入 <code style="font-family:var(--mono);font-size:12px;background:var(--accent);padding:1px 5px;border-radius:3px;">/viz</code>，工具会分析文章结构，推荐最适合的信息组织方式，并确认是否用「${data.name}」风格生成。</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">截图分享</div>
+            <div class="step-desc">生成的 HTML 文件用浏览器打开，截图即可分享。尺寸标准 600×600px，适合微信、小红书、Twitter 等平台。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Similar styles -->
+    ${similarHTML ? `
+    <div class="section">
+      <div class="section-label">相似风格</div>
+      <div class="similar-grid">${similarHTML}</div>
+    </div>` : ''}
+  `;
+
+  // Lightbox for preview
+  const lbOverlay = document.getElementById('lb-overlay');
+  const lbImg = document.getElementById('lb-img');
+
+  function openLb(src) {
+    lbImg.src = src;
+    lbOverlay.classList.add('active');
+  }
+
+  document.getElementById('preview-wrap')?.addEventListener('click', () => {
+    openLb(data.previewImg);
+  });
+
+  document.querySelectorAll('.preview-clickable').forEach(el => {
+    el.addEventListener('click', () => openLb(el.dataset.src));
+  });
+
+  document.getElementById('lb-close').addEventListener('click', () => {
+    lbOverlay.classList.remove('active');
+  });
+  lbOverlay.addEventListener('click', e => {
+    if (e.target === lbOverlay) lbOverlay.classList.remove('active');
+  });
+})();
+</script>
+</body>
+</html>
