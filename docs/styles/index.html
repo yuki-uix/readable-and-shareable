@@ -280,10 +280,13 @@ body { min-height: 100vh; }
   const root = document.getElementById('page-root');
 
   if (!data) {
+    // No valid style param — redirect to homepage gallery
     root.innerHTML = `<div class="state-msg">
-      未找到「${code || ''}」风格。<br><br>
-      <a href="../">← 浏览全部 16 种风格</a>
+      ${code ? `未找到「${code}」风格。` : '请从首页选择一种风格。'}<br><br>
+      <a href="../">← 浏览全部 16 种信息组织方式</a>
     </div>`;
+    // Auto-redirect after 2s if no style param at all
+    if (!code) setTimeout(() => { window.location.href = '../'; }, 2000);
     return;
   }
 
@@ -326,7 +329,7 @@ body { min-height: 100vh; }
 
       <aside class="sidebar">
         <div class="sidebar-preview">
-          <div class="preview-wrap" id="preview-wrap">
+          <div class="preview-wrap" id="preview-wrap" tabindex="0" role="button" aria-label="查看 ${data.name} 预览大图">
             <img src="${data.previewImg}" alt="${data.name}预览">
           </div>
           <div class="preview-hint">点击查看大图</div>
@@ -445,7 +448,9 @@ body { min-height: 100vh; }
     setTimeout(() => scrollToId(id, false), 50);
   }
 
-  document.getElementById('preview-wrap').addEventListener('click', () => openLb(data.previewImg));
+  const pw = document.getElementById('preview-wrap');
+  pw.addEventListener('click', () => openLb(data.previewImg));
+  pw.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLb(data.previewImg); } });
   document.querySelectorAll('.lb-trigger').forEach(el => el.addEventListener('click', () => openLb(el.dataset.src)));
   document.getElementById('lb-close').addEventListener('click', closeLb);
   lbOverlay.addEventListener('click', e => { if (e.target === lbOverlay) closeLb(); });
