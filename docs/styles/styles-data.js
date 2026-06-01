@@ -25,8 +25,8 @@ const STYLES_DATA = {
     primaryColor: "#2A5CAA",
     accentColor: "#EBF0FA",
     previewImg: "../showcase-mbti-intj-v2.png",
-    exampleImg: null,
-    exampleSource: null,
+    exampleImg: '../examples/intj-ce-article.png',
+    exampleSource: 'Context Engineering 的隐藏逻辑 · INTJ 框架演绎系列（6/6）',
     tokens: {
       bg: "#F5F7FA",
       surface: "#EBF0FA",
@@ -82,7 +82,7 @@ const STYLES_DATA = {
     accentColor: "#EDE8F8",
     previewImg: "../preview-infj-v2.png",
     exampleImg: null,
-    exampleSource: "CE article · Context Engineering 的隐藏逻辑",
+    exampleSource: null,
     tokens: { bg: "#F7F5FB", surface: "#EEEAF5", core: "#5B3FA6" }
   },
   infp: {
