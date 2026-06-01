@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>ESTP — 战术简报</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#111110;
+  --surface:#222220;
+  --surface2:#2C2C2A;
+  --border:rgba(255,255,255,0.12);
+  --text:#F2F2EF;
+  --text2:#A8A8A2;   /* was #888882 — lifted for 6.5:1 on surface */
+  --text3:#6E6E68;   /* tertiary, labels only */
+  --red:#E03A2F;
+  --red-pale:#311210;
+  --font:-apple-system,"Helvetica Neue","PingFang SC","Microsoft YaHei",sans-serif;
+}
+html,body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+.page{width:600px;margin:0 auto;display:flex;flex-direction:column;gap:0}
+
+/* Header strip */
+.header{
+  background:var(--red);padding:16px 36px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.header-label{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.8)}
+.header-right{font-size:10px;color:rgba(255,255,255,.7);text-align:right}
+
+/* Situation block */
+.situation{padding:28px 36px 22px;border-bottom:1px solid var(--border)}
+.sit-label{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--text3);margin-bottom:10px}
+.sit-headline{font-size:26px;font-weight:800;line-height:1.2;color:var(--text);letter-spacing:-.02em}
+.sit-headline em{color:var(--red);font-style:normal}
+
+/* Key variable */
+.keyvar{
+  margin:0 36px;padding:14px 18px;
+  background:var(--red-pale);border-left:4px solid var(--red);
+  border-radius:0 4px 4px 0;
+}
+.keyvar-label{font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--red);margin-bottom:6px}
+.keyvar-text{font-size:14px;font-weight:600;color:var(--text);line-height:1.4}
+.keyvar-sub{font-size:11px;color:var(--text2);margin-top:5px;line-height:1.5}
+
+/* NOW / NEXT split */
+.split{display:grid;grid-template-columns:1fr 1px 1fr;gap:0;margin:0}
+.split-divider{background:var(--border)}
+.split-col{padding:20px 36px}
+.split-label{
+  font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  margin-bottom:14px;display:flex;align-items:center;gap:8px;
+}
+.split-label-now{color:var(--red)}
+.split-label-next{color:var(--text3)}
+.split-dot{width:6px;height:6px;border-radius:50%}
+.split-dot-now{background:var(--red)}
+.split-dot-next{background:var(--text3)}
+
+.action-item{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px}
+.action-num{
+  min-width:22px;height:22px;border-radius:2px;
+  background:var(--surface2);color:var(--text2);
+  font-size:11px;font-weight:700;font-family:"Courier New",monospace;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.action-num.active{background:var(--red);color:#fff}
+.action-text{font-size:12px;color:var(--text);line-height:1.5}
+.action-sub{font-size:11px;color:var(--text2);line-height:1.4;margin-top:2px}
+
+/* Conflict cases */
+.cases{padding:0 36px 24px;border-top:1px solid var(--border)}
+.cases-label{font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--text3);padding-top:18px;margin-bottom:12px}
+.cases-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.case-card{background:var(--surface);border-radius:4px;padding:10px 12px}
+.case-name{font-size:11px;font-weight:700;color:var(--text);margin-bottom:4px}
+.case-conflict{font-size:11px;color:var(--text2);line-height:1.4}
+.case-conflict::before{content:'× ';color:var(--red);font-weight:700}
+.case-action{font-size:11px;color:var(--text2);line-height:1.4;margin-top:4px}
+.case-action::before{content:'→ ';color:#888}
+
+/* Footer */
+.footer{
+  padding:12px 36px;border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;font-size:10px;color:var(--text3)
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-label">Design Token · 战术简报</div>
+    <div class="header-right">2026.05<br>TOKEN BRIEF</div>
+  </div>
+
+  <!-- Situation -->
+  <div class="situation">
+    <div class="sit-label">局面</div>
+    <div class="sit-headline">Token 选错了<br><em>不是审美问题</em>——<br>是约束没对齐</div>
+  </div>
+
+  <!-- Key variable -->
+  <div style="padding:18px 36px">
+    <div class="keyvar">
+      <div class="keyvar-label">关键变量</div>
+      <div class="keyvar-text">认知任务 — 由 IA 结构决定，不由设计师决定</div>
+      <div class="keyvar-sub">用户在这个界面要做什么 → 这个答案约束了所有 Token 的合法范围</div>
+    </div>
+  </div>
+
+  <!-- NOW / NEXT -->
+  <div class="split" style="border-top:1px solid var(--border)">
+    <div class="split-col">
+      <div class="split-label split-label-now">
+        <span class="split-dot split-dot-now"></span>NOW
+      </div>
+      <div class="action-item">
+        <div class="action-num active">01</div>
+        <div>
+          <div class="action-text">问：用户的认知任务是什么？</div>
+          <div class="action-sub">扫描 / 确认 / 阅读 / 感受品牌</div>
+        </div>
+      </div>
+      <div class="action-item">
+        <div class="action-num active">02</div>
+        <div>
+          <div class="action-text">对照三轴找偏移点</div>
+          <div class="action-sub">品牌意图 · 认知任务 · Token</div>
+        </div>
+      </div>
+    </div>
+    <div class="split-divider"></div>
+    <div class="split-col">
+      <div class="split-label split-label-next">
+        <span class="split-dot split-dot-next"></span>NEXT
+      </div>
+      <div class="action-item">
+        <div class="action-num">03</div>
+        <div>
+          <div class="action-text">三轴同向 → 执行 Token 决策</div>
+          <div class="action-sub">交集非空 = 合法选择</div>
+        </div>
+      </div>
+      <div class="action-item">
+        <div class="action-num">04</div>
+        <div>
+          <div class="action-text">有摩擦 → 回到 01 重查</div>
+          <div class="action-sub">不要靠直觉调整，找约束源</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Conflict cases -->
+  <div class="cases">
+    <div class="cases-label">典型摩擦场景</div>
+    <div class="cases-grid">
+      <div class="case-card">
+        <div class="case-name">数据看板</div>
+        <div class="case-conflict">用了「温暖亲切」Token</div>
+        <div class="case-action">认知任务 = 扫描效率，需冷色高对比</div>
+      </div>
+      <div class="case-card">
+        <div class="case-name">支付确认</div>
+        <div class="case-conflict">用了「探索发现」Token</div>
+        <div class="case-action">认知任务 = 快速确认，需强 CTA</div>
+      </div>
+      <div class="case-card">
+        <div class="case-name">技术文档</div>
+        <div class="case-conflict">用了「品牌氛围」Token</div>
+        <div class="case-action">认知任务 = 深度阅读，需高可读性</div>
+      </div>
+      <div class="case-card">
+        <div class="case-name">Landing page</div>
+        <div class="case-conflict">强行对齐三轴</div>
+        <div class="case-action">IA 约束 = 0，9 种均合法，放开</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>原文：Yuki · 微信公众号 2026.05</span>
+    <span>via readable-and-shareable</span>
+  </div>
+</div>
+</body>
+</html>
