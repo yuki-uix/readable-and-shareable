@@ -283,9 +283,9 @@ Apply both together. `references/design-system.md` is the overarching visual sta
 
 ```
 请选择卡片风格：
-1. warm  — 暖米色轻量，适合知识博主、温和调性（默认）
-2. night — 深色高对比，适合科技/产品内容，截图冲击感强
-3. ink   — 纯白极简，适合概念讲解，最大化可读性
+1. warm  — 暖米色轻量，微信朋友圈 / 公众号截图首选（默认）
+2. night — 深色高对比，科技/产品内容，深色 UI 截图冲击感强
+3. ink   — 纯白极简，概念讲解 / 学术感，印刷级可读性
 4. xhs   — 暖珊瑚色封面卡 + pill badge，适合小红书传播
 
 （不选则默认使用 warm）
