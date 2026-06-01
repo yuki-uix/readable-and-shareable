@@ -306,7 +306,9 @@
   }
   .tab-btn:hover { color: var(--text2); }
   .tab-btn[aria-selected="true"] { color: var(--text); border-bottom-color: var(--text); }
+  [role="tabpanel"] { animation: tabFadeIn .15s ease; }
   [role="tabpanel"][hidden] { display: none; }
+  @keyframes tabFadeIn { from { opacity: 0; } to { opacity: 1; } }
 
   /* ── Image card showcase ── */
   .card-showcase {
