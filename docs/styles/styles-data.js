@@ -106,7 +106,7 @@ const STYLES_DATA = {
     similarStyles: ["enfp", "infj", "isfp"],
     primaryColor: "#C05070",
     accentColor: "#FFE8EC",
-    previewImg: "../showcase-mbti-infp.png",
+    previewImg: "../showcase-mbti-infp-v2.png",
     exampleImg: null,
     exampleSource: null,
     tokens: { bg: "#FFFDF7", surface: "#FFE8EC", core: "#C05070" }
@@ -158,7 +158,7 @@ const STYLES_DATA = {
     similarStyles: ["intp", "entj", "infj"],
     primaryColor: "#C05020",
     accentColor: "#FFF0E6",
-    previewImg: "../showcase-mbti-entp.png",
+    previewImg: "../showcase-mbti-entp-v2.png",
     exampleImg: null,
     exampleSource: null,
     tokens: { bg: "#FEFAF5", surface: "#FFF0E6", core: "#C05020" }
@@ -209,7 +209,7 @@ const STYLES_DATA = {
     similarStyles: ["infp", "enfp", "isfj"],
     primaryColor: "#2A7A5A",
     accentColor: "#E6F5EF",
-    previewImg: "../showcase-mbti-enfj.png",
+    previewImg: "../showcase-mbti-enfj-v2.png",
     exampleImg: null,
     exampleSource: null,
     tokens: { bg: "#F5FBF8", surface: "#E6F5EF", core: "#2A7A5A" }
@@ -311,7 +311,7 @@ const STYLES_DATA = {
     similarStyles: ["istj", "entj", "isfj"],
     primaryColor: "#1A4A7A",
     accentColor: "#E6EFF8",
-    previewImg: "../showcase-mbti-estj.png",
+    previewImg: "../showcase-mbti-estj-v2.png",
     exampleImg: null,
     exampleSource: null,
     tokens: { bg: "#F5F8FB", surface: "#E6EFF8", core: "#1A4A7A" }

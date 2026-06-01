@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>INFP v2 — 手写的信</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#FFFDF7;
+  --sa:#FFE8EC;
+  --sb:#E8F4E8;
+  --sc:#FFF3D6;
+  --sd:#E8EEFF;
+  --text:#2C2416;
+  --text2:#7A6E5F;
+  --font:-apple-system,"Helvetica Neue","PingFang SC",sans-serif;
+}
+html,body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+.card{width:600px;margin:0 auto;background:var(--bg);padding:36px 40px 32px}
+
+.eyebrow{font-size:10px;font-weight:600;letter-spacing:.1em;color:#B08060;text-transform:uppercase;margin-bottom:20px;font-style:italic}
+
+/* Arc blocks */
+.arc{display:flex;flex-direction:column;gap:0}
+.arc-block{padding:16px 20px;border-radius:6px;position:relative;margin-bottom:4px}
+.arc-block.feel {background:var(--sa)}
+.arc-block.see  {background:var(--sb)}
+.arc-block.think{background:var(--sc)}
+.arc-block.open {background:var(--sd)}
+
+.arc-label{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;opacity:.6}
+.arc-text{font-size:14px;line-height:1.75}
+.arc-text em{font-style:italic;opacity:.8}
+
+/* Arrow connector */
+.arc-arrow{text-align:left;padding:3px 0 3px 28px;color:#B08060;font-size:16px;opacity:.5}
+
+/* Decoration */
+.deco{float:right;font-size:22px;margin-top:-4px;margin-left:8px;opacity:.4}
+
+/* Footer open question */
+.footer-q{
+  margin-top:24px;padding-top:18px;
+  border-top:1px dashed rgba(180,140,100,0.3);
+  font-size:13px;font-style:italic;color:var(--text2);line-height:1.7;
+}
+.footer-meta{margin-top:16px;font-size:10px;color:#B0A090;letter-spacing:.05em}
+</style>
+</head>
+<body>
+<div class="card">
+
+  <div class="eyebrow">手写的信 · 叙事弧线式</div>
+
+  <div class="arc">
+
+    <div class="arc-block feel">
+      <div class="arc-label">开场感受</div>
+      <div class="arc-text">
+        <span class="deco">✦</span>
+        我以为写给 AI 的 prompt 越长越好——
+        <em>越详细，它越懂我。</em>
+      </div>
+    </div>
+
+    <div class="arc-arrow">↓</div>
+
+    <div class="arc-block see">
+      <div class="arc-label">观察 / 发现</div>
+      <div class="arc-text">
+        后来发现每一轮对话，它都要重新读一遍所有内容。
+        上下文越长，成本越高，它越容易迷失。
+        <em>「更多」不等于「更好」。</em>
+      </div>
+    </div>
+
+    <div class="arc-arrow">↓</div>
+
+    <div class="arc-block think">
+      <div class="arc-label">联想 / 延伸</div>
+      <div class="arc-text">
+        <span class="deco">✿</span>
+        也许写给 AI 的信，和写给人的信一样——
+        不是把所有话都说完，
+        而是把<em>最重要的那句话</em>放在它最容易看到的地方。
+      </div>
+    </div>
+
+    <div class="arc-arrow">↓</div>
+
+    <div class="arc-block open">
+      <div class="arc-label">开放落点</div>
+      <div class="arc-text">
+        Select · Compress · Isolate · Write
+        <br>
+        <em>四个动词，像一封写给未来自己的备忘录。</em>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-q">
+    你有没有也写过一封太长的信，<br>
+    最后连自己都不确定说了什么……？
+  </div>
+
+  <div class="footer-meta">原文：Context Engineering · via readable-and-shareable</div>
+
+</div>
+</body>
+</html>
