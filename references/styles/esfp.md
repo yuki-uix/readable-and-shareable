@@ -86,3 +86,28 @@
 高饱和多色、装饰元素、海报感排版 = AI 生成更容易出那种「节日能量」质感。
 
 Prompt 模板：`templates/image-card/esfp-prompt-base.md`（待创建）
+
+---
+
+### 签名视觉元素（v2）— 必须实现的布局语法
+
+**① 体验英雄区（Hero Banner）**
+- `--burst-a` 活力橙全宽背景，白字，`padding: 28px 36px`
+- 标题 26px bold，可换行，传达「感受」而非「结论」
+- 右上角装饰 `✦` 和 `●`（`position: absolute`，低透明度白色）
+
+**② 彩色感受列表（Feel List）**
+- 每条：彩色 `✦` 符号（18px，对应不同 `--burst-*` 色）+ 主句（15px bold）+ 副句（12px `--text2`）
+- 条目间 `0.5px solid rgba(0,0,0,0.06)` 分隔，`padding: 14px 0`
+- 每条 `✦` 颜色不同，形成「彩虹感」
+
+**③ 装饰色点行（Deco Dots）**
+- 5个 8px 圆点，依次使用 5个 `--burst-*` 色
+- 放在感受列表和收口之间，视觉节奏过渡
+
+**④ 邀请渐变块（Invite Block）**
+- `linear-gradient(135deg, --ob, --oc)`，白字，`border-radius: 8px`
+- 15px bold 邀请句 + 12px 副文（项目链接）
+- 收口必须用「来……」「去……」开头的行动邀请
+
+**参考实现**：`docs/preview-esfp-v2.html`（2026.06）

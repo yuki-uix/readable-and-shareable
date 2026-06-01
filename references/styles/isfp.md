@@ -100,3 +100,27 @@
 HTML 做大色块可以，但色彩搭配的「感性协调」AI 更擅长。
 
 Prompt 模板：`templates/image-card/isfp-prompt-base.md`（待创建）
+
+---
+
+### 签名视觉元素（v2）— 必须实现的布局语法
+
+**① 调色板色块（Palette Swatch）**
+- 高度 88px，`border-radius: 6px`，色块本身不含文字
+- 每块对应一个概念，颜色即语义（不用箭头或编号说明关系）
+- 2列 grid，最后一个概念可用 `grid-column: 1/-1` 全宽
+
+**② 色块标签（Swatch Label）**
+- 色块正下方，`padding: 10px 12px`，`border-bottom: 1px solid rgba(0,0,0,0.06)`
+- 概念名：13px bold `--text`；描述：12px `--text2`，1-2 句感官语言
+
+**③ 整体解读（Reading）**
+- 顶部 `1px solid rgba(0,0,0,0.06)` 分隔
+- 10px uppercase 标签「这些颜色在说」+ 13px 斜体 `--text2` 感悟句
+- **不写结论**，用「不是……是……」或「……像……」的意象句式
+
+**④ 极简留白**
+- 页面填充率 ≤ 50%，内容之间有足够呼吸
+- 无箭头、无矩阵、无编号列表
+
+**参考实现**：`docs/preview-isfp-v2.html`（2026.06）

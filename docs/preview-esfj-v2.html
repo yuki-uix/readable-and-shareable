@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>ESFJ v2 — 关系关怀图</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#FEFBF8;
+  --surface:#FDF4EE;
+  --surface-b:#F9EDE4;
+  --text:#2A1C14;
+  --text2:#8A7060;
+  --border:rgba(150,80,40,0.10);
+  --rose:#C4566A;
+  --rose-bg:#FDEEF1;
+  --warm:#B87333;
+  --warm-bg:#FEF3E6;
+  --harmony:#5C8A6E;
+  --harmony-bg:#EEF5F1;
+  --font:-apple-system,"Helvetica Neue","PingFang SC",sans-serif;
+}
+html,body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+.card{width:600px;margin:0 auto;background:var(--bg);padding:32px 32px 28px}
+
+.eyebrow{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);margin-bottom:6px}
+.title{font-size:16px;font-weight:700;line-height:1.4;margin-bottom:20px}
+
+/* Person cards */
+.cards-grid{display:flex;flex-direction:column;gap:10px}
+.person-card{
+  border:1px solid var(--rose);border-radius:6px;
+  background:#fff;padding:14px 16px;
+  display:grid;grid-template-columns:1fr auto;gap:8px;align-items:start;
+}
+.person-card.attention{border-color:var(--warm)}
+
+.person-left{}
+.person-name{
+  font-size:13px;font-weight:700;color:var(--rose);margin-bottom:6px;
+  display:flex;align-items:center;gap:6px;
+}
+.person-card.attention .person-name{color:var(--warm)}
+.person-role{font-size:10px;font-weight:500;background:var(--rose-bg);color:var(--rose);padding:1px 7px;border-radius:10px}
+.person-card.attention .person-role{background:var(--warm-bg);color:var(--warm)}
+
+.person-need{
+  display:flex;align-items:flex-start;gap:6px;margin-bottom:5px;
+}
+.need-tag{
+  font-size:10px;font-weight:600;background:var(--warm-bg);color:var(--warm);
+  padding:2px 7px;border-radius:3px;flex-shrink:0;
+}
+.need-text{font-size:12px;color:var(--text2);line-height:1.5}
+
+.person-feel{font-size:12px;font-style:italic;color:var(--text2);line-height:1.5}
+
+/* Status badge */
+.status{
+  flex-shrink:0;font-size:11px;font-weight:600;
+  padding:4px 10px;border-radius:12px;
+  display:flex;align-items:center;gap:4px;white-space:nowrap;
+}
+.status.ok{background:var(--harmony-bg);color:var(--harmony)}
+.status.watch{background:var(--warm-bg);color:var(--warm)}
+
+/* Shared feeling */
+.shared{
+  margin-top:12px;padding:14px 18px;
+  background:var(--surface);border-radius:6px;
+  border-top:2px solid var(--rose-bg);
+}
+.shared-label{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text2);margin-bottom:6px}
+.shared-text{font-size:13px;font-style:italic;color:var(--text);line-height:1.6}
+
+/* Footer */
+.footer{margin-top:14px;font-size:12px;color:var(--text2);line-height:1.6;padding-top:12px;border-top:0.5px solid var(--border)}
+.footer-meta{font-size:10px;color:var(--text2);margin-top:6px}
+</style>
+</head>
+<body>
+<div class="card">
+
+  <div class="eyebrow">关系关怀图 · 关系关怀式</div>
+  <div class="title">Context Engineering 影响到了谁</div>
+
+  <div class="cards-grid">
+
+    <div class="person-card">
+      <div class="person-left">
+        <div class="person-name">
+          工程师
+          <span class="person-role">开发者</span>
+        </div>
+        <div class="person-need">
+          <span class="need-tag">需求</span>
+          <span class="need-text">知道成本为什么高、从哪里下手优化</span>
+        </div>
+        <div class="person-feel">「我每天跑 Agent 但不知道钱花在哪里」</div>
+      </div>
+      <div class="status ok">✓ 已覆盖</div>
+    </div>
+
+    <div class="person-card">
+      <div class="person-left">
+        <div class="person-name">
+          产品负责人
+          <span class="person-role">决策者</span>
+        </div>
+        <div class="person-need">
+          <span class="need-tag">需求</span>
+          <span class="need-text">能向团队解释为什么要投入时间做上下文优化</span>
+        </div>
+        <div class="person-feel">「这件事值得做，但我说不清楚为什么」</div>
+      </div>
+      <div class="status ok">✓ 已覆盖</div>
+    </div>
+
+    <div class="person-card attention">
+      <div class="person-left">
+        <div class="person-name">
+          初学者
+          <span class="person-role">入门用户</span>
+        </div>
+        <div class="person-need">
+          <span class="need-tag">需求</span>
+          <span class="need-text">能用一个顺序开始动手，不被全部概念淹没</span>
+        </div>
+        <div class="person-feel">「这篇文章很好，但我不知道从哪步开始」</div>
+      </div>
+      <div class="status watch">○ 需关注</div>
+    </div>
+
+  </div>
+
+  <div class="shared">
+    <div class="shared-label">共同感受</div>
+    <div class="shared-text">每个角色都在问同一个问题——「我该怎么开始？」<br>答案是一样的：从 Select 开始，把不需要的信息拿走。</div>
+  </div>
+
+  <div class="footer">
+    每个角色的需求都被看见——这就是和谐的起点。
+    <div class="footer-meta">原文：Context Engineering · via readable-and-shareable</div>
+  </div>
+
+</div>
+</body>
+</html>
