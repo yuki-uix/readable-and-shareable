@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>风格详情 — readable-and-shareable</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --bg: #F8F8F6;
+  --surface: #EFEFED;
+  --text: #1A1A18;
+  --text2: #7A7A70;
+  --text3: #A8A89E;
+  --border: rgba(0,0,0,0.10);
+  --radius: 8px;
+  --font: -apple-system,"Helvetica Neue","PingFang SC","Noto Sans SC",sans-serif;
+  --mono: "SF Mono","Menlo","Courier New",monospace;
+  --core: #333;
+  --accent: #eee;
+}
+
+html { font-family: var(--font); background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
+body { min-height: 100vh; }
+
+/* ── NAV ── */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(248,248,246,0.92); backdrop-filter: blur(8px);
+  border-bottom: 0.5px solid var(--border);
+  padding: 0 32px; height: 48px;
+  display: flex; align-items: center; gap: 8px;
+}
+.nav-back {
+  font-size: 13px; color: var(--text2); text-decoration: none;
+  display: flex; align-items: center; gap: 4px; transition: color .15s;
+}
+.nav-back:hover { color: var(--text); }
+.nav-back svg { width: 14px; height: 14px; }
+.nav-sep { color: var(--text3); font-size: 13px; }
+.nav-title { font-size: 13px; color: var(--text); font-weight: 500; }
+
+/* ── TWO-COLUMN LAYOUT ── */
+.layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  align-items: start;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ── LEFT SIDEBAR ── */
+.sidebar {
+  border-right: 0.5px solid var(--border);
+  padding: 40px 28px 60px;
+  position: sticky;
+  top: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Hero text */
+.hero-eyebrow {
+  font-size: 10px; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; font-family: var(--mono);
+  color: var(--core); margin-bottom: 10px;
+  display: flex; align-items: center; gap: 6px;
+}
+.hero-code-tag {
+  font-size: 10px; font-weight: 600;
+  background: var(--accent); color: var(--core);
+  padding: 2px 7px; border-radius: 4px; letter-spacing: .06em;
+}
+.hero-name { font-size: 26px; font-weight: 700; line-height: 1.2; margin-bottom: 8px; }
+.hero-tagline { font-size: 13px; color: var(--text2); line-height: 1.65; }
+
+/* Preview */
+.preview-wrap {
+  border-radius: var(--radius); overflow: hidden;
+  border: 0.5px solid var(--border); background: var(--surface);
+  cursor: zoom-in; transition: box-shadow .15s;
+  position: relative;
+}
+.preview-wrap:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+.preview-wrap img { width: 100%; display: block; }
+.preview-hint {
+  text-align: center; padding: 7px 0 2px;
+  font-size: 10px; color: var(--text3); font-family: var(--mono);
+}
+
+/* Token swatches */
+.token-row { display: flex; gap: 6px; align-items: center; }
+.token-swatch {
+  width: 16px; height: 16px; border-radius: 50%;
+  border: 0.5px solid rgba(0,0,0,0.12); flex-shrink: 0;
+}
+.token-label { font-size: 11px; color: var(--text3); }
+
+/* CTAs */
+.cta-group { display: flex; flex-direction: column; gap: 8px; }
+.cta-primary {
+  display: block; text-align: center;
+  background: var(--core); color: #fff;
+  font-size: 13px; font-weight: 600;
+  padding: 10px 16px; border-radius: 6px;
+  text-decoration: none; transition: opacity .15s;
+}
+.cta-primary:hover { opacity: .85; }
+.cta-secondary {
+  display: block; text-align: center;
+  background: transparent; color: var(--core);
+  font-size: 13px; font-weight: 500;
+  padding: 9px 16px; border-radius: 6px;
+  border: 0.5px solid var(--core);
+  text-decoration: none; transition: background .15s;
+}
+.cta-secondary:hover { background: var(--accent); }
+
+/* ── RIGHT CONTENT ── */
+.content { padding: 40px 52px 80px; }
+
+.section { margin-bottom: 40px; }
+.section-label {
+  font-size: 10px; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; font-family: var(--mono);
+  color: var(--text3); margin-bottom: 14px;
+}
+
+/* Description */
+.desc-block { font-size: 15px; color: var(--text2); line-height: 1.85; }
+
+/* Fit grid */
+.fit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.fit-card {
+  background: #fff; border: 0.5px solid var(--border);
+  border-radius: var(--radius); padding: 18px;
+}
+.fit-card-title {
+  font-size: 12px; font-weight: 600; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 6px;
+}
+.fit-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.fit-dot.yes { background: #3A8A4A; }
+.fit-dot.no  { background: #C04040; }
+.fit-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.fit-list li {
+  font-size: 13px; color: var(--text2); line-height: 1.5;
+  padding-left: 12px; position: relative;
+}
+.fit-list li::before { content: "·"; position: absolute; left: 0; color: var(--text3); }
+
+/* Example */
+.example-wrap {
+  border-radius: var(--radius); overflow: hidden;
+  border: 0.5px solid var(--border); background: var(--surface);
+}
+.example-wrap img { width: 100%; display: block; cursor: zoom-in; }
+.example-source {
+  padding: 10px 16px; font-size: 11px; color: var(--text3);
+  font-family: var(--mono); border-top: 0.5px solid var(--border);
+}
+
+/* How-to block — dark card */
+.howto-block {
+  background: var(--core); border-radius: var(--radius);
+  padding: 32px 32px 28px;
+}
+.howto-title {
+  font-size: 18px; font-weight: 700; color: #fff;
+  margin-bottom: 24px; line-height: 1.3;
+}
+.steps { display: flex; flex-direction: column; }
+.step { display: flex; gap: 16px; padding: 16px 0; border-bottom: 0.5px solid rgba(255,255,255,0.12); }
+.step:last-child { border-bottom: none; padding-bottom: 4px; }
+.step-num {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(255,255,255,0.15); color: #fff;
+  font-size: 14px; font-weight: 700; font-family: var(--mono);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
+}
+.step-title { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+.step-desc { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.65; }
+.step-desc a { color: rgba(255,255,255,0.9); text-decoration: underline; text-underline-offset: 2px; }
+.step-desc code {
+  font-family: var(--mono); font-size: 12px;
+  background: rgba(255,255,255,0.15); padding: 1px 6px; border-radius: 3px; color: #fff;
+}
+.howto-cta {
+  margin-top: 24px;
+  display: inline-flex; align-items: center; gap: 6px;
+  border: 1.5px solid rgba(255,255,255,0.6); color: #fff;
+  font-size: 13px; font-weight: 600; padding: 9px 18px; border-radius: 6px;
+  text-decoration: none; transition: background .15s, border-color .15s;
+}
+.howto-cta:hover { background: rgba(255,255,255,0.12); border-color: #fff; }
+
+/* Similar styles — bottom of right col */
+.similar-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+.similar-item {
+  padding: 14px 16px; border-radius: 6px;
+  background: #fff; border: 0.5px solid var(--border);
+  text-decoration: none; color: var(--text);
+  transition: box-shadow .12s, transform .12s;
+}
+.similar-item:hover { box-shadow: 0 2px 10px rgba(0,0,0,0.09); transform: translateY(-2px); }
+.similar-item-code {
+  font-size: 10px; font-weight: 700; font-family: var(--mono);
+  letter-spacing: .08em; margin-bottom: 5px;
+}
+.similar-item-name { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+.similar-item-method { font-size: 11px; color: var(--text2); }
+
+/* ── LIGHTBOX ── */
+.lb-overlay {
+  display: none; position: fixed; inset: 0; z-index: 999;
+  background: rgba(0,0,0,0.88); align-items: center; justify-content: center; padding: 24px;
+}
+.lb-overlay.active { display: flex; }
+.lb-img { max-width: 88vw; max-height: 88vh; border-radius: 4px; }
+.lb-close {
+  position: fixed; top: 20px; right: 20px;
+  background: none; border: none; color: #fff; font-size: 28px;
+  cursor: pointer; line-height: 1; opacity: .8;
+}
+.lb-close:hover { opacity: 1; }
+
+/* ── MOBILE ── */
+@media (max-width: 760px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar {
+    position: static;
+    border-right: none; border-bottom: 0.5px solid var(--border);
+    padding: 28px 20px 24px;
+    /* On mobile: show preview first, then hero text, then CTAs */
+    flex-direction: column;
+  }
+  /* Reorder: preview before hero on mobile */
+  .sidebar-hero { order: 1; }
+  .sidebar-preview { order: 0; }
+  .sidebar-tokens { display: none; }
+  .sidebar-cta { order: 2; }
+  .content { padding: 28px 20px 60px; }
+  .fit-grid { grid-template-columns: 1fr; }
+  .similar-grid { grid-template-columns: repeat(2,1fr); }
+}
+
+/* ── EMPTY / ERROR ── */
+.state-msg { text-align: center; padding: 80px 24px; color: var(--text2); font-size: 15px; }
+.state-msg a { color: var(--text); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="../" class="nav-back">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 12L6 8l4-4"/></svg>
+    所有风格
+  </a>
+  <span class="nav-sep">/</span>
+  <span class="nav-title" id="nav-title">风格详情</span>
+</nav>
+
+<div id="page-root">
+  <div class="state-msg">加载中…</div>
+</div>
+
+<div class="lb-overlay" id="lb-overlay">
+  <button class="lb-close" id="lb-close" aria-label="关闭">✕</button>
+  <img class="lb-img" id="lb-img" src="" alt="">
+</div>
+
+<script src="styles-data.js"></script>
+<script>
+(function() {
+  const params = new URLSearchParams(location.search);
+  const code = (params.get('style') || '').toLowerCase();
+  const data = STYLES_DATA[code];
+  const root = document.getElementById('page-root');
+
+  if (!data) {
+    // No valid style param — redirect to homepage gallery
+    root.innerHTML = `<div class="state-msg">
+      ${code ? `未找到「${code}」风格。` : '请从首页选择一种风格。'}<br><br>
+      <a href="../">← 浏览全部 16 种信息组织方式</a>
+    </div>`;
+    // Auto-redirect after 2s if no style param at all
+    if (!code) setTimeout(() => { window.location.href = '../'; }, 2000);
+    return;
+  }
+
+  document.documentElement.style.setProperty('--core', data.primaryColor);
+  document.documentElement.style.setProperty('--accent', data.accentColor);
+  document.getElementById('nav-title').textContent = data.name;
+  document.title = `${data.name}（${data.code}）— readable-and-shareable`;
+
+  const similarHTML = (data.similarStyles || []).map(s => {
+    const sd = STYLES_DATA[s];
+    if (!sd) return '';
+    return `<a class="similar-item" href="?style=${s}">
+      <div class="similar-item-code" style="color:${sd.primaryColor}">${sd.code}</div>
+      <div class="similar-item-name">${sd.name}</div>
+      <div class="similar-item-method">${sd.fullName}</div>
+    </a>`;
+  }).join('');
+
+  const exampleHTML = data.exampleImg ? `
+    <div class="section">
+      <div class="section-label">真实案例</div>
+      <div class="example-wrap">
+        <img src="${data.exampleImg}" alt="${data.name}示例" class="lb-trigger" data-src="${data.exampleImg}">
+        ${data.exampleSource ? `<div class="example-source">来源：${data.exampleSource}</div>` : ''}
+      </div>
+    </div>` : '';
+
+  const tokenSwatches = `
+    <div class="sidebar-tokens">
+      <div class="token-row">
+        <div class="token-swatch" style="background:${data.primaryColor}"></div>
+        <div class="token-swatch" style="background:${data.accentColor};border-color:rgba(0,0,0,0.15)"></div>
+        <div class="token-swatch" style="background:${data.tokens?.bg || '#F8F8F6'}"></div>
+        <span class="token-label">设计色彩</span>
+      </div>
+    </div>`;
+
+  root.innerHTML = `
+    <div class="layout">
+
+      <aside class="sidebar">
+        <div class="sidebar-preview">
+          <div class="preview-wrap" id="preview-wrap" tabindex="0" role="button" aria-label="查看 ${data.name} 预览大图">
+            <img src="${data.previewImg}" alt="${data.name}预览">
+          </div>
+          <div class="preview-hint">点击查看大图</div>
+        </div>
+
+        <div class="sidebar-hero">
+          <div class="hero-eyebrow">
+            信息组织方式
+            <span class="hero-code-tag">${data.code}</span>
+          </div>
+          <div class="hero-name">${data.name}</div>
+          <div class="hero-tagline">${data.tagline}</div>
+        </div>
+
+        ${tokenSwatches}
+
+        <div class="sidebar-cta cta-group">
+          <a class="cta-primary" href="https://github.com/yuki-uix/readable-and-shareable" target="_blank">用这个风格生成 →</a>
+          <a class="cta-secondary" href="#howto">如何得到这张图 ↓</a>
+        </div>
+      </aside>
+
+      <main class="content">
+
+        <div class="section">
+          <div class="section-label">这种风格在做什么</div>
+          <div class="desc-block">${data.description}</div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">适合与不适合</div>
+          <div class="fit-grid">
+            <div class="fit-card">
+              <div class="fit-card-title"><span class="fit-dot yes"></span>适合这类文章</div>
+              <ul class="fit-list">${data.fitFor.map(s => `<li>${s}</li>`).join('')}</ul>
+            </div>
+            <div class="fit-card">
+              <div class="fit-card-title"><span class="fit-dot no"></span>不太适合</div>
+              <ul class="fit-list">${data.notFor.map(s => `<li>${s}</li>`).join('')}</ul>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin:-24px 0 40px;font-size:12px;color:var(--text3)">
+          这个风格适合你的文章？
+          <a id="anchor-howto" href="#howto" style="color:var(--core);text-decoration:underline;text-underline-offset:2px;cursor:pointer;">查看如何生成 →</a>
+        </div>
+
+        ${exampleHTML}
+
+        <div class="section" id="howto">
+          <div class="howto-block">
+            <div class="howto-title">如何得到一张这样的图</div>
+            <div class="steps">
+              <div class="step">
+                <div class="step-num">1</div>
+                <div>
+                  <div class="step-title">克隆项目，准备好你的文章</div>
+                  <div class="step-desc">在 Claude Code 中打开 <a href="https://github.com/yuki-uix/readable-and-shareable" target="_blank">readable-and-shareable</a>，把文章粘贴进来或提供文件路径。</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">2</div>
+                <div>
+                  <div class="step-title">运行 /viz，选择「${data.name}」风格</div>
+                  <div class="step-desc">输入 <code>/viz</code>，工具分析文章结构后推荐信息组织方式。选择「${data.name}」并确认色彩方案。</div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-num">3</div>
+                <div>
+                  <div class="step-title">截图，直接发布</div>
+                  <div class="step-desc">生成的 HTML 用浏览器打开截图即可。标准尺寸 600×600px，适合微信、小红书、Twitter。</div>
+                </div>
+              </div>
+            </div>
+            <a class="howto-cta" href="https://github.com/yuki-uix/readable-and-shareable" target="_blank">打开 GitHub 项目 →</a>
+          </div>
+        </div>
+
+        ${similarHTML ? `
+        <div class="section">
+          <div class="section-label">看完了？试试相似风格</div>
+          <div class="similar-grid">${similarHTML}</div>
+        </div>` : ''}
+
+      </main>
+    </div>
+  `;
+
+  // Lightbox
+  const lbOverlay = document.getElementById('lb-overlay');
+  const lbImg     = document.getElementById('lb-img');
+  const openLb  = src => { lbImg.src = src; lbOverlay.classList.add('active'); };
+  const closeLb = ()  => lbOverlay.classList.remove('active');
+
+  // Smooth scroll helper (accounts for sticky nav)
+  function scrollToId(id, smooth = true) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY - 48 - 16;
+    window.scrollTo({ top, behavior: smooth ? 'smooth' : 'auto' });
+  }
+
+  // All howto scroll triggers
+  ['.cta-secondary', '#anchor-howto'].forEach(sel => {
+    document.querySelector(sel)?.addEventListener('click', e => {
+      e.preventDefault();
+      scrollToId('howto');
+    });
+  });
+
+  // Handle initial hash in URL (e.g. ?style=entj#howto)
+  if (location.hash) {
+    const id = location.hash.slice(1);
+    setTimeout(() => scrollToId(id, false), 50);
+  }
+
+  const pw = document.getElementById('preview-wrap');
+  pw.addEventListener('click', () => openLb(data.previewImg));
+  pw.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLb(data.previewImg); } });
+  document.querySelectorAll('.lb-trigger').forEach(el => el.addEventListener('click', () => openLb(el.dataset.src)));
+  document.getElementById('lb-close').addEventListener('click', closeLb);
+  lbOverlay.addEventListener('click', e => { if (e.target === lbOverlay) closeLb(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+})();
+</script>
+</body>
+</html>
