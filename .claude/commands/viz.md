@@ -45,16 +45,28 @@ Scan the article for these structure signals. A single article can have multiple
 | **Relational** | Concepts that reference each other, dependency graphs, system architectures | 概念关系图 · 思维导图 |
 | **Narrative/Argumentative** | Story-driven, emotional arc, dense reasoning chains | 漫画（实验性）· 图片卡片（摘要式） |
 
-After saving `analysis.md`, show the user a **3-line summary** in the conversation:
+After saving `analysis.md`, show the user an **analysis summary card** in the conversation:
 
 ```
-📄 分析完成 → examples/{slug}/analysis.md
+📄 examples/{slug}/analysis.md
 
-主结构：{Primary structure type}（{one-line evidence}）
-核心论点：{N} 条 · 可视化挑战：{one-line summary}
+这篇文章适合{场景描述，用受众语言，例："想快速了解某领域的读者" / "需要按步骤操作的用户"}。
 
-如果结构识别不准确，告诉我，我重新分析。
+核心论点：
+· {论点 1，一句话}
+· {论点 2，一句话}
+· {论点 3，一句话，如适用}
+
+推荐产出：{产出形式}——{一句话理由，用场景语言，例："适合截图发朋友圈，感兴趣的人会回来问原文"}
+
+识别不准确？告诉我，我重新分析。
 ```
+
+**场景语言规则**：主结构描述用「这篇文章适合……的受众」而不是「层级型/时序型」等内部术语。受众看摘要卡时，判断的是「AI 有没有读懂这篇文章」，不是「结构类型是否正确」。
+
+**用户纠正时**：重新分析，覆盖写入 `analysis.md`，再次输出摘要卡。纠正流程不限次数，直到用户确认或说「继续」。
+
+**跳过**：用户说「继续」/「没问题」/「直接生成」时，不重复输出摘要卡，直接进入 Step 2.5。
 
 ### Step 2.5 — 复杂度检测：是否需要多张卡片
 
