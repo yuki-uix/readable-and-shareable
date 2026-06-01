@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>ENTJ v2 — 战略简报</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F8F8F6;--surface:#EEEDE8;--surface-b:#1E2D1E;
+  --text:#1A1A18;--text2:#7A7A70;--border:rgba(0,0,0,0.12);
+  --action:#1B5E2A;--action-bg:#EBF3EB;
+  --compare-a:#EBF3EB;--compare-b:#F5EBE8;
+  --font:-apple-system,"Helvetica Neue","PingFang SC",sans-serif;
+  --mono:"SF Mono","Menlo","Courier New",monospace;
+}
+html,body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+.page{width:600px;margin:0 auto;display:flex;flex-direction:column}
+
+/* ① Verdict Bar */
+.verdict{background:var(--action);padding:18px 28px 16px}
+.verdict-label{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.55);font-family:var(--mono);margin-bottom:7px}
+.verdict-text{font-size:18px;font-weight:700;color:#fff;line-height:1.35}
+
+/* body */
+.body{padding:24px 28px;display:flex;flex-direction:column;gap:20px}
+
+/* header */
+.header{border-bottom:0.5px solid var(--border);padding-bottom:12px}
+.eyebrow{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);font-family:var(--mono);margin-bottom:6px}
+.title{font-size:15px;font-weight:600;color:var(--text);line-height:1.35}
+
+/* ④ Metrics */
+.metrics{display:flex;gap:0;border:0.5px solid var(--border);border-radius:4px;overflow:hidden}
+.metric{flex:1;padding:12px 14px;border-right:0.5px solid var(--border);background:var(--surface)}
+.metric:last-child{border-right:none}
+.metric-num{font-size:30px;font-weight:700;color:var(--text);line-height:1;font-family:var(--mono)}
+.metric-unit{font-size:12px;font-weight:400;color:var(--text2);margin-left:2px}
+.metric-label{font-size:10px;color:var(--text2);margin-top:5px;line-height:1.4}
+
+/* ② Compare Matrix */
+.compare-label{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text2);font-family:var(--mono);margin-bottom:8px}
+.compare-table{border:0.5px solid var(--border);border-radius:4px;overflow:hidden}
+.compare-head{display:grid;grid-template-columns:1fr 1fr 1fr}
+.compare-hcell{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text2);padding:6px 10px;background:var(--surface);font-family:var(--mono)}
+.compare-hcell.a{background:var(--compare-a);position:relative}
+.compare-hcell.b{background:var(--compare-b)}
+.rec-tag{position:absolute;top:4px;right:4px;font-size:8px;font-weight:700;background:var(--action);color:#fff;padding:1px 5px;border-radius:2px}
+.compare-row{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:0.5px solid var(--border)}
+.compare-cell{font-size:11.5px;color:var(--text2);padding:8px 10px;line-height:1.4}
+.compare-cell.a{background:var(--compare-a)}
+.compare-cell.b{background:var(--compare-b)}
+.compare-cell strong{color:var(--text);font-weight:600}
+.compare-row:nth-child(odd) .compare-cell:first-child{background:var(--surface)}
+
+/* ③ Action Rows */
+.action-label{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text2);font-family:var(--mono);margin-bottom:8px}
+.action-list{display:flex;flex-direction:column;gap:0}
+.action-row{display:flex;align-items:baseline;gap:10px;padding:9px 12px;border-left:4px solid var(--action);background:var(--action-bg);border-bottom:0.5px solid rgba(0,0,0,0.06)}
+.action-row:last-child{border-bottom:none}
+.action-verb{font-size:12px;font-weight:700;color:var(--action);min-width:32px;flex-shrink:0}
+.action-text{font-size:12px;color:var(--text);line-height:1.5}
+
+.footer{border-top:0.5px solid var(--border);padding:11px 28px;display:flex;justify-content:space-between;font-size:10px;color:var(--text2);font-family:var(--mono)}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ① Verdict Bar -->
+  <div class="verdict">
+    <div class="verdict-label">核心判断</div>
+    <div class="verdict-text">Prompt Cache 是成本优化第一优先级，其他措施在此之后才值得投入</div>
+  </div>
+
+  <div class="body">
+
+    <div class="header">
+      <div class="eyebrow">战略简报 · 结论前置式</div>
+      <div class="title">Coding Agent 成本优化——从 $11.30 到 $4–5 的路径选择</div>
+    </div>
+
+    <!-- ④ Metrics -->
+    <div class="metrics">
+      <div class="metric">
+        <div><span class="metric-num">93</span><span class="metric-unit">–99%</span></div>
+        <div class="metric-label">Input token 占<br>API 总成本</div>
+      </div>
+      <div class="metric">
+        <div><span class="metric-num">10</span><span class="metric-unit">×</span></div>
+        <div class="metric-label">Cache 命中后<br>Input 价格差距</div>
+      </div>
+      <div class="metric">
+        <div><span class="metric-num">$4–5</span></div>
+        <div class="metric-label">全措施到位后<br>估算成本/天</div>
+      </div>
+    </div>
+
+    <!-- ② Compare Matrix -->
+    <div>
+      <div class="compare-label">两种主路径对比</div>
+      <div class="compare-table">
+        <div class="compare-head">
+          <div class="compare-hcell">维度</div>
+          <div class="compare-hcell a">Prompt Cache<div class="rec-tag">推荐</div></div>
+          <div class="compare-hcell b">减少调用次数</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-cell"><strong>配置成本</strong></div>
+          <div class="compare-cell a">改一次配置<br>长期生效</div>
+          <div class="compare-cell b">需要改工作流<br>影响开发效率</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-cell"><strong>节省幅度</strong></div>
+          <div class="compare-cell a"><strong>45%+</strong>（70% 命中率）</div>
+          <div class="compare-cell b">取决于任务密度</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-cell"><strong>质量影响</strong></div>
+          <div class="compare-cell a">无影响</div>
+          <div class="compare-cell b">减少上下文<br>可能降低精度</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ③ Action Rows -->
+    <div>
+      <div class="action-label">行动指令</div>
+      <div class="action-list">
+        <div class="action-row">
+          <span class="action-verb">立即</span>
+          <span class="action-text">固定 system prompt 和 MCP schema 顺序，关掉 attribution header</span>
+        </div>
+        <div class="action-row">
+          <span class="action-verb">优先</span>
+          <span class="action-text">写好 CLAUDE.md 路标（≤200行），静态语言项目开启 LSP</span>
+        </div>
+        <div class="action-row">
+          <span class="action-verb">推迟</span>
+          <span class="action-text">输出压缩（Caveman）——先把 Input 压下去，Output 优化才显现</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <span>原文：Zhenjia Zhou · Thoughtworks 2026</span>
+    <span>via readable-and-shareable</span>
+  </div>
+</div>
+</body>
+</html>

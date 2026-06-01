@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>ENFP v2 — 意义星图</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#FEFCF7;--surface:#FFF5E6;
+  --text:#2A1F14;--text2:#8A7060;--text3:#B09880;
+  --border:rgba(180,100,40,0.10);
+  --star:#E8832A;--star-bg:#FFF0DC;
+  --link-a:#D4845A;--link-b:#7AB87A;--link-c:#8B78C8;
+  --link-a-bg:#FDF0E8;--link-b-bg:#F0F8F0;--link-c-bg:#F3F0FB;
+  --font:-apple-system,"Helvetica Neue","PingFang SC",sans-serif;
+  --mono:"SF Mono","Menlo","Courier New",monospace;
+}
+html,body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+.page{width:600px;margin:0 auto;padding:40px 44px 36px;display:flex;flex-direction:column;gap:18px}
+
+.header{border-bottom:0.5px solid var(--border);padding-bottom:13px}
+.eyebrow{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);font-family:var(--mono);margin-bottom:7px}
+.title{font-size:17px;font-weight:600;line-height:1.35;color:var(--text)}
+.title em{font-style:normal;color:var(--text2);font-weight:400;font-size:13px}
+
+/* ① Spark Cards */
+.spark-card{background:var(--star-bg);border:0.5px solid var(--border);border-radius:6px;padding:10px 14px;display:flex;gap:10px;align-items:flex-start}
+.spark-dot{width:9px;height:9px;border-radius:50%;background:var(--star);flex-shrink:0;margin-top:4px}
+.spark-body{}
+.spark-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px;display:flex;align-items:center;gap:7px}
+.spark-desc{font-size:11px;color:var(--text2);line-height:1.6}
+
+/* ② Category Tags */
+.cat-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;font-family:var(--mono);font-weight:600}
+.tag-a{background:var(--link-a-bg);color:var(--link-a)}
+.tag-b{background:var(--link-b-bg);color:var(--link-b)}
+.tag-c{background:var(--link-c-bg);color:var(--link-c)}
+
+/* ③ Why It Matters */
+.connect-row{display:flex;align-items:center;gap:10px;padding:3px 0}
+.connect-line{flex:1;border-top:1px dashed var(--border)}
+.connect-text{font-size:11px;color:var(--text3);font-style:italic}
+
+/* ④ Open Star */
+.open-star{border:1.5px dashed var(--border);border-radius:6px;padding:10px 14px;display:flex;gap:10px;align-items:center}
+.open-dot{width:9px;height:9px;border-radius:50%;border:1.5px dashed var(--text3);flex-shrink:0}
+.open-text{font-size:12px;color:var(--text3);font-style:italic}
+
+.footer{border-top:0.5px solid var(--border);padding-top:12px;display:flex;justify-content:space-between;font-size:10px;color:var(--text3);font-family:var(--mono)}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="eyebrow">意义星图 · 星座聚焦式</div>
+    <div class="title">参加 AI Hackathon，没获奖，<br><em>但这些事情让我看见了什么</em></div>
+  </div>
+
+  <!-- ① Spark Cards -->
+  <div class="spark-card">
+    <div class="spark-dot"></div>
+    <div class="spark-body">
+      <div class="spark-title">
+        610 个作品，全都有 agent 系统
+        <span class="cat-tag tag-a">环境信号</span>
+      </div>
+      <div class="spark-desc">执行门槛被 AI 拉平之后，真正的差异来自你能不能定义一个别人没看见的问题</div>
+    </div>
+  </div>
+
+  <div class="connect-row">
+    <div class="connect-line"></div>
+    <div class="connect-text">这让我开始问……</div>
+    <div class="connect-line"></div>
+  </div>
+
+  <div class="spark-card">
+    <div class="spark-dot"></div>
+    <div class="spark-body">
+      <div class="spark-title">
+        反馈回路从来没有被建立
+        <span class="cat-tag tag-b">核心概念</span>
+      </div>
+      <div class="spark-desc">Onboarding 文档腐烂不是人懒——是没有任何机制会触发更新。这才是真正缺失的东西</div>
+    </div>
+  </div>
+
+  <div class="spark-card">
+    <div class="spark-dot"></div>
+    <div class="spark-body">
+      <div class="spark-title">
+        AI 进不了人的协作习惯里
+        <span class="cat-tag tag-c">边界发现</span>
+      </div>
+      <div class="spark-desc">Zoom 里的口头共识、Slack 里的临时决定——这些没有结构化事件，agent 看不见</div>
+    </div>
+  </div>
+
+  <div class="connect-row">
+    <div class="connect-line"></div>
+    <div class="connect-text">这些连接成一个更大的问题……</div>
+    <div class="connect-line"></div>
+  </div>
+
+  <div class="spark-card">
+    <div class="spark-dot"></div>
+    <div class="spark-body">
+      <div class="spark-title">
+        问题定义 = 找到缺失的回路
+        <span class="cat-tag tag-b">意义总结</span>
+      </div>
+      <div class="spark-desc">好的 AI 产品问题不是「让这件事更快」，而是「找到那个从未被建立的反馈机制」</div>
+    </div>
+  </div>
+
+  <!-- ④ Open Star -->
+  <div class="open-star">
+    <div class="open-dot"></div>
+    <div class="open-text">还在寻找……你的领域里，哪个反馈回路从未被建立过？</div>
+  </div>
+
+  <div class="footer">
+    <span>原文：Yuki · 微信公众号 2026</span>
+    <span>via readable-and-shareable</span>
+  </div>
+</div>
+</body>
+</html>
