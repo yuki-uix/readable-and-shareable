@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>ESTJ v2 — 执行流程图</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F7F8FA;
+  --surface:#EEF0F4;
+  --surface-b:#E4E7EE;
+  --text:#1A1C22;
+  --text2:#6A6E7A;
+  --border:rgba(0,0,40,0.12);
+  --navy:#1E3A5F;
+  --navy-bg:#EBF0F8;
+  --done:#2D6A4F;
+  --done-bg:#E8F4ED;
+  --pending:#B5622A;
+  --pending-bg:#FDF0E6;
+  --font:-apple-system,"Helvetica Neue","PingFang SC",sans-serif;
+  --mono:"SF Mono","Menlo","Courier New",monospace;
+}
+html,body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+.card{width:600px;margin:0 auto;background:var(--bg)}
+
+/* Header */
+.header{background:var(--navy);padding:20px 28px 18px;color:#fff}
+.header-eyebrow{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-family:var(--mono);color:rgba(255,255,255,.5);margin-bottom:6px}
+.header-title{font-size:16px;font-weight:700;line-height:1.35}
+.header-sub{font-size:12px;color:rgba(255,255,255,.6);margin-top:4px}
+
+/* Flow track */
+.flow-section{padding:20px 28px 16px}
+.section-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;font-family:var(--mono);color:var(--text2);margin-bottom:12px}
+.flow-track{display:flex;align-items:center;gap:0}
+.flow-node{
+  background:var(--navy);color:#fff;
+  font-size:12px;font-weight:600;
+  padding:8px 14px;border-radius:4px;
+  white-space:nowrap;flex-shrink:0;
+}
+.flow-node.done{background:var(--done)}
+.flow-node.active{background:var(--navy);box-shadow:0 0 0 2px #fff,0 0 0 4px var(--navy)}
+.flow-arrow{flex:1;height:1.5px;background:var(--navy-bg);position:relative;min-width:16px}
+.flow-arrow::after{content:"";position:absolute;right:-1px;top:-3.5px;border:4px solid transparent;border-left:6px solid var(--navy-bg)}
+
+/* Matrix */
+.matrix-section{padding:0 28px 20px}
+.matrix{width:100%;border-collapse:collapse;font-size:12px}
+.matrix th{background:var(--navy);color:#fff;padding:7px 10px;text-align:left;font-weight:600;letter-spacing:.05em;font-size:10px;text-transform:uppercase}
+.matrix th:first-child{border-radius:4px 0 0 0}
+.matrix th:last-child{border-radius:0 4px 0 0}
+.matrix td{padding:8px 10px;border-bottom:0.5px solid var(--border);vertical-align:top;line-height:1.4}
+.matrix tr:last-child td{border-bottom:none}
+.matrix tr:nth-child(even) td{background:var(--surface)}
+.matrix td:first-child{font-weight:600;color:var(--navy);width:72px;font-size:11px}
+.tag{display:inline-block;font-size:10px;padding:2px 6px;border-radius:3px;font-weight:600;font-family:var(--mono)}
+.tag-done{background:var(--done-bg);color:var(--done)}
+.tag-pending{background:var(--pending-bg);color:var(--pending)}
+.tag-active{background:var(--navy-bg);color:var(--navy)}
+
+/* Pending */
+.pending-section{padding:0 28px 20px}
+.pending-list{display:flex;flex-direction:column;gap:6px}
+.pending-item{
+  display:flex;align-items:flex-start;gap:8px;
+  background:var(--pending-bg);border-left:3px solid var(--pending);
+  padding:8px 12px;border-radius:0 4px 4px 0;
+  font-size:12px;line-height:1.5;
+}
+.pending-icon{color:var(--pending);font-size:13px;flex-shrink:0;margin-top:1px}
+
+/* Footer bar */
+.footer-bar{
+  background:var(--surface-b);padding:12px 28px;
+  display:flex;justify-content:space-between;align-items:center;
+  border-top:0.5px solid var(--border);
+}
+.footer-verdict{font-size:12px;font-weight:700;color:var(--navy)}
+.footer-meta{font-size:10px;color:var(--text2);font-family:var(--mono)}
+</style>
+</head>
+<body>
+<div class="card">
+
+  <div class="header">
+    <div class="header-eyebrow">执行流程图 · 流程管控式</div>
+    <div class="header-title">Context Engineering 实施计划</div>
+    <div class="header-sub">负责人已明确 · 验收标准已定义 · 按节点推进</div>
+  </div>
+
+  <div class="flow-section">
+    <div class="section-label">执行主轴</div>
+    <div class="flow-track">
+      <div class="flow-node done">Select</div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node done">Compress</div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node active">Isolate</div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node">Write</div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node" style="background:var(--surface);color:var(--text2);border:1px dashed var(--border)">验收</div>
+    </div>
+  </div>
+
+  <div class="matrix-section">
+    <div class="section-label">责任矩阵</div>
+    <table class="matrix">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Select</th>
+          <th>Compress</th>
+          <th>Isolate</th>
+          <th>Write</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>负责人</td>
+          <td>工程师 A</td>
+          <td>工程师 A</td>
+          <td>工程师 B</td>
+          <td>工程师 B</td>
+        </tr>
+        <tr>
+          <td>验收标准</td>
+          <td>Token 减少 40%</td>
+          <td>摘要准确率 ≥90%</td>
+          <td>子任务独立运行</td>
+          <td>CLAUDE.md 同步</td>
+        </tr>
+        <tr>
+          <td>状态</td>
+          <td><span class="tag tag-done">✓ 完成</span></td>
+          <td><span class="tag tag-done">✓ 完成</span></td>
+          <td><span class="tag tag-active">▶ 进行中</span></td>
+          <td><span class="tag tag-pending">⚠ 待开始</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pending-section">
+    <div class="section-label">待处理事项</div>
+    <div class="pending-list">
+      <div class="pending-item">
+        <span class="pending-icon">⚠</span>
+        <span>Isolate 阶段：子任务边界尚未定义，需与工程师 B 对齐</span>
+      </div>
+      <div class="pending-item">
+        <span class="pending-icon">⚠</span>
+        <span>Write 阶段：CLAUDE.md 模板未确认，等待 PM 审批</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bar">
+    <span class="footer-verdict">责任到人 · 按节点推进</span>
+    <span class="footer-meta">via readable-and-shareable</span>
+  </div>
+
+</div>
+</body>
+</html>

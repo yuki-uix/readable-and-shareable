@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>ENFJ v2 — 成长路线图</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#FDFAF6;
+  --surface:#F5EFE6;
+  --text:#2A1F14;
+  --text2:#8A7060;
+  --border:rgba(120,80,40,0.12);
+  --amber:#C97C2A;
+  --amber-bg:#FEF3E2;
+  --growth:#4A7C59;
+  --growth-bg:#EEF3EE;
+  --font:-apple-system,"Helvetica Neue","PingFang SC",sans-serif;
+}
+html,body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+.card{width:600px;margin:0 auto;background:var(--bg);padding:36px 36px 32px}
+
+.eyebrow{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.title{font-size:17px;font-weight:700;line-height:1.4;margin-bottom:24px}
+
+/* Path */
+.path{display:flex;flex-direction:column;align-items:flex-start;gap:0;position:relative;padding-left:28px}
+.path::before{
+  content:"";position:absolute;left:10px;top:16px;bottom:16px;
+  width:2px;background:linear-gradient(to bottom,var(--amber),var(--growth));
+  border-radius:2px;
+}
+
+.node{position:relative;margin-bottom:8px;width:100%}
+.node-dot{
+  position:absolute;left:-22px;top:12px;
+  width:12px;height:12px;border-radius:50%;
+  border:2px solid var(--amber);background:var(--bg);
+  z-index:1;
+}
+.node-dot.arrival{border-color:var(--growth);background:var(--growth)}
+.node-dot.start{border-color:var(--text2);background:var(--surface)}
+
+.node-card{
+  padding:14px 18px;border-radius:6px;
+  border:0.5px solid var(--border);
+}
+.node-card.start-card{background:var(--surface)}
+.node-card.amber-card{background:var(--amber-bg);border-color:rgba(201,124,42,0.2)}
+.node-card.arrival-card{
+  background:var(--growth-bg);border-color:rgba(74,124,89,0.2);
+  box-shadow:0 0 0 3px rgba(74,124,89,0.08);
+}
+
+.node-type{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px;color:var(--text2)}
+.node-card.amber-card .node-type{color:var(--amber)}
+.node-card.arrival-card .node-type{color:var(--growth)}
+.node-main{font-size:14px;font-weight:600;line-height:1.4;margin-bottom:4px}
+.node-note{font-size:12px;color:var(--text2);font-style:italic;line-height:1.5}
+
+/* Annotation beside path */
+.annotation{
+  position:absolute;right:0;font-size:11px;font-style:italic;
+  color:var(--text2);max-width:140px;line-height:1.5;text-align:right;
+}
+
+/* Footer */
+.footer-invite{
+  margin-top:24px;padding:16px 20px;
+  background:var(--amber-bg);border-radius:6px;
+  border-left:3px solid var(--amber);
+  font-size:13px;line-height:1.7;color:var(--text);
+}
+.footer-meta{margin-top:14px;font-size:10px;color:var(--text2);letter-spacing:.04em}
+</style>
+</head>
+<body>
+<div class="card">
+
+  <div class="eyebrow">成长路线图 · 成长路径式</div>
+  <div class="title">如果你也在迷失在 Agent 的成本迷宫里</div>
+
+  <div class="path">
+
+    <div class="node">
+      <div class="node-dot start"></div>
+      <div class="node-card start-card">
+        <div class="node-type">现在的困境</div>
+        <div class="node-main">每次运行成本超出预期，不知道钱花在哪里</div>
+        <div class="node-note">input token 占 API 成本的 93–99%，而你可能从没注意过这个数字</div>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-dot"></div>
+      <div class="node-card amber-card">
+        <div class="node-type">看见的时刻</div>
+        <div class="node-main">每一轮对话都要重新 Prefill 所有上下文</div>
+        <div class="node-note">这不是 bug，这是工作记忆的本质——你用的越多，它读的越多</div>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-dot"></div>
+      <div class="node-card amber-card">
+        <div class="node-type">转化节点</div>
+        <div class="node-main">Select · Compress · Isolate · Write</div>
+        <div class="node-note">四种策略，不是先后顺序，而是根据文章类型选择适合的组合</div>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-dot arrival"></div>
+      <div class="node-card arrival-card">
+        <div class="node-type">可以到达的地方</div>
+        <div class="node-main">成本从 $11.30 降至 $4–5，不是魔法，是工程</div>
+        <div class="node-note">当你开始主动管理上下文，Agent 才真正属于你</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-invite">
+    「控制成本」不是在省钱——<br>
+    是在学会<strong>用有限的注意力</strong>，和 AI 真正对话。<br>
+    你可以走到这里。
+  </div>
+
+  <div class="footer-meta">原文：Context Engineering · via readable-and-shareable</div>
+
+</div>
+</body>
+</html>
