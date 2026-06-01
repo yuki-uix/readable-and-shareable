@@ -279,10 +279,41 @@ Apply both together. `references/design-system.md` is the overarching visual sta
 
 #### 图片卡片风格选择
 
-用户选择「图片卡片」后，追加询问风格（在调用 prompt.md 前）：
+用户选择「图片卡片（HTML）」后，分两步确认风格：
+
+**第一步：推荐信息组织方式（基于 analysis.md）**
+
+查 `analysis.md` 的主结构类型，用自然语言给出 2-3 种推荐，以方法名为主语，MBTI 标签作括注：
 
 ```
-请选择卡片风格：
+根据这篇文章的结构，推荐以下信息组织方式：
+
+✦ {方法名}（{MBTI}）— {一句话：这篇文章的哪个特点匹配这种方式}
+  {方法名}（{MBTI}）— {一句话}
+  {方法名}（{MBTI}）— {一句话，如适用}
+
+选哪种？或者告诉我「看全部 16 种」。
+```
+
+使用下表查找推荐方式（优先推荐 1-2 种，最多 3 种）：
+
+| 文章主结构 | 推荐信息组织方式 | MBTI |
+|---|---|---|
+| 层级 + 框架驱动，有强结论 | 框架演绎 | INTJ |
+| 对比 + 量化，有验收标准 | 执行流程图 | ESTJ |
+| 推导 + 条件分支，开放收口 | 推导草稿 | INTP |
+| 步骤 + 操作手册，明确完成 | 步骤手册 | ISFJ |
+| 叙事 + 论证密集 | 意义地图 | INFJ |
+| 行动 + 即时决策，数据驱动 | 战术简报 | ESTP |
+
+若用户说「看全部 16 种」，列出全量 16 种方式供选择（参考 `references/styles/mbti-index.md`）。
+
+**第二步：选配色风格（确认信息组织方式后）**
+
+用户确认方式后，追加询问配色：
+
+```
+配色风格：
 1. warm  — 暖米色轻量，微信朋友圈 / 公众号截图首选（默认）
 2. night — 深色高对比，科技/产品内容，深色 UI 截图冲击感强
 3. ink   — 纯白极简，概念讲解 / 学术感，印刷级可读性
@@ -291,7 +322,9 @@ Apply both together. `references/design-system.md` is the overarching visual sta
 （不选则默认使用 warm）
 ```
 
-将用户选定的风格作为上下文传入 `templates/image-card/prompt.md`，prompt.md 会跳过风格询问步骤，直接使用 `template-{style}.html`。
+两步都确认后，将「信息组织方式（MBTI）+ 配色风格」一起传入 `templates/image-card/prompt.md`。
+
+**快捷跳过**：若用户通过 Keyword Shortcuts 已指定风格（如「xhs」「深色」），或 Step 2.5 系列卡场景已确认方式，跳过第一步直接询问配色。
 
 ### Step 5 — Export
 
