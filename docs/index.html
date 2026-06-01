@@ -378,6 +378,60 @@
     .mbti-row { grid-template-columns: repeat(2, 1fr); }
   }
 
+  /* ── MBTI Lightbox ── */
+  .mbti-card { cursor: pointer; }
+
+  #mbti-lightbox {
+    display: none; position: fixed; inset: 0; z-index: 1000;
+    background: rgba(0,0,0,.82); backdrop-filter: blur(4px);
+    align-items: center; justify-content: center;
+  }
+  #mbti-lightbox.open { display: flex; }
+
+  .lb-inner {
+    position: relative; max-width: min(520px, 90vw);
+    display: flex; flex-direction: column; align-items: center; gap: 14px;
+    animation: lb-in .18s ease;
+  }
+  @keyframes lb-in { from { opacity:0; transform: scale(.96); } to { opacity:1; transform: scale(1); } }
+
+  .lb-img-wrap {
+    width: 100%; border-radius: 8px; overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0,0,0,.5);
+  }
+  .lb-img-wrap img { width: 100%; height: auto; display: block; max-height: 78vh; object-fit: contain; }
+
+  .lb-nav {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+    color: #fff; font-size: 18px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .15s; user-select: none; backdrop-filter: blur(2px);
+  }
+  .lb-nav:hover { background: rgba(255,255,255,.22); }
+  .lb-nav.prev { left: -52px; }
+  .lb-nav.next { right: -52px; }
+  @media (max-width: 680px) {
+    .lb-nav.prev { left: -44px; }
+    .lb-nav.next { right: -44px; }
+  }
+
+  .lb-meta {
+    display: flex; align-items: center; gap: 10px;
+    color: rgba(255,255,255,.85); font-size: 13px;
+  }
+  .lb-type { font-weight: 700; font-size: 15px; }
+  .lb-style { font-weight: 400; color: rgba(255,255,255,.55); }
+  .lb-counter { font-size: 11px; color: rgba(255,255,255,.35); margin-left: auto; }
+
+  .lb-close {
+    position: absolute; top: -44px; right: 0;
+    background: none; border: none; color: rgba(255,255,255,.5);
+    font-size: 22px; cursor: pointer; padding: 4px; line-height: 1;
+  }
+  .lb-close:hover { color: #fff; }
+
   .iframe-wrap {
     border: 0.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden;
     background: var(--bg2);
@@ -534,22 +588,22 @@
         <div>
           <div class="mbti-group-label">NT Analysts — 逻辑框架系</div>
           <div class="mbti-row">
-            <a href="showcase-mbti-intj.png" target="_blank" rel="noopener" class="mbti-card" aria-label="INTJ 演绎框架">
+            <div class="mbti-card" role="button" tabindex="0" aria-label="INTJ 演绎框架" data-mbti="INTJ" data-style="演绎框架" data-src="showcase-mbti-intj.png">
               <img src="showcase-mbti-intj.png" alt="INTJ：技术文档图，精确几何，冷蓝语义色，强结论" loading="lazy">
               <div class="mbti-card-label">INTJ <span>演绎框架</span></div>
-            </a>
-            <a href="showcase-mbti-intp.png" target="_blank" rel="noopener" class="mbti-card" aria-label="INTP 推导草稿">
+            </div>
+            <div class="mbti-card" role="button" tabindex="0" aria-label="INTP 推导草稿" data-mbti="INTP" data-style="推导草稿" data-src="showcase-mbti-intp.png">
               <img src="showcase-mbti-intp.png" alt="INTP：数学草稿，条件标签，待验证收口" loading="lazy">
               <div class="mbti-card-label">INTP <span>推导草稿</span></div>
-            </a>
-            <a href="showcase-mbti-entj.png" target="_blank" rel="noopener" class="mbti-card" aria-label="ENTJ 战略简报">
+            </div>
+            <div class="mbti-card" role="button" tabindex="0" aria-label="ENTJ 战略简报" data-mbti="ENTJ" data-style="战略简报" data-src="showcase-mbti-entj.png">
               <img src="showcase-mbti-entj.png" alt="ENTJ：结论前置，对比矩阵，行动指令" loading="lazy">
               <div class="mbti-card-label">ENTJ <span>战略简报</span></div>
-            </a>
-            <a href="showcase-mbti-entp.png" target="_blank" rel="noopener" class="mbti-card" aria-label="ENTP 发散风暴">
+            </div>
+            <div class="mbti-card" role="button" tabindex="0" aria-label="ENTP 发散风暴" data-mbti="ENTP" data-style="发散风暴" data-src="showcase-mbti-entp.png">
               <img src="showcase-mbti-entp.png" alt="ENTP：放射网状，无收口，开放反问" loading="lazy">
               <div class="mbti-card-label">ENTP <span>发散风暴</span></div>
-            </a>
+            </div>
           </div>
         </div>
 
@@ -557,22 +611,22 @@
         <div>
           <div class="mbti-group-label">NF Diplomats — 意义叙事系</div>
           <div class="mbti-row">
-            <a href="showcase-mbti-infj.png" target="_blank" rel="noopener" class="mbti-card" aria-label="INFJ 意义地图">
+            <div class="mbti-card" role="button" tabindex="0" aria-label="INFJ 意义地图" data-mbti="INFJ" data-style="意义地图" data-src="showcase-mbti-infj.png">
               <img src="showcase-mbti-infj.png" alt="INFJ：概念网络，紫青渐变，整体感悟" loading="lazy">
               <div class="mbti-card-label">INFJ <span>意义地图</span></div>
-            </a>
-            <a href="showcase-mbti-infp.png" target="_blank" rel="noopener" class="mbti-card" aria-label="INFP 叙事手记">
+            </div>
+            <div class="mbti-card" role="button" tabindex="0" aria-label="INFP 叙事手记" data-mbti="INFP" data-style="叙事手记" data-src="showcase-mbti-infp.png">
               <img src="showcase-mbti-infp.png" alt="INFP：手写日记，情绪色块，开放邀请" loading="lazy">
               <div class="mbti-card-label">INFP <span>叙事手记</span></div>
-            </a>
-            <a href="showcase-mbti-enfj.png" target="_blank" rel="noopener" class="mbti-card" aria-label="ENFJ 成长路线图">
+            </div>
+            <div class="mbti-card" role="button" tabindex="0" aria-label="ENFJ 成长路线图" data-mbti="ENFJ" data-style="成长路线图" data-src="showcase-mbti-enfj.png">
               <img src="showcase-mbti-enfj.png" alt="ENFJ：成长路线图，琥珀转化节点，绿色到达，第二人称邀请" loading="lazy">
               <div class="mbti-card-label">ENFJ <span>成长路线图</span></div>
-            </a>
-            <a href="showcase-mbti-enfp.png" target="_blank" rel="noopener" class="mbti-card" aria-label="ENFP 意义星图">
+            </div>
+            <div class="mbti-card" role="button" tabindex="0" aria-label="ENFP 意义星图" data-mbti="ENFP" data-style="意义星图" data-src="showcase-mbti-enfp.png">
               <img src="showcase-mbti-enfp.png" alt="ENFP：意义星图，多色柔和节点，有机曲线，意义确认收口" loading="lazy">
               <div class="mbti-card-label">ENFP <span>意义星图</span></div>
-            </a>
+            </div>
           </div>
         </div>
 
@@ -580,22 +634,22 @@
         <div>
           <div class="mbti-group-label">SJ Sentinels — 秩序执行系</div>
           <div class="mbti-row">
-            <a href="showcase-mbti-isfj.png" target="_blank" rel="noopener" class="mbti-card" aria-label="ISFJ 步骤手册">
+            <div class="mbti-card" role="button" tabindex="0" aria-label="ISFJ 步骤手册" data-mbti="ISFJ" data-style="步骤手册" data-src="showcase-mbti-isfj.png">
               <img src="showcase-mbti-isfj.png" alt="ISFJ：编号步骤，安全感配色，明确完成" loading="lazy">
               <div class="mbti-card-label">ISFJ <span>步骤手册</span></div>
-            </a>
-            <a href="showcase-mbti-istj.png" target="_blank" rel="noopener" class="mbti-card" aria-label="ISTJ 规则档案">
+            </div>
+            <div class="mbti-card" role="button" tabindex="0" aria-label="ISTJ 规则档案" data-mbti="ISTJ" data-style="规则档案" data-src="showcase-mbti-istj.png">
               <img src="showcase-mbti-istj.png" alt="ISTJ：规则档案，层级编号，来源注释，依规执行" loading="lazy">
               <div class="mbti-card-label">ISTJ <span>规则档案</span></div>
-            </a>
-            <a href="showcase-mbti-esfj.png" target="_blank" rel="noopener" class="mbti-card" aria-label="ESFJ 关系关怀图">
+            </div>
+            <div class="mbti-card" role="button" tabindex="0" aria-label="ESFJ 关系关怀图" data-mbti="ESFJ" data-style="关系关怀图" data-src="showcase-mbti-esfj.png">
               <img src="showcase-mbti-esfj.png" alt="ESFJ：关系关怀图，人物卡片，需求标签，关怀确认" loading="lazy">
               <div class="mbti-card-label">ESFJ <span>关系关怀图</span></div>
-            </a>
-            <a href="showcase-mbti-estj.png" target="_blank" rel="noopener" class="mbti-card" aria-label="ESTJ 执行流程图">
+            </div>
+            <div class="mbti-card" role="button" tabindex="0" aria-label="ESTJ 执行流程图" data-mbti="ESTJ" data-style="执行流程图" data-src="showcase-mbti-estj.png">
               <img src="showcase-mbti-estj.png" alt="ESTJ：执行流程图，责任矩阵，验收标准，执行指令" loading="lazy">
               <div class="mbti-card-label">ESTJ <span>执行流程图</span></div>
-            </a>
+            </div>
           </div>
         </div>
 
@@ -603,22 +657,22 @@
         <div>
           <div class="mbti-group-label">SP Explorers — 即兴感官系</div>
           <div class="mbti-row">
-            <a href="showcase-mbti-istp.png" target="_blank" rel="noopener" class="mbti-card" aria-label="ISTP 机制拆解图">
+            <div class="mbti-card" role="button" tabindex="0" aria-label="ISTP 机制拆解图" data-mbti="ISTP" data-style="机制拆解" data-src="showcase-mbti-istp.png">
               <img src="showcase-mbti-istp.png" alt="ISTP：机制拆解图，流程节点，关键变量标红，无结论" loading="lazy">
               <div class="mbti-card-label">ISTP <span>机制拆解</span></div>
-            </a>
-            <a href="showcase-mbti-estp.png" target="_blank" rel="noopener" class="mbti-card" aria-label="ESTP 战术简报">
+            </div>
+            <div class="mbti-card" role="button" tabindex="0" aria-label="ESTP 战术简报" data-mbti="ESTP" data-style="战术简报" data-src="showcase-mbti-estp.png">
               <img src="showcase-mbti-estp.png" alt="ESTP：战术简报，大字局面，关键变量，现在/下一步" loading="lazy">
               <div class="mbti-card-label">ESTP <span>战术简报</span></div>
-            </a>
-            <a href="showcase-mbti-isfp.png" target="_blank" rel="noopener" class="mbti-card" aria-label="ISFP 色彩故事">
+            </div>
+            <div class="mbti-card" role="button" tabindex="0" aria-label="ISFP 色彩故事" data-mbti="ISFP" data-style="色彩故事" data-src="showcase-mbti-isfp.png">
               <img src="showcase-mbti-isfp.png" alt="ISFP：色彩故事，大色块，展签标注，安静美学" loading="lazy">
               <div class="mbti-card-label">ISFP <span>色彩故事</span></div>
-            </a>
-            <a href="showcase-mbti-esfp.png" target="_blank" rel="noopener" class="mbti-card" aria-label="ESFP 体验海报">
+            </div>
+            <div class="mbti-card" role="button" tabindex="0" aria-label="ESFP 体验海报" data-mbti="ESFP" data-style="体验海报" data-src="showcase-mbti-esfp.png">
               <img src="showcase-mbti-esfp.png" alt="ESFP：体验海报，高饱和多彩，活力感，邀请体验" loading="lazy">
               <div class="mbti-card-label">ESFP <span>体验海报</span></div>
-            </a>
+            </div>
           </div>
         </div>
 
@@ -931,6 +985,76 @@
         </div>
       </div>`;
   }
+})();
+</script>
+
+<!-- ── MBTI Lightbox ── -->
+<div id="mbti-lightbox" role="dialog" aria-modal="true" aria-label="MBTI Note 画廊">
+  <div class="lb-inner">
+    <button class="lb-close" id="lb-close" aria-label="关闭">✕</button>
+    <div class="lb-img-wrap">
+      <img id="lb-img" src="" alt="">
+    </div>
+    <button class="lb-nav prev" id="lb-prev" aria-label="上一张">‹</button>
+    <button class="lb-nav next" id="lb-next" aria-label="下一张">›</button>
+    <div class="lb-meta">
+      <span class="lb-type" id="lb-type"></span>
+      <span class="lb-style" id="lb-style"></span>
+      <span class="lb-counter" id="lb-counter"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const lb = document.getElementById('mbti-lightbox');
+  const lbImg = document.getElementById('lb-img');
+  const lbType = document.getElementById('lb-type');
+  const lbStyle = document.getElementById('lb-style');
+  const lbCounter = document.getElementById('lb-counter');
+
+  // Collect all cards in DOM order
+  const cards = Array.from(document.querySelectorAll('.mbti-card[data-src]'));
+  let current = 0;
+
+  function open(idx) {
+    current = (idx + cards.length) % cards.length;
+    const c = cards[current];
+    lbImg.src = c.dataset.src;
+    lbImg.alt = c.querySelector('img').alt;
+    lbType.textContent = c.dataset.mbti;
+    lbStyle.textContent = c.dataset.style;
+    lbCounter.textContent = `${current + 1} / ${cards.length}`;
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('lb-close').focus();
+  }
+
+  function close() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+    cards[current].focus();
+  }
+
+  cards.forEach((card, i) => {
+    card.addEventListener('click', () => open(i));
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i); }
+    });
+  });
+
+  document.getElementById('lb-prev').addEventListener('click', () => open(current - 1));
+  document.getElementById('lb-next').addEventListener('click', () => open(current + 1));
+  document.getElementById('lb-close').addEventListener('click', close);
+
+  lb.addEventListener('click', e => { if (e.target === lb) close(); });
+
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') open(current - 1);
+    if (e.key === 'ArrowRight') open(current + 1);
+  });
 })();
 </script>
 </body>
