@@ -144,7 +144,19 @@
   .hero-cmd span { color: var(--text3); }
   .hero-cmd-hint {
     font-size: 11px; color: var(--text3);
+    margin-bottom: 12px;
+  }
+  .hero-prereq {
+    display: flex; gap: 16px; flex-wrap: wrap;
     margin-bottom: 32px;
+  }
+  .hero-prereq-item {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 11px; color: var(--text3);
+  }
+  .hero-prereq-item .label { color: var(--text2); font-weight: 500; }
+  .hero-prereq-sep {
+    width: 1px; background: var(--border); align-self: stretch;
   }
 
   .hero-links { display: flex; gap: 12px; flex-wrap: wrap; }
@@ -500,7 +512,24 @@
       <div class="hero-cmd">
         <span>$</span> /viz
       </div>
-      <div class="hero-cmd-hint">· 在 Claude Code 终端中运行 · 需要 Claude Pro / Max</div>
+      <div class="hero-cmd-hint">在 Claude Code 终端中运行</div>
+
+      <div class="hero-prereq" aria-label="前提条件">
+        <div class="hero-prereq-item">
+          <span>需要</span>
+          <span class="label">Claude Pro / Max</span>
+        </div>
+        <div class="hero-prereq-sep" aria-hidden="true"></div>
+        <div class="hero-prereq-item">
+          <span>需要</span>
+          <span class="label">Claude Code CLI</span>
+        </div>
+        <div class="hero-prereq-sep" aria-hidden="true"></div>
+        <div class="hero-prereq-item">
+          <span>首次安装到生成</span>
+          <span class="label">约 5 分钟</span>
+        </div>
+      </div>
 
       <div class="hero-links">
         <a class="btn btn-primary" href="https://github.com/yuki-uix/readable-and-shareable" target="_blank">
