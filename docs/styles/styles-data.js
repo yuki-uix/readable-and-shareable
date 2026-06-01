@@ -81,8 +81,8 @@ const STYLES_DATA = {
     primaryColor: "#5B3FA6",
     accentColor: "#EDE8F8",
     previewImg: "../preview-infj-v2.png",
-    exampleImg: '../examples/infj-token-coherence.png',
-    exampleSource: 'Token 一致性的设计哲学 · INFJ 意义连接',
+    exampleImg: null,
+    exampleSource: null,
     tokens: { bg: "#F7F5FB", surface: "#EEEAF5", core: "#5B3FA6" }
   },
   infp: {
@@ -107,8 +107,8 @@ const STYLES_DATA = {
     primaryColor: "#C05070",
     accentColor: "#FFE8EC",
     previewImg: "../showcase-mbti-infp-v2.png",
-    exampleImg: '../examples/infp-token-coherence.png',
-    exampleSource: 'Token 一致性的设计哲学 · INFP 叙事弧线',
+    exampleImg: null,
+    exampleSource: null,
     tokens: { bg: "#FFFDF7", surface: "#FFE8EC", core: "#C05070" }
   },
   entj: {
@@ -159,8 +159,8 @@ const STYLES_DATA = {
     primaryColor: "#C05020",
     accentColor: "#FFF0E6",
     previewImg: "../showcase-mbti-entp-v2.png",
-    exampleImg: '../examples/entp-token-coherence.png',
-    exampleSource: 'Token 一致性的设计哲学 · ENTP 发散风暴',
+    exampleImg: null,
+    exampleSource: null,
     tokens: { bg: "#FEFAF5", surface: "#FFF0E6", core: "#C05020" }
   },
   enfp: {
@@ -185,8 +185,8 @@ const STYLES_DATA = {
     primaryColor: "#E8832A",
     accentColor: "#FFF0DC",
     previewImg: "../preview-enfp-v2.png",
-    exampleImg: '../examples/enfp-token-coherence.png',
-    exampleSource: 'Token 一致性的设计哲学 · ENFP 星座聚焦',
+    exampleImg: null,
+    exampleSource: null,
     tokens: { bg: "#FEFCF7", surface: "#FFF5E6", core: "#E8832A" }
   },
   enfj: {
@@ -287,8 +287,8 @@ const STYLES_DATA = {
     primaryColor: "#7A5030",
     accentColor: "#F5EDE6",
     previewImg: "../showcase-mbti-isfp-v2.png",
-    exampleImg: '../examples/isfp-token-coherence.png',
-    exampleSource: 'Token 一致性的设计哲学 · ISFP 色彩故事',
+    exampleImg: null,
+    exampleSource: null,
     tokens: { bg: "#FDFAF7", surface: "#F5EDE6", core: "#7A5030" }
   },
   estj: {
@@ -387,8 +387,8 @@ const STYLES_DATA = {
     primaryColor: "#D4402A",
     accentColor: "#FDEAE6",
     previewImg: "../showcase-mbti-esfp-v2.png",
-    exampleImg: '../examples/esfp-token-coherence.png',
-    exampleSource: 'Token 一致性的设计哲学 · ESFP 体验海报',
+    exampleImg: null,
+    exampleSource: null,
     tokens: { bg: "#FDF6F5", surface: "#FDEAE6", core: "#D4402A" }
   },
   istp: {
