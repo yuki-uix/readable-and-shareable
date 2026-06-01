@@ -338,6 +338,20 @@ Apply both together. `references/design-system.md` is the overarching visual sta
 
 **快捷跳过**：若用户通过 Keyword Shortcuts 已指定风格（如「xhs」「深色」），或 Step 2.5 系列卡场景已确认方式，跳过第一步直接询问配色。
 
+### Step 4.5 — Auto Screenshot（图片卡片专用）
+
+图片卡片 HTML 生成并保存后，**立即自动截图**，无需用户手动操作：
+
+```bash
+node scripts/screenshot.mjs {html路径} --json
+```
+
+- 成功：将返回的 `path` 用 `Read` 工具展示 PNG 预览，并在 Step 5 摘要块填入截图路径
+- 失败（exit code 1）：fallback — 在摘要块省略截图行，改为提示「手动截图：用浏览器打开 HTML，宽度设为 600px 截图」
+- 系列卡片：对每张 HTML 依次执行，所有 PNG 路径均列入摘要块
+
+**不得跳过此步骤**，截图是「可分享」的最后一步。
+
 ### Step 5 — Export
 
 产出物底部自动附加来源 footer（防洗稿）：
@@ -353,7 +367,7 @@ via readable-and-shareable · github.com/yuki-uix/readable-and-shareable
 ✅ 生成完成
 
   文件  → {相对路径，如 examples/my-article/image-card-warm.html}
-  截图  → {相对路径，如 examples/my-article/image-card-warm.png}（如已生成）
+  截图  → {相对路径，如 examples/my-article/image-card-warm.png}
   分享  → {分享链接，或「直接使用文件」}
 
   分享前确认：手机端预览过？原文链接在产出物里？
@@ -362,7 +376,7 @@ via readable-and-shareable · github.com/yuki-uix/readable-and-shareable
 ```
 
 规则：
-- 没有截图路径时省略截图行；没有分享链接时写「直接使用文件」
+- 截图由 Step 4.5 自动生成，失败时省略截图行并附手动说明；没有分享链接时写「直接使用文件」
 - 系列卡片时，文件/截图行列出全部 N 张路径（每张一行），清晰可查
 - 语气轻松自然，不用分隔线和大量 emoji 制造视觉噪音
 
