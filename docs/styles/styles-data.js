@@ -56,8 +56,8 @@ const STYLES_DATA = {
     primaryColor: "#7A6000",
     accentColor: "#FFF8E6",
     previewImg: "../showcase-mbti-intp-v2.png",
-    exampleImg: null,
-    exampleSource: null,
+    exampleImg: "../showcase-mbti-intp-v2.png",
+    exampleSource: "What if there's only One Major AI Winner? · AI Supremacy",
     tokens: { bg: "#FFFDF5", surface: "#FFF8E6", core: "#7A6000" }
   },
   infj: {
