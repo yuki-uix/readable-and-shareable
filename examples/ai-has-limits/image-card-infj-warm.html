@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>AI 的局限 — INFJ 意义连接</title>
+<script src="../../docs/mermaid.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F7F5FB;
+  --surface:#EEEAF5;
+  --text:#1C1828;
+  --text2:#7A6E8A;
+  --text3:#A090B0;
+  --border:rgba(80,60,120,0.12);
+  --core:#5B3FA6;
+  --teal:#2A7A8A;
+  --font:-apple-system,"Helvetica Neue","PingFang SC",sans-serif;
+  --mono:"SF Mono","Menlo","Courier New",monospace;
+}
+html,body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+.page{width:600px;margin:0 auto;display:flex;flex-direction:column}
+
+.header{padding:28px 36px 18px;border-bottom:0.5px solid var(--border)}
+.eyebrow{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);font-family:var(--mono);margin-bottom:7px}
+.title{font-size:17px;font-weight:700;line-height:1.4;color:var(--text);margin-bottom:6px}
+.subtitle{font-size:13px;color:var(--text2);line-height:1.6;font-style:italic}
+
+.map-wrap{padding:20px 28px 16px;background:var(--bg)}
+.map-wrap .mermaid{width:100%}
+
+.annotation{
+  margin:0 28px 16px;
+  padding:12px 16px;
+  background:var(--surface);
+  border-radius:6px;
+  border-left:2px solid var(--core);
+}
+.annotation-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);font-family:var(--mono);margin-bottom:5px}
+.annotation-text{font-size:12px;color:var(--text2);line-height:1.65}
+
+.insight{background:linear-gradient(135deg,var(--core),var(--teal));padding:18px 36px 20px}
+.insight-label{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45);font-family:var(--mono);margin-bottom:7px}
+.insight-text{font-size:13px;font-weight:600;color:#fff;line-height:1.65}
+
+.footer-bar{padding:11px 36px;display:flex;justify-content:space-between;border-top:0.5px solid var(--border);font-size:10px;color:var(--text3);font-family:var(--mono)}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="eyebrow">意义连接 · INFJ</div>
+    <div class="title">测量框架即裁判</div>
+    <div class="subtitle">——当评估工具和被评估工具是同一把尺子</div>
+  </div>
+
+  <div class="map-wrap">
+    <div class="mermaid">
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "primaryColor": "#EDE8F8",
+    "primaryTextColor": "#1C1828",
+    "primaryBorderColor": "#8B6CC8",
+    "lineColor": "#8B6CC8",
+    "secondaryColor": "#E6F4F6",
+    "secondaryTextColor": "#1C1828",
+    "secondaryBorderColor": "#2A7A8A",
+    "tertiaryColor": "#FAE8F0",
+    "tertiaryTextColor": "#1C1828",
+    "tertiaryBorderColor": "#B05080",
+    "edgeLabelBackground": "#F7F5FB",
+    "fontFamily": "PingFang SC, Helvetica Neue, sans-serif",
+    "fontSize": "12px"
+  }
+}}%%
+graph TD
+    FRAME(["测量框架即裁判\n谁设计评估，谁赢"])
+    CTF["Common Task Framework\n共享数据集定义何为进步"]
+    BLIND["结构性盲区\n不可测的问题系统性消失"]
+    REDUCE["多样性削减\n重塑世界适配算法"]
+    GOODHART["Goodhart 定律 + James Scott\n指标成目标，可读性消灭复杂性"]
+
+    classDef core fill:#5B3FA6,stroke:#5B3FA6,color:#fff,font-weight:bold
+    classDef normal fill:#EDE8F8,stroke:#8B6CC8,color:#1C1828,font-weight:600
+    classDef teal fill:#E6F4F6,stroke:#2A7A8A,color:#1C1828,font-weight:600
+    classDef danger fill:#FAE8F0,stroke:#B05080,color:#1C1828,font-weight:600
+
+    class FRAME core
+    class CTF,BLIND normal
+    class GOODHART teal
+    class REDUCE danger
+
+    CTF -->|"只测可测量的"| BLIND
+    BLIND -->|"反向确认"| FRAME
+    FRAME -->|"设计评估标准"| CTF
+    REDUCE -.->|"矛盾：扩大甜区\n同时隐藏真实边界"| FRAME
+    GOODHART -->|"历史平行"| BLIND
+    </div>
+  </div>
+
+  <div class="annotation">
+    <div class="annotation-label">核心矛盾</div>
+    <div class="annotation-text">AI 有局限，但测量框架只能看见 AI 成功的地方——循环是结构性的，不是认知疏忽。多样性削减（让世界适配算法）进一步遮蔽了这个循环。</div>
+  </div>
+
+  <div class="insight">
+    <div class="insight-label">整体洞见</div>
+    <div class="insight-text">问「AI 能不能解这个问题」之前，先问：这个问题的评估方式，是谁定义的？</div>
+  </div>
+
+  <div class="footer-bar">
+    <span>Henry Farrell 评 Ben Recht《The Irrational Decision》· 2026</span>
+    <span>via readable-and-shareable</span>
+  </div>
+
+</div>
+<script>
+  mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+</script>
+</body>
+</html>

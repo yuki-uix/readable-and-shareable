@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>营销人也能用 Claude Code — ENTJ 战略简报</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F8F8F6;
+  --surface:#EEEDE8;
+  --surface-b:#1E2D1E;
+  --text:#1A1A18;
+  --text2:#7A7A70;
+  --text3:#A8A89E;
+  --border:rgba(0,0,0,0.12);
+  --action:#1B5E2A;
+  --action-bg:#EBF3EB;
+  --compare-a:#EBF3EB;
+  --compare-b:#F5EBE8;
+  --font:-apple-system,"Helvetica Neue","PingFang SC",sans-serif;
+  --mono:"SF Mono","Menlo","Courier New",monospace;
+}
+html,body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+.card{width:600px;margin:0 auto;background:var(--bg)}
+
+/* ① Verdict Bar */
+.verdict{background:var(--surface-b);padding:22px 28px 20px}
+.verdict-label{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45);font-family:var(--mono);margin-bottom:6px}
+.verdict-text{font-size:20px;font-weight:800;color:#fff;line-height:1.25}
+
+/* Eyebrow */
+.eyebrow{padding:16px 28px 0;display:flex;justify-content:space-between;align-items:center}
+.eyebrow-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);font-family:var(--mono)}
+.eyebrow-tag{font-size:10px;font-weight:700;background:var(--action-bg);color:var(--action);padding:2px 8px;border-radius:3px;font-family:var(--mono)}
+
+/* ④ Metrics */
+.metrics{padding:16px 28px;display:flex;gap:0;border-bottom:0.5px solid var(--border)}
+.metric{flex:1;text-align:center;padding:10px 0}
+.metric+.metric{border-left:0.5px solid var(--border)}
+.metric-num{font-size:32px;font-weight:900;color:var(--action);line-height:1;margin-bottom:2px}
+.metric-unit{font-size:11px;color:var(--text3)}
+.metric-label{font-size:11px;color:var(--text2);margin-top:2px}
+
+/* ② Compare Matrix — 3 builds */
+.matrix-header{padding:14px 28px 8px;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);font-family:var(--mono)}
+.matrix{margin:0 28px;border:0.5px solid var(--border);border-radius:4px;overflow:hidden}
+.matrix-row{display:grid;grid-template-columns:100px 1fr 1fr;border-bottom:0.5px solid var(--border)}
+.matrix-row:last-child{border-bottom:none}
+.matrix-head{background:var(--surface);padding:8px 12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text2)}
+.matrix-head.a{background:var(--compare-a);color:var(--action)}
+.matrix-head.b{border-left:0.5px solid var(--border)}
+.matrix-cell{padding:10px 12px;font-size:12px;line-height:1.4;color:var(--text)}
+.matrix-cell.label{font-weight:600;color:var(--action);background:var(--action-bg);font-size:11px}
+.matrix-cell.b{border-left:0.5px solid var(--border);color:var(--text2)}
+
+/* ③ Action Rows */
+.action-header{padding:14px 28px 8px;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);font-family:var(--mono)}
+.actions{margin:0 28px 20px;display:flex;flex-direction:column;gap:0;border:0.5px solid var(--border);border-radius:4px;overflow:hidden}
+.action-row{display:flex;align-items:center;gap:12px;padding:11px 14px;background:var(--action-bg);border-bottom:0.5px solid rgba(0,0,0,0.06)}
+.action-row:last-child{border-bottom:none}
+.action-bar{width:4px;height:32px;background:var(--action);border-radius:2px;flex-shrink:0}
+.action-verb{font-size:12px;font-weight:800;color:var(--action);min-width:32px;flex-shrink:0}
+.action-text{font-size:13px;color:var(--text);line-height:1.4}
+
+/* Footer */
+.footer-bar{padding:12px 28px;border-top:0.5px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.footer-verdict{font-size:12px;font-weight:700;color:var(--action)}
+.footer-meta{font-size:10px;color:var(--text3);font-family:var(--mono)}
+</style>
+</head>
+<body>
+<div class="card">
+
+  <div class="eyebrow">
+    <span class="eyebrow-label">战略简报 · 结论前置式</span>
+    <span class="eyebrow-tag">ENTJ</span>
+  </div>
+
+  <!-- ① Verdict Bar -->
+  <div class="verdict">
+    <div class="verdict-label">核心判断</div>
+    <div class="verdict-text">Claude Code 不只是给工程师的<br>营销工作流可以全面自动化</div>
+  </div>
+
+  <!-- ④ Metrics -->
+  <div class="metrics">
+    <div class="metric">
+      <div class="metric-num">5</div>
+      <div class="metric-unit">个</div>
+      <div class="metric-label">真实 Build</div>
+    </div>
+    <div class="metric">
+      <div class="metric-num">4</div>
+      <div class="metric-unit">位</div>
+      <div class="metric-label">市场营销人</div>
+    </div>
+    <div class="metric">
+      <div class="metric-num">0</div>
+      <div class="metric-unit">行</div>
+      <div class="metric-label">手写代码</div>
+    </div>
+  </div>
+
+  <!-- ② Compare Matrix -->
+  <div class="matrix-header">证据——3 个典型 Build</div>
+  <div class="matrix">
+    <div class="matrix-row">
+      <div class="matrix-head">Build</div>
+      <div class="matrix-head a">做了什么</div>
+      <div class="matrix-head b" style="background:var(--surface)">关键结果</div>
+    </div>
+    <div class="matrix-row">
+      <div class="matrix-cell label">定位检查器</div>
+      <div class="matrix-cell">接入模板，AI 评分 B2B 首页定位</div>
+      <div class="matrix-cell b">4 轮迭代 → 出具体建议</div>
+    </div>
+    <div class="matrix-row">
+      <div class="matrix-cell label">外发自动化</div>
+      <div class="matrix-cell">从成单记录找相似公司 + 联系人</div>
+      <div class="matrix-cell b">每周 10 家，草稿发 Slack</div>
+    </div>
+    <div class="matrix-row">
+      <div class="matrix-cell label">竞品情报</div>
+      <div class="matrix-cell">抓 LinkedIn 广告库，分析投放主题</div>
+      <div class="matrix-cell b">定时生成 PDF 报告自动发送</div>
+    </div>
+  </div>
+
+  <!-- ③ Action Rows -->
+  <div class="action-header">行动指令</div>
+  <div class="actions">
+    <div class="action-row">
+      <div class="action-bar"></div>
+      <span class="action-verb">立即</span>
+      <span class="action-text">写 ICP + Persona + Messaging 三个基础 Skill 文件</span>
+    </div>
+    <div class="action-row">
+      <div class="action-bar"></div>
+      <span class="action-verb">优先</span>
+      <span class="action-text">选一个重复最多的手工任务，用它做第一个 Agent</span>
+    </div>
+    <div class="action-row">
+      <div class="action-bar"></div>
+      <span class="action-verb">停止</span>
+      <span class="action-text">等「学会编程再用」——市场人现在就能开始</span>
+    </div>
+  </div>
+
+  <div class="footer-bar">
+    <span class="footer-verdict">判断明确 · 立即执行</span>
+    <span class="footer-meta">MKT1 Newsletter · via readable-and-shareable</span>
+  </div>
+
+</div>
+</body>
+</html>
