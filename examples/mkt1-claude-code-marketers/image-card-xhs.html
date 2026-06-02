@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>营销人也能用 Claude Code</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --font: -apple-system, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --bg:       #FFF9F5;
+    --bg2:      #FFF1E8;
+    --bg3:      #FFE4D0;
+    --text:     #1C1816;
+    --text2:    #6B5E57;
+    --text3:    #A8998F;
+    --coral:    #FF6B5B;
+    --amber:    #FFAB40;
+    --teal:     #26C6B0;
+    --lavender: #A78BFA;
+    --border:   rgba(0, 0, 0, 0.06);
+    /* ENTJ verdict color mapped to coral for XHS */
+    --verdict:  #D94F3D;
+    --verdict-bg: rgba(255,107,91,0.08);
+  }
+
+  html, body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; }
+  .cards-wrap { max-width: 600px; margin: 0 auto; }
+
+  /* ── Base card ── */
+  .card {
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 52px 48px;
+    background: var(--bg);
+    border-bottom: 0.5px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+    break-after: page;
+  }
+  .card::before {
+    content: ''; position: absolute; top: -80px; right: -80px;
+    width: 260px; height: 260px; border-radius: 50%;
+    background: var(--bg2); pointer-events: none;
+  }
+  .card::after {
+    content: ''; position: absolute; bottom: -60px; left: -40px;
+    width: 180px; height: 180px; border-radius: 50%;
+    background: var(--bg3); opacity: .5; pointer-events: none;
+  }
+
+  /* ── Badge ── */
+  .card-num {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 700; letter-spacing: .08em;
+    color: var(--coral); background: rgba(255,107,91,0.1);
+    border: 1px solid rgba(255,107,91,0.25);
+    border-radius: 20px; padding: 4px 12px;
+    margin-bottom: 28px; width: fit-content;
+    position: relative; z-index: 1;
+  }
+
+  /* ── Standard title & desc ── */
+  .card-title {
+    font-size: clamp(26px, 5.5vw, 36px); font-weight: 700;
+    line-height: 1.2; letter-spacing: -.01em; color: var(--text);
+    margin-bottom: 20px; position: relative; z-index: 1;
+  }
+  .card-title span {
+    background: linear-gradient(180deg, transparent 55%, rgba(255,171,64,0.5) 55%);
+  }
+  .card-desc {
+    font-size: 15px; color: var(--text2); line-height: 1.8;
+    max-width: 380px; position: relative; z-index: 1;
+  }
+  .card-desc::before {
+    content: ''; display: inline-block;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--coral); margin-right: 8px;
+    vertical-align: middle; flex-shrink: 0;
+  }
+
+  /* ── ENTJ: Verdict Bar ── */
+  .verdict-bar {
+    background: var(--coral); border-radius: 8px;
+    padding: 14px 18px; margin-bottom: 24px;
+    position: relative; z-index: 1;
+  }
+  .verdict-label {
+    font-size: 10px; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; color: rgba(255,255,255,.65);
+    margin-bottom: 5px;
+  }
+  .verdict-text {
+    font-size: 18px; font-weight: 800; color: #fff; line-height: 1.25;
+  }
+
+  /* ── ENTJ: Action Rows ── */
+  .action-list { display: flex; flex-direction: column; gap: 0; position: relative; z-index: 1; }
+  .action-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 14px; border-radius: 6px;
+    background: var(--bg2); margin-bottom: 8px;
+    border-left: 4px solid var(--coral);
+  }
+  .action-verb {
+    font-size: 13px; font-weight: 800; color: var(--coral);
+    flex-shrink: 0; min-width: 32px;
+  }
+  .action-text { font-size: 13px; color: var(--text); line-height: 1.5; }
+
+  /* ── ENTJ: Metrics ── */
+  .metrics-row {
+    display: flex; gap: 16px; margin-top: 20px;
+    position: relative; z-index: 1;
+  }
+  .metric {
+    flex: 1; text-align: center;
+    background: var(--bg2); border-radius: 8px; padding: 14px 8px;
+  }
+  .metric-num {
+    font-size: 32px; font-weight: 900; color: var(--coral);
+    line-height: 1; margin-bottom: 4px;
+  }
+  .metric-unit { font-size: 12px; color: var(--text3); }
+  .metric-label { font-size: 11px; color: var(--text2); margin-top: 2px; }
+
+  /* ── Build card tags ── */
+  .build-tag {
+    display: inline-block; font-size: 11px; font-weight: 600;
+    background: var(--bg3); color: var(--text2);
+    padding: 3px 10px; border-radius: 12px; margin-bottom: 16px;
+    position: relative; z-index: 1;
+  }
+  .build-tag.highlight { background: rgba(255,107,91,0.12); color: var(--coral); }
+
+  /* ── Cover ── */
+  .card-cover {
+    background: linear-gradient(145deg, #FFF9F5 0%, #FFE8DC 100%);
+    justify-content: flex-end; padding-bottom: 60px;
+  }
+  .card-cover::before { background: rgba(255,107,91,0.12); }
+  .card-cover::after  { background: rgba(255,171,64,0.15); }
+  .cover-label {
+    font-size: 11px; font-weight: 700; letter-spacing: .15em;
+    text-transform: uppercase; color: var(--coral); margin-bottom: 16px;
+    position: relative; z-index: 1;
+  }
+  .cover-title {
+    font-size: clamp(28px, 6vw, 40px); font-weight: 800;
+    line-height: 1.18; letter-spacing: -.02em; color: var(--text);
+    margin-bottom: 18px; position: relative; z-index: 1;
+  }
+  .cover-sub {
+    font-size: 13px; color: var(--text2); line-height: 1.7;
+    max-width: 340px; position: relative; z-index: 1;
+  }
+  .cover-count {
+    position: absolute; top: 48px; right: 48px;
+    font-size: 72px; font-weight: 900;
+    color: rgba(255,107,91,0.08); letter-spacing: -.04em;
+    line-height: 1; z-index: 0;
+  }
+
+  /* ── Footer ── */
+  .card-footer {
+    justify-content: flex-end; padding: 40px 48px;
+    background: linear-gradient(145deg, #FFF9F5 0%, #FFE8DC 100%);
+  }
+  .card-footer::before, .card-footer::after { display: none; }
+  .footer-dot-row { display: flex; gap: 6px; margin-bottom: 20px; }
+  .footer-dot-row span { width: 8px; height: 8px; border-radius: 50%; background: var(--bg3); }
+  .footer-dot-row span:first-child { background: var(--coral); }
+  .footer-source { font-size: 13px; color: var(--text2); line-height: 1.8; margin-bottom: 8px; }
+  .footer-source a { color: var(--text); text-decoration: none; font-weight: 600; }
+  .footer-brand { font-size: 10px; color: var(--text3); letter-spacing: .03em; }
+</style>
+</head>
+<body>
+<div class="cards-wrap">
+
+<!-- Cover -->
+<div class="card card-cover">
+  <div class="cover-count">05</div>
+  <div class="cover-label">AI × 市场营销</div>
+  <div class="cover-title">营销人也能用<br>Claude Code</div>
+  <div class="cover-sub">不用写代码，4 位市场人正在用它构建自动化 Agent——这是他们做了什么</div>
+</div>
+
+<!-- Card 01: Verdict — 结论前置 -->
+<div class="card">
+  <div class="card-num">01 — 05</div>
+  <div class="verdict-bar">
+    <div class="verdict-label">核心判断</div>
+    <div class="verdict-text">Claude Code 不只是给工程师的</div>
+  </div>
+  <div class="card-desc" style="margin-top:0">定位、外发、竞品分析——营销人的日常工作，全都可以自动化</div>
+  <div class="metrics-row">
+    <div class="metric">
+      <div class="metric-num">5</div>
+      <div class="metric-unit">个</div>
+      <div class="metric-label">真实 Build</div>
+    </div>
+    <div class="metric">
+      <div class="metric-num">4</div>
+      <div class="metric-unit">位</div>
+      <div class="metric-label">市场人</div>
+    </div>
+    <div class="metric">
+      <div class="metric-num">0</div>
+      <div class="metric-unit">行</div>
+      <div class="metric-label">手写代码</div>
+    </div>
+  </div>
+</div>
+
+<!-- Card 02: Build 1 — 定位检查器 -->
+<div class="card">
+  <div class="card-num">02 — 05</div>
+  <div class="build-tag highlight">Build 1 · Emily Kramer</div>
+  <div class="card-title"><span>首页定位检查器</span></div>
+  <div class="card-desc">接入 MKT1 模板，4 轮迭代后能给 B2B 首页打分并给出改进建议</div>
+</div>
+
+<!-- Card 03: Build 2 — 外发自动化 -->
+<div class="card">
+  <div class="card-num">03 — 05</div>
+  <div class="build-tag highlight">Build 2 · Elaine Zelby</div>
+  <div class="card-title"><span>相似客户自动外发</span></div>
+  <div class="card-desc">每周从成单记录找 10 家相似公司 · 3-5 个联系人 · 草稿发 Slack 人工审核</div>
+</div>
+
+<!-- Card 04: Build 3 — 竞品情报 -->
+<div class="card">
+  <div class="card-num">04 — 05</div>
+  <div class="build-tag highlight">Build 3 · Kamil Rextin</div>
+  <div class="card-title"><span>竞品广告情报 Agent</span></div>
+  <div class="card-desc">抓 LinkedIn 广告库数据 · 分析投放主题 · 定时生成 PDF 报告自动发送</div>
+</div>
+
+<!-- Card 05: Action — 行动指令收尾 -->
+<div class="card">
+  <div class="card-num">05 — 05</div>
+  <div class="card-title" style="margin-bottom:20px"><span>先建这 3 个基础技能</span></div>
+  <div class="action-list">
+    <div class="action-item">
+      <span class="action-verb">立即</span>
+      <span class="action-text">写 ICP 技能文件——谁是你的理想客户</span>
+    </div>
+    <div class="action-item">
+      <span class="action-verb">优先</span>
+      <span class="action-text">建 Persona + 核心 Messaging 的 Skill</span>
+    </div>
+    <div class="action-item">
+      <span class="action-verb">然后</span>
+      <span class="action-text">用这 3 个作地基，再做复杂 Agent</span>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="card card-footer">
+  <div class="footer-dot-row"><span></span><span></span><span></span></div>
+  <div class="footer-source">
+    原文：<a href="https://newsletter.mkt1.co/p/real-marketers-claude-code-builds" target="_blank">Emily Kramer · MKT1 Newsletter</a>
+  </div>
+  <div class="footer-brand">via readable-and-shareable · github.com/yuki-uix/readable-and-shareable</div>
+</div>
+
+</div>
+</body>
+</html>

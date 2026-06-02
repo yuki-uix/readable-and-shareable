@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>AI 的局限 — INFJ 深度解读</title>
+<script src="../../docs/mermaid.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F7F5FB;
+  --text:#1C1828;
+  --text2:#7A6E8A;
+  --text3:#B0A0C0;
+  --core:#5B3FA6;
+  --core-mid:rgba(91,63,166,0.18);
+  --core-light:rgba(91,63,166,0.08);
+  --core-border:#8B6CC8;
+  --teal:#2A7A8A;
+  --teal-mid:rgba(42,122,138,0.15);
+  --teal-border:#3A9AAA;
+  --danger:#C05080;
+  --danger-mid:rgba(192,80,128,0.15);
+  --danger-border:#D06090;
+  --font:-apple-system,"Helvetica Neue","PingFang SC",sans-serif;
+  --mono:"SF Mono","Menlo","Courier New",monospace;
+  --gap:20px;
+}
+html,body{
+  font-family:var(--font);
+  background:#DDD8EE;
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── 卡片固定尺寸：600×800（3:4）── */
+.card{
+  width:600px;
+  height:800px;
+  background:var(--bg);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+/* ── 主标题 ── */
+.top{
+  background:var(--core);
+  padding:14px var(--gap) 12px;
+  flex-shrink:0;
+}
+.top-eyebrow{
+  font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(255,255,255,.38);font-family:var(--mono);margin-bottom:4px;
+}
+.top-title{font-size:22px;font-weight:900;color:#fff;line-height:1.15;letter-spacing:-.02em}
+.top-sub{font-size:10.5px;color:rgba(255,255,255,.55);margin-top:3px;font-style:italic}
+
+/* ── 核心主张 ── */
+.claim{
+  padding:11px var(--gap) 11px calc(var(--gap) + 5px);
+  background:#fff;
+  border-bottom:2px solid var(--core);
+  border-left:5px solid var(--core);
+  flex-shrink:0;
+}
+.claim-kicker{
+  font-size:9.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--core);font-family:var(--mono);margin-bottom:5px;
+}
+.claim-body{
+  font-size:14px;font-weight:700;color:var(--text);line-height:1.55;
+}
+.claim-body em{color:var(--core);font-style:normal}
+
+/* ── 내용 영역: flex grow ── */
+.content{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  overflow:hidden;
+}
+
+/* ── 구획 ── */
+.sec{
+  border-bottom:0.5px solid rgba(91,63,166,0.12);
+  flex-shrink:0;
+}
+.sec:last-child{border-bottom:none}
+
+.sec-head{
+  padding:7px var(--gap);
+  display:flex;align-items:center;gap:8px;
+  background:var(--core-mid);
+}
+.sec.teal .sec-head{background:var(--teal-mid)}
+.sec.danger .sec-head{background:var(--danger-mid)}
+
+.sec-num{
+  width:22px;height:22px;border-radius:5px;flex-shrink:0;
+  font-size:11px;font-weight:900;font-family:var(--mono);
+  color:#fff;background:var(--core);
+  display:flex;align-items:center;justify-content:center;
+}
+.sec.teal .sec-num{background:var(--teal)}
+.sec.danger .sec-num{background:var(--danger)}
+.sec-title{font-size:13px;font-weight:800;color:var(--text)}
+
+.sec-body{padding:9px var(--gap)}
+
+/* ── Mermaid ── */
+.mermaid-wrap{padding:4px var(--gap) 0}
+.mermaid-wrap .mermaid{width:100%}
+
+/* ── 인용구 ── */
+.quote{
+  font-size:12px;font-weight:600;color:var(--text);line-height:1.6;
+  padding:8px 12px;
+  background:var(--core-light);
+  border-left:3px solid var(--core);
+  border-radius:0 4px 4px 0;
+}
+.quote em{color:var(--core);font-style:normal}
+
+/* ── 가정 리스트 ── */
+.assumes{display:flex;flex-direction:column;gap:7px}
+.assume{display:flex;gap:8px;align-items:flex-start}
+.abadge{
+  font-size:9.5px;font-weight:900;font-family:var(--mono);
+  color:var(--core);background:var(--core-mid);
+  border:1.5px solid var(--core-border);
+  padding:1px 5px;border-radius:3px;flex-shrink:0;line-height:1.5;
+  margin-top:1px;
+}
+.atitle{font-size:12px;font-weight:800;color:var(--text);margin-bottom:2px}
+.abody{font-size:11px;color:var(--text2);line-height:1.55}
+.abody em{color:var(--danger);font-style:normal;font-weight:700}
+
+/* ── 两栏 ── */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.col{padding:9px 11px;border-radius:6px}
+.col.d{background:var(--danger-mid);border:1.5px solid var(--danger-border)}
+.col.t{background:var(--teal-mid);border:1.5px solid var(--teal-border)}
+.ctag{
+  font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+  font-family:var(--mono);margin-bottom:4px;
+}
+.col.d .ctag{color:var(--danger)}
+.col.t .ctag{color:var(--teal)}
+.cbody{font-size:11px;color:var(--text);line-height:1.55}
+.cbody em{font-style:normal;font-weight:700}
+.col.d .cbody em{color:var(--danger)}
+.col.t .cbody em{color:var(--teal)}
+
+/* ── 整体洞见 ── */
+.insight{
+  background:linear-gradient(135deg,var(--core) 0%,var(--teal) 100%);
+  padding:13px var(--gap) 14px;
+  flex-shrink:0;
+}
+.insight-kicker{
+  font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.4);font-family:var(--mono);margin-bottom:5px;
+}
+.insight-body{font-size:12.5px;font-weight:700;color:#fff;line-height:1.65}
+
+.src{
+  padding:7px var(--gap);
+  display:flex;justify-content:space-between;
+  font-size:9px;color:var(--text3);font-family:var(--mono);
+  border-top:0.5px solid rgba(91,63,166,.12);
+  flex-shrink:0;
+}
+</style>
+</head>
+<body>
+<div class="card">
+
+  <div class="top">
+    <div class="top-eyebrow">意义连接 · INFJ · 深度解读</div>
+    <div class="top-title">测量框架即裁判</div>
+    <div class="top-sub">读 Henry Farrell 评 Ben Recht《The Irrational Decision》</div>
+  </div>
+
+  <div class="claim">
+    <div class="claim-kicker">核心主张</div>
+    <div class="claim-body">AI 理性主义者结构性地看不见自己工具的边界——<br>因为<em>评估工具和被评估工具是同一把尺子</em>。<br>这不是认知偏见，而是方法论的自我封闭。</div>
+  </div>
+
+  <div class="content">
+
+    <!-- §1 概念网络 -->
+    <div class="sec">
+      <div class="sec-head">
+        <span class="sec-num">1</span>
+        <span class="sec-title">概念关系网络 — 循环是结构性的</span>
+      </div>
+      <div class="mermaid-wrap">
+        <div class="mermaid">
+%%{init:{"theme":"base","themeVariables":{"primaryColor":"#EDE8F8","primaryTextColor":"#1C1828","primaryBorderColor":"#8B6CC8","lineColor":"#8B6CC8","secondaryColor":"#E6F4F6","secondaryTextColor":"#1C1828","secondaryBorderColor":"#2A7A8A","tertiaryColor":"#FAE8F0","tertiaryTextColor":"#1C1828","tertiaryBorderColor":"#C05080","edgeLabelBackground":"#F7F5FB","fontFamily":"PingFang SC,Helvetica Neue,sans-serif","fontSize":"11px"}}}%%
+graph LR
+    CTF["Common Task\nFramework"] --> |"只测可测"| BLIND["结构性\n盲区"]
+    BLIND -->|"反向确认"| FRAME(["测量框架\n即裁判"])
+    FRAME -->|"设计评估"| CTF
+    REDUCE["多样性削减"] -.->|"矛盾：扩大甜区\n遮蔽真实边界"| FRAME
+    classDef core fill:#5B3FA6,stroke:#5B3FA6,color:#fff,font-weight:bold
+    classDef n fill:#EDE8F8,stroke:#8B6CC8,color:#1C1828,font-weight:600
+    classDef d fill:#FAE8F0,stroke:#C05080,color:#1C1828,font-weight:600
+    class FRAME core
+    class CTF,BLIND n
+    class REDUCE d
+        </div>
+      </div>
+      <div class="sec-body" style="padding-top:6px">
+        <div class="quote">CTF → 盲区 → 框架 → CTF：这不是链，是<em>闭环</em>。多样性削减既扩大甜区，又遮蔽真实边界。</div>
+      </div>
+    </div>
+
+    <!-- §2 隐藏假设 -->
+    <div class="sec">
+      <div class="sec-head">
+        <span class="sec-num">2</span>
+        <span class="sec-title">隐藏假设 — 论点成立的三个前提</span>
+      </div>
+      <div class="sec-body">
+        <div class="assumes">
+          <div class="assume">
+            <span class="abadge">A</span>
+            <div>
+              <div class="atitle">盲区是认知问题，不是激励问题</div>
+              <div class="abody">「看不见」vs<em>「不想看见」</em>——VC、学术考核都在奖励可测量的进展，修它需要不同的激励结构。</div>
+            </div>
+          </div>
+          <div class="assume">
+            <span class="abadge">B</span>
+            <div>
+              <div class="atitle">「甜区」可以事先识别</div>
+              <div class="abody">甜区只能事后确认，在实际决策时<em>几乎没有指导价值</em>。</div>
+            </div>
+          </div>
+          <div class="assume">
+            <span class="abadge">C</span>
+            <div>
+              <div class="atitle">多样性削减是边缘现象</div>
+              <div class="abody">把人类行为压缩成<em>可优化标准单元</em>是 AI 大规模部署的普遍代价，不是特例。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- §3 张力 -->
+    <div class="sec danger">
+      <div class="sec-head">
+        <span class="sec-num">3</span>
+        <span class="sec-title">论证最脆弱的地方</span>
+      </div>
+      <div class="sec-body">
+        <div class="cols">
+          <div class="col d">
+            <div class="ctag">张力一</div>
+            <div class="cbody">没把<em>「看不见」</em>和「不去看」分开——前者是认识论，后者是政治经济问题。</div>
+          </div>
+          <div class="col d">
+            <div class="ctag">张力二</div>
+            <div class="cbody">说政治<em>「不可优化」</em>，又说多样性削减让它变得可优化——局限到底意味着什么？</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- §4 So What -->
+    <div class="sec teal">
+      <div class="sec-head">
+        <span class="sec-num">4</span>
+        <span class="sec-title">So What + 更大的连接</span>
+      </div>
+      <div class="sec-body">
+        <div class="quote" style="border-left-color:var(--teal);background:rgba(42,122,138,0.07);margin-bottom:8px">
+          之前问「AI 能不能解」。更准确的问题是：<em style="color:var(--teal)">这个问题的评估方式，是谁定义的？</em>
+        </div>
+        <div class="cols">
+          <div class="col t">
+            <div class="ctag">Goodhart 定律</div>
+            <div class="cbody">指标变成目标后就不再是好指标。CTF 是这条定律在 ML 的<em>具体实例</em>。</div>
+          </div>
+          <div class="col t">
+            <div class="ctag">James Scott 可读性</div>
+            <div class="cbody">把复杂系统压平成可管理表征，AI 是<em>最新版本</em>，更快，更难看见。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- .content -->
+
+  <div class="insight">
+    <div class="insight-kicker">整体洞见</div>
+    <div class="insight-body">AI 的问题不是「能不能解」，而是「谁来定义解了没有」。当评估框架和被评估工具来自同一套思维，局限就变成了透明——不是消失了，是被设计成看不见的。</div>
+  </div>
+
+  <div class="src">
+    <span>Henry Farrell 评 Ben Recht《The Irrational Decision》· 2026</span>
+    <span>via readable-and-shareable</span>
+  </div>
+
+</div>
+<script>mermaid.initialize({startOnLoad:true,securityLevel:'loose'})</script>
+</body>
+</html>
