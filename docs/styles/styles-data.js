@@ -186,8 +186,8 @@ const STYLES_DATA = {
     primaryColor: "#E8832A",
     accentColor: "#FFF0DC",
     previewImg: "../preview-enfp-v2.png",
-    exampleImg: null,
-    exampleSource: null,
+    exampleImg: "../showcase-mbti-enfp-v2.png",
+    exampleSource: "It's not [X], it's [Y]. · Ruben's Substack",
     tokens: { bg: "#FEFCF7", surface: "#FFF5E6", core: "#E8832A" }
   },
   enfj: {
