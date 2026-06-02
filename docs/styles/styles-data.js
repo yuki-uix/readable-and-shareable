@@ -211,8 +211,8 @@ const STYLES_DATA = {
     primaryColor: "#2A7A5A",
     accentColor: "#E6F5EF",
     previewImg: "../showcase-mbti-enfj-v2.png",
-    exampleImg: null,
-    exampleSource: null,
+    exampleImg: "../showcase-mbti-enfj-v2.png",
+    exampleSource: "Your AI Agent Has More Access Than You Think · OpenClaw Unboxed",
     tokens: { bg: "#F5FBF8", surface: "#E6F5EF", core: "#2A7A5A" }
   },
   istj: {
