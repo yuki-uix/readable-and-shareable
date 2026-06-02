@@ -263,8 +263,8 @@ const STYLES_DATA = {
     primaryColor: "#2A6B3C",
     accentColor: "#E8F5EC",
     previewImg: "../showcase-mbti-isfj-v2.png",
-    exampleImg: null,
-    exampleSource: null,
+    exampleImg: "../showcase-mbti-isfj-v2.png",
+    exampleSource: "How to Build Your AI Second Brain · Noah Vincent",
     tokens: { bg: "#F5FBF7", surface: "#E8F5EC", core: "#2A6B3C" }
   },
   isfp: {
