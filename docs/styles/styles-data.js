@@ -237,8 +237,8 @@ const STYLES_DATA = {
     primaryColor: "#3D3D3A",
     accentColor: "#EEEEED",
     previewImg: "../preview-istj-v2.png",
-    exampleImg: null,
-    exampleSource: null,
+    exampleImg: "../showcase-mbti-istj-v2.png",
+    exampleSource: "OpenClaw vs Hermes Agent · OpenClaw Unboxed",
     tokens: { bg: "#F8F8F7", surface: "#EEEEED", core: "#3D3D3A" }
   },
   isfj: {
