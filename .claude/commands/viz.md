@@ -1,4 +1,10 @@
-# Skill: viz — Share-Thought Generator
+# ⚠️ DEPRECATED — 请使用 `/digest`
+
+此 skill 已退役。输入 `/digest` 使用新的深度解读 × 可视化卡片工作流。
+
+---
+
+# Skill: viz — Share-Thought Generator [已退役]
 
 ## Trigger
 
