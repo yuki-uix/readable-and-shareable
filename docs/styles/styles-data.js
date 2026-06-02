@@ -413,8 +413,8 @@ const STYLES_DATA = {
     primaryColor: "#3A4A5A",
     accentColor: "#E8ECF0",
     previewImg: "../showcase-mbti-istp-v2.png",
-    exampleImg: null,
-    exampleSource: null,
+    exampleImg: "../showcase-mbti-istp-v2.png",
+    exampleSource: "Stop Calling It Memory · Limited Edition Jonathan",
     tokens: { bg: "#F6F7F8", surface: "#E8ECF0", core: "#3A4A5A" }
   }
 };
