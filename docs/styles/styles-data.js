@@ -160,8 +160,8 @@ const STYLES_DATA = {
     primaryColor: "#C05020",
     accentColor: "#FFF0E6",
     previewImg: "../showcase-mbti-entp-v2.png",
-    exampleImg: null,
-    exampleSource: null,
+    exampleImg: "../showcase-mbti-entp-v2.png",
+    exampleSource: "How to Stop Hitting Claude Usage Limits · Ruben's Substack",
     tokens: { bg: "#FEFAF5", surface: "#FFF0E6", core: "#C05020" }
   },
   enfp: {
