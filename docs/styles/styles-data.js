@@ -108,8 +108,8 @@ const STYLES_DATA = {
     primaryColor: "#C05070",
     accentColor: "#FFE8EC",
     previewImg: "../showcase-mbti-infp-v2.png",
-    exampleImg: null,
-    exampleSource: null,
+    exampleImg: "../showcase-mbti-infp-v2.png",
+    exampleSource: "I Shook Hands with a Nobel Prize Winner · Ruben's Substack",
     tokens: { bg: "#FFFDF7", surface: "#FFE8EC", core: "#C05070" }
   },
   entj: {
