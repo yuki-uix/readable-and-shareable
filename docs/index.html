@@ -394,7 +394,14 @@
     transition: box-shadow .15s, transform .15s;
   }
   .mbti-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
-  .mbti-card img { width: 100%; height: auto; display: block; }
+  .mbti-card .card-img-wrap { position: relative; height: 220px; overflow: hidden; }
+  .mbti-card .card-img-bg {
+    position: absolute; inset: -12px;
+    background-size: cover; background-position: center;
+    filter: blur(16px) brightness(0.85) saturate(3);
+    z-index: 0;
+  }
+  .mbti-card img { position: relative; width: 100%; height: 220px; object-fit: contain; display: block; z-index: 1; }
   .mbti-card-label {
     padding: 5px 8px; font-size: 12px; font-weight: 600; color: var(--text);
     background: var(--surface); border-top: 0.5px solid var(--border);
@@ -725,8 +732,8 @@
               <img src="showcase-mbti-entj.png" alt="ENTJ：结论前置，对比矩阵，行动指令" loading="lazy">
               <div class="mbti-card-label">战略简报<span class="mbti-tag">ENTJ</span></div>
             </div>
-            <div class="mbti-card" role="button" tabindex="0" aria-label="ENTP 发散风暴" data-mbti="ENTP" data-desc="发散网络，多方向联想，矛盾并存，刻意不收口" data-style="发散风暴" data-src="showcase-mbti-entp.png">
-              <img src="showcase-mbti-entp.png" alt="ENTP：放射网状，无收口，开放反问" loading="lazy">
+            <div class="mbti-card" role="button" tabindex="0" aria-label="ENTP 发散风暴" data-mbti="ENTP" data-desc="发散网络，多方向联想，矛盾并存，刻意不收口" data-style="发散风暴" data-src="showcase-mbti-entp-v2.png">
+              <img src="showcase-mbti-entp-v2.png" alt="ENTP：放射网状，无收口，开放反问" loading="lazy">
               <div class="mbti-card-label">发散风暴<span class="mbti-tag">ENTP</span></div>
             </div>
           </div>
@@ -1139,6 +1146,19 @@
   const lbStyle = document.getElementById('lb-style');
   const lbCounter = document.getElementById('lb-counter');
   const lbDesc = document.getElementById('lb-desc');
+
+  // MBTI cards — blurred background for letterbox
+  document.querySelectorAll('.mbti-card img').forEach(img => {
+    const wrap = document.createElement('div');
+    wrap.className = 'card-img-wrap';
+    const bg = document.createElement('div');
+    bg.className = 'card-img-bg';
+    img.parentNode.insertBefore(wrap, img);
+    wrap.appendChild(bg);
+    wrap.appendChild(img);
+    const setSrc = () => { bg.style.backgroundImage = `url(${img.src})`; };
+    if (img.complete) setSrc(); else img.addEventListener('load', setSrc);
+  });
 
   // MBTI cards → navigate to style detail page
   document.querySelectorAll('.mbti-card[data-mbti]').forEach(card => {
