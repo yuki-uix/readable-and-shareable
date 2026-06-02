@@ -337,12 +337,12 @@ body { min-height: 100vh; }
     <div class="layout">
 
       <aside class="sidebar">
-        <div class="sidebar-preview">
+        ${!data.exampleImg ? `<div class="sidebar-preview">
           <div class="preview-wrap" id="preview-wrap" tabindex="0" role="button" aria-label="查看 ${data.name} 预览大图">
             <img src="${data.previewImg}" alt="${data.name}预览">
           </div>
           <div class="preview-hint">点击查看大图</div>
-        </div>
+        </div>` : ''}
 
         <div class="sidebar-hero">
           <div class="hero-eyebrow">
@@ -458,8 +458,10 @@ body { min-height: 100vh; }
   }
 
   const pw = document.getElementById('preview-wrap');
-  pw.addEventListener('click', () => openLb(data.previewImg));
-  pw.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLb(data.previewImg); } });
+  if (pw) {
+    pw.addEventListener('click', () => openLb(data.previewImg));
+    pw.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLb(data.previewImg); } });
+  }
   document.querySelectorAll('.lb-trigger').forEach(el => el.addEventListener('click', () => openLb(el.dataset.src)));
   document.getElementById('lb-close').addEventListener('click', closeLb);
   lbOverlay.addEventListener('click', e => { if (e.target === lbOverlay) closeLb(); });

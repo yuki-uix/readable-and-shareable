@@ -24,7 +24,7 @@ const STYLES_DATA = {
     similarStyles: ["intp", "entj", "infj"],
     primaryColor: "#2A5CAA",
     accentColor: "#EBF0FA",
-    previewImg: "../showcase-mbti-intj-v2.png",
+    previewImg: "../examples/intj-mkt1-paid.png",
     exampleImg: '../examples/intj-mkt1-paid.png',
     exampleSource: 'Paid Isn\'t Dead · MKT1 Newsletter · Emily Kramer',
     exampleLink: 'https://newsletter.mkt1.co/p/ads',
