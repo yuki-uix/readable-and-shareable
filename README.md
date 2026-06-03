@@ -36,9 +36,11 @@ cp .claude/skills/viz.md ~/.claude/skills/viz.md
 - `index.html` — self-contained interactive HTML, shareable as a single file
 - Platform drafts: 微信 / 掘金 / dev.to / LinkedIn / Twitter thread
 
-## Example
+## Examples
 
 [Coding Agent Cost Optimization](examples/coding-agent-cost/) — a 20,000-word article that contains hierarchical, quantitative, and sequential structures. Demonstrates all three visualization forms.
+
+[Meditations on Moloch](examples/meditations-on-moloch/) — Scott Alexander's 17,000-word essay on coordination failure and civilizational traps. Digest + 4-card ENTP sketchnote series covering: what Moloch is, why coordination fails, why moral solutions don't work, and why the solution itself is a Moloch.
 
 ## Methodology
 

@@ -356,9 +356,12 @@
   }
   .series-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 24px;
     align-items: start;
+  }
+  @media (max-width: 860px) {
+    .series-grid { grid-template-columns: 1fr 1fr; }
   }
   @media (max-width: 640px) {
     .series-grid { grid-template-columns: 1fr; }
@@ -387,6 +390,10 @@
     /* height = card image (~270px for 2:3 at 180px wide) + label (~28px) + bottom stack offset (24px) */
     height: 322px;
     margin-bottom: 12px;
+  }
+  .series-stack--square {
+    /* height = card image (~180px for 1:1 at 180px wide) + label (~28px) + bottom stack offset (24px) */
+    height: 232px;
   }
   .series-card {
     position: absolute;
@@ -805,6 +812,53 @@
             <img src="series2-card-3-discourse.png"
                  alt="Card 3：话语位置 — 这篇文章站在哪里" loading="lazy">
             <div class="series-card-label">3 / 3 <span>话语位置</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="series-section">
+        <div class="series-header">
+          <div class="series-title">哲学长文 · 4 张</div>
+          <div class="series-meta">
+            <span class="tag">论证型</span>
+            <span class="tag">开放问题</span>
+            <span style="font-size:12px;color:var(--text3)">ENTP · 辩证发散</span>
+          </div>
+          <p class="series-desc">17,000 词 · 每张卡一个独立成立的论点，孤儿问题收尾，刻意不收口。<a href="https://slatestarcodex.com/2014/07/30/meditations-on-moloch/" target="_blank" rel="noopener" class="series-source-link">查看原文 →</a></p>
+        </div>
+        <div class="series-stack series-stack--square">
+          <div class="series-card" role="button" tabindex="0"
+               data-src="series3-card-1-moloch.png"
+               data-label="1 / 4" data-title="Moloch 是什么"
+               data-total="共 4 张"
+               aria-label="查看系列卡片 1：Moloch 是什么">
+            <img src="series3-card-1-moloch.png"
+                 alt="Card 1：没有坏人，也会有坏结果 — Moloch 不是恶魔，是规则本身" loading="lazy">
+            <div class="series-card-label">1 / 4 <span>Moloch 是什么</span></div>
+          </div>
+          <div class="series-card" role="button" tabindex="0"
+               data-src="series3-card-2-moloch.png"
+               data-label="2 / 4" data-title="多极陷阱的解剖"
+               aria-label="查看系列卡片 2：多极陷阱的解剖">
+            <img src="series3-card-2-moloch.png"
+                 alt="Card 2：协调为什么会失败 — 三个触发条件，缺一不可" loading="lazy">
+            <div class="series-card-label">2 / 4 <span>多极陷阱的解剖</span></div>
+          </div>
+          <div class="series-card" role="button" tabindex="0"
+               data-src="series3-card-3-moloch.png"
+               data-label="3 / 4" data-title="对齐是出路吗？"
+               aria-label="查看系列卡片 3：对齐是出路吗？">
+            <img src="series3-card-3-moloch.png"
+                 alt="Card 3：道德解法，找错了层次 — 结构性问题需要结构性出路" loading="lazy">
+            <div class="series-card-label">3 / 4 <span>对齐是出路吗？</span></div>
+          </div>
+          <div class="series-card" role="button" tabindex="0"
+               data-src="series3-card-4-moloch.png"
+               data-label="4 / 4" data-title="解法的悖论"
+               aria-label="查看系列卡片 4：解法的悖论">
+            <img src="series3-card-4-moloch.png"
+                 alt="Card 4：对抗 Moloch，本身是个陷阱 — 解法复现了它要解决的问题" loading="lazy">
+            <div class="series-card-label">4 / 4 <span>解法的悖论</span></div>
           </div>
         </div>
       </div>
