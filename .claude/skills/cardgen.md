@@ -45,9 +45,12 @@
 **Prompt 写作规则（从实践提炼）：**
 - Footer 只写 `(full-width, deep navy fill, white text)`，不加 "NO white gap / flush" 等强调指令——越强调反而越容易渲染错误
 - 单张卡内容行数超过 9 行时 footer 容易被挤出，需精简内容
+- **系列标识写法**：用 `Top-right corner, tiny text, {color}, small caps:` 然后换行写标识文字（如 `SERIES NAME · 1 / 3`）。不要用 "SERIES LABEL" 等区块标题词，模型会把区块标题渲染进图片
+- **停靠站描述**：用 "First story stop / Second story stop" 等序数描述，不要用 "STOP 1 / STOP 2"，模型会把 STOP 字样渲染进图片
 - 表格每行只放一个工具 / 概念，禁止「A / B」合并
 - Eyebrow 不写 MBTI 类型（字母 J 渲染不稳定），只写内容标签
 - 系列卡 footer attribution 格式：`{domain} · readable-and-shareable`（不超过 30 字符）
+- **ENTP 关键节点标签禁用「颠覆——」**：模型会把「覆」字截掉渲染成「颠是——」；改用「关键——」，视觉权重靠橙色边框和字号区分
 
 保存至 `examples/{slug}/prompts/{NN}-{mbti}-{mode}.md`
 
