@@ -190,9 +190,19 @@ Card 3 · {主题名} — {一句话}
 4. 保存 prompt 至 `examples/{slug}/prompts/{NN}-{mbti}-sketch.md`
 5. 执行生成：
 ```bash
-bash scripts/gen-ai-card.sh examples/{slug}/prompts/{NN}-{mbti}-sketch.md --ar 2:3
+bash scripts/gen-ai-card.sh \
+  --prompt examples/{slug}/prompts/{NN}-{mbti}-sketch.md \
+  --output examples/{slug}/cards/card-{N}.png \
+  --ar 2:3
 ```
-6. 输出保存至 `examples/{slug}/cards/card-{N}.png`（或单卡时 `infographic/infographic.png`）
+6. 展示生成图片，询问是否调整，再继续下一张
+
+**Prompt 写作关键规则（从 INTJ 系列实践提炼）：**
+- **Footer 写法**：只写 `(full-width, deep navy fill, white text)`，不加任何 "NO white gap / flush" 指令——越强调反而越容易渲染错误
+- **内容密度**：单张卡超过 9 行表格内容时 footer 会被挤出，需减少内容行数
+- **合并行禁止**：表格每行只放一个工具 / 概念，不做「A / B」合并——合并破坏表格的可扫描性
+- **Eyebrow 不写 MBTI 类型**：模型对 J 渲染不稳定，eyebrow 只写内容标签（如 `CODING AGENT · 成本解构`）
+- **系列卡统一 footer attribution**：`{domain} · readable-and-shareable`（不超过 30 字符）
 
 **系列卡时**：依次生成每张，展示每张后询问是否调整再继续下一张。
 
