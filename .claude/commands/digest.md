@@ -1,245 +1,77 @@
-# Skill: digest — 深度解读 × 可视化卡片
+# Skill: /digest — 文章解读与卡片生成
 
 ## 定位
 
-**readable-and-shareable 个人工具包的核心 skill。**
+输入一篇文章，走完从「深度解读」到「可视化卡片」的完整流程。
 
-输入：一篇值得分享的文章（URL / 文本 / 文件路径）
-输出：基于深度解读的可视化分享卡片（单张或系列）
-
-不是提炼原文，而是**你对这篇文章的真实解读**——卡片内容来自解读，不是原文的压缩。
-
----
-
-## 执行步骤
-
-### Step 1 — 摄入
-
-接受文章输入：
-- URL → `WebFetch` 抓取正文
-- 文件路径 → `Read` 读取
-- 粘贴文本 → 直接使用
-
-若文章超过 5000 字，默认全量分析，不跳过任何部分。
+内部由三个专职模块组成，按需依次调用：
+- **digest-read** — 摄入 + 解读 + Review
+- **cardplan** — 卡片规划 + 视觉语言选择
+- **cardgen** — prompt 写作 + 图片生成
 
 ---
 
-### Step 2 — 深度解读
-
-**这是整个 skill 的核心。**
-
-将解读结果写入 `examples/{slug}/digest.md`，同时在对话中展示完整内容。
-
-#### `digest.md` 结构
-
-```markdown
-# Digest — {文章标题}
-
-**来源**：{URL 或文件路径}  
-**日期**：{YYYY-MM-DD}
-
----
-
-## 核心主张
-
-作者真正在说什么？用一句话表达——不是标题，不是话题，而是论点。
-> 例："作者认为 Context Engineering 的本质不是省钱技巧，而是一种对 Agent 认知结构的重新设计。"
-
----
-
-## 隐藏假设
-
-这个论点成立，需要读者接受哪些前提？这些前提是否被明说？
-（列出 2-3 条，每条一句话）
-
----
-
-## So What
-
-读完这篇文章，你的判断应该改变什么？
-不是「你学到了什么」，而是「你之前的什么认知需要更新」。
-
----
-
-## 盲点 / 反例
-
-这个结论在什么情况下不成立？
-作者有意或无意回避了什么问题？
-
----
-
-## 更大的连接
-
-这篇文章指向的是哪个更大的趋势或问题？
-它和哪些已有的概念框架形成对话？
-```
-
-#### 写作标准
-
-- **不是摘要**：不要复述原文说了什么，而是说出它意味着什么
-- **有观点**：每个部分都应该有可被质疑的判断，而不是中性描述
-- **够具体**：「隐藏假设」和「盲点」必须针对这篇文章，不能套用通用说法
-- **篇幅**：整个 digest.md 约 300-500 字，像一篇有密度的读书笔记
-
----
-
-### Step 2.5 — 复杂度评估（自动触发）
-
-在展示 digest.md 之后，立即执行以下评估：
-
-**判定为复杂文章，若满足以下任意两条：**
-- 原文字数 > 3000 字（中文）或 > 5000 words（英文）
-- 包含 4 个以上独立成立的主题板块
-- 覆盖多个工具对比 / 框架 / 决策维度，每个可单独成卡
-
-**若判定为复杂文章，提出拆分方案：**
+## 调用方式
 
 ```
-这篇文章信息量较大，建议拆成 {N} 张系列卡片，每张围绕一个独立主题：
-
-Card 1 · {主题名} — {一句话说这张卡解决什么问题}
-Card 2 · {主题名} — {一句话}
-Card 3 · {主题名} — {一句话}
-...
-
-系列卡使用同一视觉风格，形成一组可连续发布的内容。
-
-确认这个拆分，或告诉我怎么调整？
+/digest {文章 URL / 文件路径 / 粘贴文本}   ← 全流程，从头跑
+/digest cardplan {slug}                    ← 从规划阶段继续（已有 digest.md）
+/digest cardgen {slug}                     ← 从生成阶段继续（已有 card-plan.md）
+/digest cardgen {slug} {N}                 ← 重新生成第 N 张卡
 ```
-
-**用户确认后**，为每张卡写独立的 mini-digest（100-200 字），聚焦该卡的核心判断，保存至 `examples/{slug}/cards/card-{N}-brief.md`。
-
-**若判定为普通文章**，直接进入 Step 3。
 
 ---
 
-### Step 3 — Review
+## 编排逻辑
 
-展示 digest.md 内容后，询问：
+### 全流程（默认）
 
-```
-这是我对这篇文章的解读。
+输入是文章时，依次执行：
 
-有没有哪个判断你觉得不准，或者你想加入自己的角度？
-告诉我，我调整后再生成卡片。
+**Phase 1 — 解读**
+读取并执行 `.claude/skills/digest-read.md`。
+完成条件：用户确认解读准确（说「继续」）。
 
-（觉得准确的话直接说「继续」）
-```
+**Phase 2 — 规划**
+读取并执行 `.claude/skills/cardplan.md`。
+完成条件：用户确认卡片拆分方案和视觉风格。
 
-**用户修正时**：更新 `digest.md`，重新展示被修改的部分，再次确认。  
-**用户确认后**：进入 Step 4。
+**Phase 3 — 生成**
+读取并执行 `.claude/skills/cardgen.md`。
+完成条件：所有卡片生成完毕并确认。
 
 ---
 
-### Step 4 — 选择风格
+### 断点续跑
 
-#### 4A — 输出模式
+若已有中间产物，从对应阶段继续：
 
-首先确认输出模式：
-
-```
-输出模式：
-1. 手绘笔记 — AI 生成图片，sketch-note 美学，适合分享感强的内容
-2. 编辑卡片 — HTML 截图，精准排版控制，适合数据密集 / 高信息量内容
-
-（不选则默认 手绘笔记）
-```
-
-#### 4B — MBTI 风格（视觉语言）
-
-**MBTI 决定的是整张卡（或整个系列）的视觉语言：颜色、字体、质感、整体气质。**  
-**布局结构**（信息如何排布）由每张卡的内容单独决定，不由 MBTI 决定。
-
-> **系列卡规则**：整个系列只选一次 MBTI——视觉语言全程统一。  
-> 每张卡的版式结构根据该卡内容独立设计，但颜色 / 字体 / 质感不变。  
-> 这样系列卡「同出一门」，不会像四个不同作者做的。
-
-基于 digest.md 的**整体解读气质**推荐 MBTI：
-
-| 文章气质 | 推荐 MBTI | 视觉语言关键词 |
+| 命令 | 前提 | 执行模块 |
 |---|---|---|
-| 定量分析 + 系统框架 + ROI 导向 | INTJ | 冷白、深海蓝、大数字锚点、权威感 |
-| 有强结论 + 行动建议 | ENTJ | 深炭灰、金色、执行感 |
-| 需要展示推导过程 | INTP | 米黄、草稿感、暖褐 |
-| 多个闪光点 + 意义驱动 | ENFP | 星空黑、琥珀、星座散点 |
-| 有争议 / 开放问题 | ENTP | 双色辩论、高对比 |
-| 强规范 / 最佳实践 | ISTJ | 森林绿、米白、结构感 |
-| 有成长弧线 / 旅程感 | ENFJ | 琥珀、路径节点 |
-| 感受驱动 / 叙事弧线 | INFP | 赤陶、暖米、蜿蜒路径 |
-| 实用决策工具 | ISTP | 靛蓝、决策树、工程感 |
-| 温暖对比指南 | ISFJ | 鼠尾草绿、暖米、双栏 |
+| `/digest cardplan {slug}` | 已有 `examples/{slug}/digest.md` | cardplan |
+| `/digest cardgen {slug}` | 已有 `examples/{slug}/card-plan.md` | cardgen |
+| `/digest cardgen {slug} {N}` | 已有 `examples/{slug}/card-plan.md` | cardgen（单张） |
 
-推荐格式：
+若前提文件不存在，提示用户从哪一步开始。
+
+---
+
+## 文件结构
+
+每篇文章的产出物统一存放：
+
 ```
-根据这篇文章的气质，建议用「{MBTI}」作为系列视觉语言——{一句话理由}。
-
-每张卡的版式结构会根据内容单独设计。
-
-也可以选其他风格，告诉我。
+examples/{slug}/
+├── digest.md        ← Phase 1 输出
+├── card-plan.md     ← Phase 2 输出
+├── prompts/         ← Phase 3 中间产物
+└── cards/           ← Phase 3 最终产物
 ```
 
 ---
 
-### Step 5 — 生成卡片
+## 边界
 
-#### 手绘笔记模式
-
-1. 读取 `references/sketch-styles/{mbti}.md` — 该 MBTI 的 sketch-note 视觉规范
-2. 读取 `references/sketchnote-design-language.md` — 元规则
-3. 基于 card brief（或 digest.md）构建 AI 图像生成 prompt
-4. 保存 prompt 至 `examples/{slug}/prompts/{NN}-{mbti}-sketch.md`
-5. 执行生成：
-```bash
-bash scripts/gen-ai-card.sh examples/{slug}/prompts/{NN}-{mbti}-sketch.md --ar 2:3
-```
-6. 输出保存至 `examples/{slug}/cards/card-{N}.png`（或单卡时 `infographic/infographic.png`）
-
-**系列卡时**：依次生成每张，展示每张后询问是否调整再继续下一张。
-
-#### 编辑卡片模式
-
-基于 `digest.md` 生成图片卡片 HTML，保存至 `examples/{slug}/image-card-{style}-{color}.html`。
-
-读取参考文件：
-1. `references/styles/{style}.md` — 签名视觉元素 + 设计 token
-2. `references/design-system.md` — 全局视觉规范
-
-执行截图：
-```bash
-node scripts/screenshot.mjs {html路径} --json
-```
-
----
-
-### Step 6 — 输出摘要
-
-**单卡：**
-```
-✅ 生成完成
-
-  解读  → examples/{slug}/digest.md
-  卡片  → examples/{slug}/cards/card-1.png
-
-  满意直接分享，不满意告诉我哪里要改。
-```
-
-**系列卡：**
-```
-✅ 系列生成完成（{N} 张）
-
-  解读  → examples/{slug}/digest.md
-  Card 1 · {主题} → examples/{slug}/cards/card-1.png
-  Card 2 · {主题} → examples/{slug}/cards/card-2.png
-  ...
-
-  可单独调整某张，或整体调整系列风格。
-```
-
----
-
-## 边界说明
-
-- 仅输出**图片卡片**（手绘生成 或 HTML截图），不生成思维导图 / Interactive HTML / 漫画
-- 不支持多人使用场景，面向个人深度阅读工作流
-- 手绘笔记模式依赖 `scripts/gen-ai-card.sh`（DashScope API）
-- 编辑卡片模式依赖 `scripts/screenshot.mjs`（本地 Chrome）
+- 对用户只暴露 `/digest` 一个命令
+- 三个内部模块的实现细节对用户不可见
+- 任意阶段可单独重跑，不影响其他阶段的产物
