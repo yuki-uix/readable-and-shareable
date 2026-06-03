@@ -663,63 +663,47 @@
     <!-- Series cards case study -->
     <div class="series-section">
       <div class="series-header">
-        <div class="series-title">系列卡片案例：长文拆解（6 张）</div>
+        <div class="series-title">系列卡片案例：长文拆解（4 张）</div>
         <div class="series-meta">
           <span class="tag">论述型</span>
           <span class="tag">层级型</span>
           <span style="font-size:12px;color:var(--text3)">23 页 PDF · 识别为多卡场景 · INTJ 框架演绎风格</span>
         </div>
-        <p class="series-desc">一篇文章篇幅过长时，<code>/viz</code> 会自动检测并拆成系列卡片，全系列统一一种视觉风格。<br>案例原文：《怎么优化 Coding Agent 的成本：从 Prompt Cache 到 Context Engineering》</p>
+        <p class="series-desc">文章信息量过大时，<code>/digest</code> 会识别复杂度并提议拆分方案，整个系列共用同一套视觉语言。<br>案例原文：<a href="https://zhenjia.dev/posts/coding-agent-cost-optimization" target="_blank" rel="noopener" style="color:var(--text);text-decoration:underline;text-underline-offset:2px;">《怎么优化 Coding Agent 的成本：从 Prompt Cache 到 Context Engineering》</a>· Zhenjia Zhou</p>
       </div>
       <div class="series-scroll">
         <div class="series-cards">
           <div class="series-card" role="button" tabindex="0"
-               data-src="examples/coding-agent-cost/cards/card-1-overview.png"
-               data-label="1 / 6" data-title="框架总览"
-               aria-label="查看系列卡片 1：框架总览">
-            <img src="examples/coding-agent-cost/cards/card-1-overview.png"
-                 alt="Card 1：Select/Compress/Isolate/Write 框架总览" loading="lazy">
-            <div class="series-card-label">1 / 6 <span>框架总览</span></div>
+               data-src="series-card-1-cost-truth.png"
+               data-label="1 / 4" data-title="成本真相"
+               aria-label="查看系列卡片 1：成本真相">
+            <img src="series-card-1-cost-truth.png"
+                 alt="Card 1：钱花在哪里 — Input token 占比与 Cache 原理" loading="lazy">
+            <div class="series-card-label">1 / 4 <span>成本真相</span></div>
           </div>
           <div class="series-card" role="button" tabindex="0"
-               data-src="examples/coding-agent-cost/cards/card-2-cost-structure.png"
-               data-label="2 / 6" data-title="成本结构"
-               aria-label="查看系列卡片 2：成本结构">
-            <img src="examples/coding-agent-cost/cards/card-2-cost-structure.png"
-                 alt="Card 2：Prefill/Decode 成本结构 + Cache 原理" loading="lazy">
-            <div class="series-card-label">2 / 6 <span>成本结构</span></div>
+               data-src="series-card-2-framework.png"
+               data-label="2 / 4" data-title="框架全图"
+               aria-label="查看系列卡片 2：框架全图">
+            <img src="series-card-2-framework.png"
+                 alt="Card 2：Context Engineering — Select/Compress/Isolate/Write 四方向" loading="lazy">
+            <div class="series-card-label">2 / 4 <span>框架全图</span></div>
           </div>
           <div class="series-card" role="button" tabindex="0"
-               data-src="examples/coding-agent-cost/cards/card-3-select.png"
-               data-label="3 / 6" data-title="Select"
-               aria-label="查看系列卡片 3：Select">
-            <img src="examples/coding-agent-cost/cards/card-3-select.png"
-                 alt="Card 3：Indexing vs Grep vs LSP 召回精度决策" loading="lazy">
-            <div class="series-card-label">3 / 6 <span>Select</span></div>
+               data-src="series-card-3-tooling.png"
+               data-label="3 / 4" data-title="工具选型"
+               aria-label="查看系列卡片 3：工具选型">
+            <img src="series-card-3-tooling.png"
+                 alt="Card 3：每个优化方向的代表工具与选择逻辑" loading="lazy">
+            <div class="series-card-label">3 / 4 <span>工具选型</span></div>
           </div>
           <div class="series-card" role="button" tabindex="0"
-               data-src="examples/coding-agent-cost/cards/card-4-compress.png"
-               data-label="4 / 6" data-title="Compress"
-               aria-label="查看系列卡片 4：Compress">
-            <img src="examples/coding-agent-cost/cards/card-4-compress.png"
-                 alt="Card 4：预防 vs 压缩工具对比" loading="lazy">
-            <div class="series-card-label">4 / 6 <span>Compress</span></div>
-          </div>
-          <div class="series-card" role="button" tabindex="0"
-               data-src="examples/coding-agent-cost/cards/card-5-isolate-write.png"
-               data-label="5 / 6" data-title="Isolate + Write"
-               aria-label="查看系列卡片 5：Isolate + Write">
-            <img src="examples/coding-agent-cost/cards/card-5-isolate-write.png"
-                 alt="Card 5：模型分级 + 外置记忆架构" loading="lazy">
-            <div class="series-card-label">5 / 6 <span>Isolate + Write</span></div>
-          </div>
-          <div class="series-card" role="button" tabindex="0"
-               data-src="examples/coding-agent-cost/cards/card-6-roadmap.png"
-               data-label="6 / 6" data-title="落地路线图"
-               aria-label="查看系列卡片 6：落地路线图">
-            <img src="examples/coding-agent-cost/cards/card-6-roadmap.png"
-                 alt="Card 6：$11.30 到 $4–5 的 6 步落地路线图" loading="lazy">
-            <div class="series-card-label">6 / 6 <span>落地路线图</span></div>
+               data-src="series-card-4-roadmap.png"
+               data-label="4 / 4" data-title="落地路径"
+               aria-label="查看系列卡片 4：落地路径">
+            <img src="series-card-4-roadmap.png"
+                 alt="Card 4：$11.30 → $4-5 的六步优化路径" loading="lazy">
+            <div class="series-card-label">4 / 4 <span>落地路径</span></div>
           </div>
         </div>
       </div>
