@@ -413,6 +413,20 @@
     letter-spacing: .04em;
   }
 
+  /* coming soon */
+  .mbti-card.coming-soon {
+    pointer-events: none; position: relative;
+    filter: grayscale(100%) opacity(0.35);
+  }
+  .mbti-card.coming-soon::after {
+    content: "即将上线";
+    position: absolute; top: 8px; right: 8px;
+    background: rgba(0,0,0,0.5); color: #fff; border-radius: 3px;
+    font-size: 10px; font-weight: 600; padding: 2px 6px;
+    letter-spacing: .04em; z-index: 10;
+    filter: none;
+  }
+
   /* empty slot */
   .mbti-slot {
     border: 1px dashed var(--border); border-radius: var(--radius-md);
@@ -728,7 +742,7 @@
               <img src="showcase-mbti-intp-v2.png" alt="INTP：数学草稿，条件标签，待验证收口" loading="lazy">
               <div class="mbti-card-label">推导草稿<span class="mbti-tag">INTP</span></div>
             </div>
-            <div class="mbti-card" role="button" tabindex="0" aria-label="ENTJ 战略简报" data-mbti="ENTJ" data-desc="结论前置，对比矩阵，关键数字，行动指令收尾" data-style="战略简报" data-src="showcase-mbti-entj.png">
+            <div class="mbti-card coming-soon" role="button" tabindex="-1" aria-label="ENTJ 战略简报" data-mbti="ENTJ" data-desc="结论前置，对比矩阵，关键数字，行动指令收尾" data-style="战略简报" data-src="showcase-mbti-entj.png">
               <img src="showcase-mbti-entj.png" alt="ENTJ：结论前置，对比矩阵，行动指令" loading="lazy">
               <div class="mbti-card-label">战略简报<span class="mbti-tag">ENTJ</span></div>
             </div>
@@ -743,7 +757,7 @@
         <div>
           <div class="mbti-group-label">NF Diplomats — 意义叙事系</div>
           <div class="mbti-row">
-            <div class="mbti-card" role="button" tabindex="0" aria-label="INFJ 意义地图" data-mbti="INFJ" data-desc="意义连接，概念网络，渐变连线，整体洞见收口" data-style="意义地图" data-src="showcase-mbti-infj.png">
+            <div class="mbti-card coming-soon" role="button" tabindex="-1" aria-label="INFJ 意义地图" data-mbti="INFJ" data-desc="意义连接，概念网络，渐变连线，整体洞见收口" data-style="意义地图" data-src="showcase-mbti-infj.png">
               <img src="showcase-mbti-infj.png" alt="INFJ：概念网络，紫青渐变，整体感悟" loading="lazy">
               <div class="mbti-card-label">意义地图<span class="mbti-tag">INFJ</span></div>
             </div>
@@ -774,11 +788,11 @@
               <img src="showcase-mbti-istj-v2.png" alt="ISTJ：决策参考卡，双栏对比，forest green 配色" loading="lazy">
               <div class="mbti-card-label">档案归纳<span class="mbti-tag">ISTJ</span></div>
             </div>
-            <div class="mbti-card" role="button" tabindex="0" aria-label="ESFJ 关系关怀图" data-mbti="ESFJ" data-desc="关系关怀，具体场景，温暖细节，以人为中心" data-style="关系关怀图" data-src="showcase-mbti-esfj-v2.png">
+            <div class="mbti-card coming-soon" role="button" tabindex="-1" aria-label="ESFJ 关系关怀图" data-mbti="ESFJ" data-desc="关系关怀，具体场景，温暖细节，以人为中心" data-style="关系关怀图" data-src="showcase-mbti-esfj-v2.png">
               <img src="showcase-mbti-esfj-v2.png" alt="ESFJ：关系关怀图，人物卡片，需求标签，关怀确认" loading="lazy">
               <div class="mbti-card-label">关系关怀图<span class="mbti-tag">ESFJ</span></div>
             </div>
-            <div class="mbti-card" role="button" tabindex="0" aria-label="ESTJ 执行流程图" data-mbti="ESTJ" data-desc="责任矩阵，流程节点，验收标准，操作感配色" data-style="执行流程图" data-src="showcase-mbti-estj.png">
+            <div class="mbti-card coming-soon" role="button" tabindex="-1" aria-label="ESTJ 执行流程图" data-mbti="ESTJ" data-desc="责任矩阵，流程节点，验收标准，操作感配色" data-style="执行流程图" data-src="showcase-mbti-estj.png">
               <img src="showcase-mbti-estj.png" alt="ESTJ：执行流程图，责任矩阵，验收标准，执行指令" loading="lazy">
               <div class="mbti-card-label">执行流程图<span class="mbti-tag">ESTJ</span></div>
             </div>
@@ -793,15 +807,15 @@
               <img src="showcase-mbti-istp-v2.png" alt="ISTP：决策树，是否分叉，三结论，indigo 单色" loading="lazy">
               <div class="mbti-card-label">执行流程图<span class="mbti-tag">ISTP</span></div>
             </div>
-            <div class="mbti-card" role="button" tabindex="0" aria-label="ESTP 战术简报" data-mbti="ESTP" data-desc="深色主题，NOW/NEXT 切割，场景冲突卡，即时行动" data-style="战术简报" data-src="showcase-mbti-estp.png">
+            <div class="mbti-card coming-soon" role="button" tabindex="-1" aria-label="ESTP 战术简报" data-mbti="ESTP" data-desc="深色主题，NOW/NEXT 切割，场景冲突卡，即时行动" data-style="战术简报" data-src="showcase-mbti-estp.png">
               <img src="showcase-mbti-estp.png" alt="ESTP：战术简报，大字局面，关键变量，现在/下一步" loading="lazy">
               <div class="mbti-card-label">战术简报<span class="mbti-tag">ESTP</span></div>
             </div>
-            <div class="mbti-card" role="button" tabindex="0" aria-label="ISFP 色彩故事" data-mbti="ISFP" data-desc="色彩叙事，感官细节，氛围层次，安静表达" data-style="色彩故事" data-src="showcase-mbti-isfp-v2.png">
+            <div class="mbti-card coming-soon" role="button" tabindex="-1" aria-label="ISFP 色彩故事" data-mbti="ISFP" data-desc="色彩叙事，感官细节，氛围层次，安静表达" data-style="色彩故事" data-src="showcase-mbti-isfp-v2.png">
               <img src="showcase-mbti-isfp-v2.png" alt="ISFP：色彩故事，大色块，展签标注，安静美学" loading="lazy">
               <div class="mbti-card-label">色彩故事<span class="mbti-tag">ISFP</span></div>
             </div>
-            <div class="mbti-card" role="button" tabindex="0" aria-label="ESFP 体验海报" data-mbti="ESFP" data-desc="体验海报，大字强色，即时感，感受优先" data-style="体验海报" data-src="showcase-mbti-esfp-v2.png">
+            <div class="mbti-card coming-soon" role="button" tabindex="-1" aria-label="ESFP 体验海报" data-mbti="ESFP" data-desc="体验海报，大字强色，即时感，感受优先" data-style="体验海报" data-src="showcase-mbti-esfp-v2.png">
               <img src="showcase-mbti-esfp-v2.png" alt="ESFP：体验海报，高饱和多彩，活力感，邀请体验" loading="lazy">
               <div class="mbti-card-label">体验海报<span class="mbti-tag">ESFP</span></div>
             </div>
