@@ -348,28 +348,87 @@
   }
 
   /* ── Series cards ── */
-  .series-section { margin-top: var(--space-8); }
+  /* ── Series group ── */
+  .series-group-label {
+    font-size: 11px; font-weight: 600; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--text3);
+    margin-top: var(--space-8); margin-bottom: var(--space-4);
+  }
+  .series-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+  @media (max-width: 640px) {
+    .series-grid { grid-template-columns: 1fr; }
+  }
+  .series-source-link {
+    display: inline-block; margin-top: 4px;
+    font-size: 12px; color: var(--text3);
+    text-decoration: none;
+  }
+  .series-source-link:hover { color: var(--text); text-decoration: underline; }
+
+  .series-section { margin-top: 0; }
   .series-header { margin-bottom: var(--space-4); }
   .series-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: var(--space-2); }
   .series-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
-  .series-desc { font-size: 13px; color: var(--text2); line-height: 1.6; }
-  .series-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 4px; }
-  .series-cards { display: flex; gap: var(--space-3); width: max-content; }
+  .series-desc {
+    font-size: 13px; color: var(--text2); line-height: 1.6;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* ── Series card stack ── */
+  .series-stack {
+    position: relative;
+    width: 180px;
+    /* height = card image (~270px for 2:3 at 180px wide) + label (~28px) + bottom stack offset (24px) */
+    height: 322px;
+    margin-bottom: 12px;
+  }
   .series-card {
-    width: 180px; flex-shrink: 0;
-    border-radius: var(--radius-sm); overflow: hidden;
+    position: absolute;
+    width: 180px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
     border: 1px solid var(--border);
     background: var(--bg2);
     cursor: pointer;
-    transition: box-shadow .15s, transform .15s;
+    transition: transform .25s ease, box-shadow .25s ease;
+    transform-origin: bottom center;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
   }
-  .series-card:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+  /* Stack layers — neat offset, no rotation */
+  .series-card:nth-child(4) { z-index: 1; transform: translate(12px, 12px); }
+  .series-card:nth-child(3) { z-index: 2; transform: translate( 8px,  8px); }
+  .series-card:nth-child(2) { z-index: 3; transform: translate( 4px,  4px); }
+  .series-card:first-child  { z-index: 4; transform: none; box-shadow: 0 4px 16px rgba(0,0,0,.14); }
+
+  /* Hover: front card lifts slightly */
+  .series-stack:hover .series-card:first-child {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,.18);
+  }
+
   .series-card img { width: 100%; height: auto; display: block; }
   .series-card-label {
     padding: 6px 10px; font-size: 11px; font-weight: 600;
     color: var(--text2); background: var(--bg2);
   }
   .series-card-label span { font-weight: 400; color: var(--text3); }
+
+  /* 总数徽章：右上角 */
+  .series-card:first-child::before {
+    content: attr(data-total);
+    position: absolute; top: 8px; right: 8px;
+    background: rgba(0,0,0,.52); color: #fff;
+    font-size: 10px; font-weight: 600;
+    padding: 2px 7px; border-radius: 10px;
+    letter-spacing: .03em; z-index: 5;
+    pointer-events: none;
+  }
 
   /* ── MBTI Note matrix ── */
   .mbti-section {
@@ -661,21 +720,24 @@
     </div>
 
     <!-- Series cards case study -->
-    <div class="series-section">
-      <div class="series-header">
-        <div class="series-title">系列卡片案例：长文拆解（4 张）</div>
-        <div class="series-meta">
-          <span class="tag">论述型</span>
-          <span class="tag">层级型</span>
-          <span style="font-size:12px;color:var(--text3)">23 页 PDF · 识别为多卡场景 · INTJ 框架演绎风格</span>
+    <div class="series-group-label">系列卡片案例</div>
+    <div class="series-grid">
+
+      <div class="series-section">
+        <div class="series-header">
+          <div class="series-title">技术长文 · 4 张</div>
+          <div class="series-meta">
+            <span class="tag">论述型</span>
+            <span class="tag">层级型</span>
+            <span style="font-size:12px;color:var(--text3)">INTJ · 框架演绎</span>
+          </div>
+          <p class="series-desc"><code>/digest</code> 识别复杂度后拆成系列，整个系列共用同一套视觉语言。<a href="https://zhenjia.dev/posts/coding-agent-cost-optimization" target="_blank" rel="noopener" class="series-source-link">查看原文 →</a></p>
         </div>
-        <p class="series-desc">文章信息量过大时，<code>/digest</code> 会识别复杂度并提议拆分方案，整个系列共用同一套视觉语言。<br>案例原文：<a href="https://zhenjia.dev/posts/coding-agent-cost-optimization" target="_blank" rel="noopener" style="color:var(--text);text-decoration:underline;text-underline-offset:2px;">《怎么优化 Coding Agent 的成本：从 Prompt Cache 到 Context Engineering》</a>· Zhenjia Zhou</p>
-      </div>
-      <div class="series-scroll">
-        <div class="series-cards">
+        <div class="series-stack">
           <div class="series-card" role="button" tabindex="0"
                data-src="series-card-1-cost-truth.png"
                data-label="1 / 4" data-title="成本真相"
+               data-total="共 4 张"
                aria-label="查看系列卡片 1：成本真相">
             <img src="series-card-1-cost-truth.png"
                  alt="Card 1：钱花在哪里 — Input token 占比与 Cache 原理" loading="lazy">
@@ -686,7 +748,7 @@
                data-label="2 / 4" data-title="框架全图"
                aria-label="查看系列卡片 2：框架全图">
             <img src="series-card-2-framework.png"
-                 alt="Card 2：Context Engineering — Select/Compress/Isolate/Write 四方向" loading="lazy">
+                 alt="Card 2：Context Engineering 四方向" loading="lazy">
             <div class="series-card-label">2 / 4 <span>框架全图</span></div>
           </div>
           <div class="series-card" role="button" tabindex="0"
@@ -694,7 +756,7 @@
                data-label="3 / 4" data-title="工具选型"
                aria-label="查看系列卡片 3：工具选型">
             <img src="series-card-3-tooling.png"
-                 alt="Card 3：每个优化方向的代表工具与选择逻辑" loading="lazy">
+                 alt="Card 3：每个优化方向的代表工具" loading="lazy">
             <div class="series-card-label">3 / 4 <span>工具选型</span></div>
           </div>
           <div class="series-card" role="button" tabindex="0"
@@ -707,6 +769,46 @@
           </div>
         </div>
       </div>
+
+      <div class="series-section">
+        <div class="series-header">
+          <div class="series-title">人文书评 · 3 张</div>
+          <div class="series-meta">
+            <span class="tag">叙事型</span>
+            <span class="tag">批判型</span>
+            <span style="font-size:12px;color:var(--text3)">INFP · 叙事弧线</span>
+          </div>
+          <p class="series-desc">卡片数由独立认知单元推导，不预设。每张有序列标识，可单独阅读。<a href="https://paulgraham.com/greatwork.html" target="_blank" rel="noopener" class="series-source-link">查看原文 →</a></p>
+        </div>
+        <div class="series-stack">
+          <div class="series-card" role="button" tabindex="0"
+               data-src="series2-card-1-agency.png"
+               data-label="1 / 3" data-title="主体性"
+               data-total="共 3 张"
+               aria-label="查看系列卡片 1：主体性">
+            <img src="series2-card-1-agency.png"
+                 alt="Card 1：主体性 — 大多数人缺的不是能力" loading="lazy">
+            <div class="series-card-label">1 / 3 <span>主体性</span></div>
+          </div>
+          <div class="series-card" role="button" tabindex="0"
+               data-src="series2-card-2-blind-spots.png"
+               data-label="2 / 3" data-title="成功哲学的盲点"
+               aria-label="查看系列卡片 2：成功哲学的盲点">
+            <img src="series2-card-2-blind-spots.png"
+                 alt="Card 2：成功哲学的盲点 — Paul Graham 没说的部分" loading="lazy">
+            <div class="series-card-label">2 / 3 <span>成功哲学的盲点</span></div>
+          </div>
+          <div class="series-card" role="button" tabindex="0"
+               data-src="series2-card-3-discourse.png"
+               data-label="3 / 3" data-title="话语位置"
+               aria-label="查看系列卡片 3：话语位置">
+            <img src="series2-card-3-discourse.png"
+                 alt="Card 3：话语位置 — 这篇文章站在哪里" loading="lazy">
+            <div class="series-card-label">3 / 3 <span>话语位置</span></div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <div class="mbti-section">
@@ -1117,6 +1219,27 @@
   }
 })();
 </script>
+
+<script>
+// ── Series preview expand ──
+document.querySelectorAll('.series-view-all').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const preview = btn.previousElementSibling;
+    if (preview.classList.contains('series-preview')) {
+      preview.style.maxWidth = 'none';
+      preview.style.overflowX = 'auto';
+      preview.style.setProperty('--show-fade', '0');
+      // remove gradient after
+      preview.classList.add('expanded');
+      btn.style.display = 'none';
+    }
+  });
+});
+</script>
+
+<style>
+.series-preview.expanded::after { display: none; }
+</style>
 
 <!-- ── MBTI Lightbox ── -->
 <div id="mbti-lightbox" role="dialog" aria-modal="true" aria-label="MBTI Note 画廊">
